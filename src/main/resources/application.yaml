@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    include: mysql
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
