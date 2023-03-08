@@ -4,11 +4,12 @@ import dev.gyuray.forum.domain.Address;
 import dev.gyuray.forum.domain.Comment;
 import dev.gyuray.forum.domain.Post;
 import dev.gyuray.forum.domain.Role;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Getter @Setter
 public class UserUpdateDTO {
     private Long id;
     private Address address;
