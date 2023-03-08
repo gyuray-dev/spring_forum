@@ -30,11 +30,10 @@ public class UserRepository {
         user.setComments(userUpdateDTO.getComments());
     }
 
-    public Optional<User> findByName(String name) {
-        return Optional.ofNullable(
-                em.createQuery("select u from User u where u.name = :name", User.class)
+    public List<User> findByName(String name) {
+        return em.createQuery("select u from User u where u.name = :name", User.class)
                 .setParameter("name", name)
-                .getSingleResult());
+                .getResultList();
     }
 
     public List<User> findAll() {
