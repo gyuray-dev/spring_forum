@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -18,7 +17,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public void join(UserForm userForm) {
+    public Long join(UserForm userForm) {
         if (userRepository.findByName(userForm.getName()).isPresent()) {
             throw new IllegalStateException("이미 존재하는 회원입니다");
         }
@@ -34,6 +33,8 @@ public class UserService {
         user.setEmail(userForm.getEmail());
         user.setRegDate(userForm.getRegDate());
         userRepository.save(user);
+
+        return user.getId();
     }
 
     public User findUser(Long userId) {
