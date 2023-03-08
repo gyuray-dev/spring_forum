@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter @Setter
 public class CommentUpdateDTO {
-    Long id;
-    String content;
+    private Long id;
+    private String content;
 }
