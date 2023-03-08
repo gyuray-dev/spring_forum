@@ -19,7 +19,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public void join(UserForm userForm) {
-        if (userRepository.findByName(userForm.getName()) != null) {
+        if (userRepository.findByName(userForm.getName()).isPresent()) {
             throw new IllegalStateException("이미 존재하는 회원입니다");
         }
 
