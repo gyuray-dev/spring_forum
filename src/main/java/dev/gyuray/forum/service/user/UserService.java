@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -41,6 +42,15 @@ public class UserService {
         return userRepository.findOne(userId).orElseThrow(() -> {
             throw new IllegalStateException("해당 ID를 가진 유저가 없습니다");
         });
+    }
+
+    public Optional<User> findUserByName(String userName) {
+        List<User> foundUser = userRepository.findByName(userName);
+        if (foundUser == null) {
+            throw new IllegalStateException("해당 ID를 가진 유저가 없습니다");
+        }
+
+        return foundUser.stream().findAny();
     }
 
     public List<User> findUsers() {
