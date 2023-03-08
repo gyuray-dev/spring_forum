@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    include: mysql
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+
+  logging.level:
+    org.hibernate.SQL: debug
