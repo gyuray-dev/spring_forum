@@ -16,10 +16,12 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    public void post(PostForm postForm) {
+    public Long post(PostForm postForm) {
         Post post = new Post();
         post.setTitle(postForm.getTitle());
         post.setContent(postForm.getContent());
+        postRepository.save(post);
+        return post.getId();
     }
 
     @Transactional

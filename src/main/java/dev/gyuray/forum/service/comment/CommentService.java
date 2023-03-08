@@ -14,10 +14,11 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
 
-    public void comment(CommentForm commentForm) {
+    public Long comment(CommentForm commentForm) {
         Comment comment = new Comment();
         comment.setContent(commentForm.getContent());
         commentRepository.save(comment);
+        return comment.getId();
     }
 
     @Transactional
