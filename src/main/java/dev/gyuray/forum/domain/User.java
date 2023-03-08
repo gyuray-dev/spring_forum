@@ -22,6 +22,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Comment> comments = new ArrayList<>();
 
+    @Column(name="user_name")
     private String name;
 
     @Embedded
