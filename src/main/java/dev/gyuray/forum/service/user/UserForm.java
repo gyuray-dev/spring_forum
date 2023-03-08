@@ -9,7 +9,9 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class UserForm {
     private String name;
-    private Address address;
+    private String city;
+    private String street;
+    private String zipcode;
     private String email;
     private LocalDateTime regDate;
 }

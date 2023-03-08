@@ -1,5 +1,6 @@
 package dev.gyuray.forum.service.user;
 
+import dev.gyuray.forum.domain.Address;
 import dev.gyuray.forum.domain.User;
 import dev.gyuray.forum.repository.user.UserRepository;
 import dev.gyuray.forum.repository.user.UserUpdateDTO;
@@ -21,9 +22,15 @@ public class UserService {
         if (userRepository.findByName(userForm.getName()) != null) {
             throw new IllegalStateException("이미 존재하는 회원입니다");
         }
+
+        Address address = new Address();
+        address.setCity(userForm.getCity());
+        address.setStreet(userForm.getStreet());
+        address.setZipcode(userForm.getZipcode());
+
         User user = new User();
         user.setName(userForm.getName());
-        user.setAddress(userForm.getAddress());
+        user.setAddress(address);
         user.setEmail(userForm.getEmail());
         user.setRegDate(userForm.getRegDate());
         userRepository.save(user);
