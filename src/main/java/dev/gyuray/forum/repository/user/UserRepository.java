@@ -32,7 +32,7 @@ public class UserRepository {
 
     public Optional<User> findByName(String name) {
         return Optional.ofNullable(
-                em.createQuery("select u from User u where user_name = :name", User.class)
+                em.createQuery("select u from User u where u.name = :name", User.class)
                 .setParameter("name", name)
                 .getSingleResult());
     }
