@@ -28,7 +28,7 @@ public class User {
 
     private String email;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     private LocalDateTime regDate;
