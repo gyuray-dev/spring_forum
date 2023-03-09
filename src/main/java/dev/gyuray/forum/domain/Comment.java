@@ -1,5 +1,6 @@
 package dev.gyuray.forum.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
+@EqualsAndHashCode
 public class Comment {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

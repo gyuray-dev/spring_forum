@@ -1,5 +1,6 @@
 package dev.gyuray.forum.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
+@EqualsAndHashCode
 public class Post {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
