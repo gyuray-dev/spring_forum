@@ -12,9 +12,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
-    <!-- fontawesome -->
-    <!-- <script src="https://kit.fontawesome.com/cc737cceb8.js" crossorigin="anonymous"></script> -->
-    
     <!-- Bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
@@ -23,17 +20,14 @@
 <body style="max-width: 800px; margin: auto;">
 
     <!-- NavBar -->
-    <div class="container mb-4">
-        <nav class="navbar border-bottom" bg-white>
-            <div class="container bg-white mb-2">
-                <a class="navbar-brand" href="/static/index.html">
-                    <img src="/assets/spring.png" alt="Logo" width="30" height="30"
-                        class="d-inline-block align-text-top">
-                    Spring Forum
-                </a>
-                <button type="button" class="btn btn-primary btn ms-auto">로그인</button>
-                <button type="button" class="btn btn-secondary btn ms-2">회원가입</button>
-            </div>
+    <div class="container col-md-12 mb-4">
+        <nav class="navbar border-bottom">
+            <a class="navbar-brand" href="/static/index.html">
+                <img src="/assets/spring.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+                Spring Forum
+            </a>
+            <button type="button" class="btn btn-outline-primary btn ms-auto">로그인</button>
+            <button type="button" class="btn btn-primary btn ms-2">회원가입</button>
         </nav>
     </div>
 
@@ -91,6 +85,17 @@
         </table>
     </div>
 
+
+    <!-- Write button -->
+    <div class="container">
+        <nav class="navbar" bg-white>
+            <div class="container mb-2">
+                <button type="button" class="btn btn-outline-danger btn ms-auto fw-bold">글쓰기</button>
+            </div>
+        </nav>
+    </div>
+
+
     <!-- pager -->
     <div class="container">
         <div class="row mb-3 text-center">
@@ -134,44 +139,44 @@
                 </button>
             </div>
         </div>
-    </form>
+        </form>
 
-    <!-- Footer -->
-    <footer class="container mt-5 border-top p-3 text-center text-lg-start">
-        <div class="row d-flex align-items-center">
+        <!-- Footer -->
+        <footer class="container mt-5 border-top p-3 text-center text-lg-start">
+            <div class="row d-flex align-items-center">
 
-            <div class="col-md-7 col-lg-8 text-center text-md-start">
-                <div class="p-3">
-                    © 2023 Copyright:
-                    <a class="text-dark" href="https://gyuray.dev/">gyuray.dev</a>
+                <div class="col-md-7 col-lg-8 text-center text-md-start">
+                    <div class="p-3">
+                        © 2023 Copyright:
+                        <a class="text-dark" href="https://gyuray.dev/">gyuray.dev</a>
+                    </div>
                 </div>
+
+                <div class="col-md-5 col-lg-4 ml-lg-0 text-center text-md-end">
+                    <a href="https://gyurey.dev" class="btn btn-outline-dark btn-floating m-1" role="button">
+                        <i class="bi bi-cup-hot fs-5"></i>
+                    </a>
+                    <a href="https://github.com/gyuray-dev" class="btn btn-outline-dark btn-floating m-1" role="button">
+                        <i class="bi bi-github fs-5"></i>
+                    </a>
+                    <a href="https://www.instagram.com/ooggyoo/" class="btn btn-outline-dark btn-floating m-1"
+                        role="button">
+                        <i class="bi bi-instagram fs-5"></i>
+                    </a>
+                </div>
+
             </div>
-
-            <div class="col-md-5 col-lg-4 ml-lg-0 text-center text-md-end">
-                <a href="https://gyurey.dev" class="btn btn-outline-dark btn-floating m-1" role="button">
-                    <i class="bi bi-cup-hot fs-5"></i>
-                </a>
-                <a href="https://github.com/gyuray-dev" class="btn btn-outline-dark btn-floating m-1" role="button">
-                    <i class="bi bi-github fs-5"></i>
-                </a>
-                <a href="https://www.instagram.com/ooggyoo/" class="btn btn-outline-dark btn-floating m-1"
-                    role="button">
-                    <i class="bi bi-instagram fs-5"></i>
-                </a>
-            </div>
-
-        </div>
-    </footer>
+        </footer>
 
 
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
-        integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
-        crossorigin="anonymous"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+            integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+            crossorigin="anonymous"></script>
 </body>
 
 </html>
