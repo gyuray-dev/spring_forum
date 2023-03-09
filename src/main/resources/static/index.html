@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Bootswatch CSS -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/cerulean/bootstrap.min.css" integrity="sha256-DVTNk9+Gfg5+ReJbDwm+4kBWmZZeHjaniFMj0km+q2Y=" crossorigin="anonymous"> -->
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/cc737cceb8.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body style="max-width: 800px; margin: auto;">
+
+    <!-- NavBar -->
+    <div class="container mb-4">
+        <nav class="navbar border-bottom" bg-white>
+            <div class="container bg-white mb-2">
+                <a class="navbar-brand" href="/static/index.html">
+                    <img src="/assets/spring.png" alt="Logo" width="30" height="30"
+                        class="d-inline-block align-text-top">
+                    Spring Forum
+                </a>
+                <button type="button" class="btn btn-primary btn-sm ms-auto">로그인</button>
+                <button type="button" class="btn btn-secondary btn-sm ms-2">회원가입</button>
+            </div>
+        </nav>
+    </div>
+
+
+    <!-- Paging Amount -->
+    <div class="container mb-1 d-flex justify-content-end">
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+            <label class="btn btn-outline-primary btn-sm btn-outline-secondary py-0" for="btnradio1">10</label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+            <label class="btn btn-outline-primary btn-sm btn-outline-secondary py-0" for="btnradio2">30</label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+            <label class="btn btn-outline-primary btn-sm btn-outline-secondary py-0" for="btnradio3">50</label>
+        </div>
+    </div>
+
+
+    <!-- Board -->
+    <div class="container">
+        <table class="table align-middle">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col" class="col-1">번호</th>
+                    <th scope="col" class="col-6">글제목</th>
+                    <th scope="col" class="col-2">작성자</th>
+                    <th scope="col" class="col-1">조회수</th>
+                    <th scope="col" class="col-2">작성일</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                <tr class="text-center">
+                    <td>3</th>
+                    <td class="text-start">공지사항 글제목</td>
+                    <td>운영자</td>
+                    <td>1</td>
+                    <td>2023-03-01 12:34:56</td>
+                </tr>
+                <tr class="text-center">
+                    <td>2</th>
+                    <td class="text-start">공지사항 글제목</td>
+                    <td>운영자</td>
+                    <td>1</td>
+                    <td>2023-03-01 12:34:56</td>
+                </tr>
+                <tr class="text-center">
+                    <td>1</th>
+                    <td class="text-start">공지사항 글제목</td>
+                    <td>운영자</td>
+                    <td>1</td>
+                    <td>2023-03-01 12:34:56</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- pager -->
+    <div class="container">
+        <div class="row mb-3 text-center">
+            <div class="btn-toolbar d-flex justify-content-center mt-4" role="toolbar"
+                aria-label="Toolbar with button groups">
+                <div class="btn-group me-2" role="group" aria-label="Second group">
+                    <button type="button" class="btn btn-light">&lt; prev</button>
+                </div>
+                <div class="btn-group me-2" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-light">1</button>
+                    <button type="button" class="btn btn-primary">2</button>
+                    <button type="button" class="btn btn-light">3</button>
+                    <button type="button" class="btn btn-light">4</button>
+                    <button type="button" class="btn btn-light">5</button>
+                </div>
+                <div class="btn-group me-2" role="group" aria-label="Second group">
+                    <button type="button" class="btn btn-light">next &gt;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-4 p-0">
+                        <select class="form-select" id="">
+                            <option value="title">제목</option>
+                            <option value="title">내용</option>
+                            <option value="title">작성자</option>
+                        </select>
+                    </div>
+                    <div class="col-md-8 p-0">
+                        <input class="form-control" type="text" placeholder="검색" aria-label="Search">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1 p-0">
+                <button class="btn btn-outline-primary" type="submit">
+                    <i class="fa fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+
+
+    <div class="row">
+
+
+    </div>
+
+
+    <!-- </div> -->
+
+
+    <!-- Footer -->
+    <footer class="container mt-5 border-top p-3 text-center text-lg-start">
+        <div class="row d-flex align-items-center">
+
+            <div class="col-md-7 col-lg-8 text-center text-md-start">
+                <div class="p-3">
+                    © 2023 Copyright:
+                    <a class="text-dark" href="https://gyuray.dev/">gyuray.dev</a>
+                </div>
+            </div>
+
+            <div class="col-md-5 col-lg-4 ml-lg-0 text-center text-md-end">
+                <a href="https://gyurey.dev" class="btn btn-outline-dark btn-floating m-1" role="button">
+                    <i class="fa fa-mug-hot"></i>
+                </a>
+                <a href="https://github.com/gyuray-dev" class="btn btn-outline-dark btn-floating m-1" role="button">
+                    <i class="fa fa-github"></i>
+                </a>
+                <a href="https://www.instagram.com/ooggyoo/" class="btn btn-outline-dark btn-floating m-1"
+                    role="button">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+
+        </div>
+    </footer>
+
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+        integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
