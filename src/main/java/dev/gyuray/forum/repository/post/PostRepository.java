@@ -29,7 +29,7 @@ public class PostRepository {
         foundPost.setContent(postUpdateDTO.getContent());
     }
 
-    public List<PostListDTO> findAll() {
+    public List<PostListDTO> findAll(int offset, int limit) {
         String query = "select new dev.gyuray.forum.repository.post.PostListDTO(" +
                 "p.id, " +
                 "p.title, " +
@@ -41,6 +41,8 @@ public class PostRepository {
                 "join p.user u " +
                 "order by p.id desc";
         return em.createQuery(query, PostListDTO.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
                 .getResultList();
     }
 

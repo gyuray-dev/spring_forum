@@ -40,9 +40,9 @@ public class PostService {
                 });
     }
 
-    public List<PostListDTO> findAll() {
-        return postRepository.findAll();
-
+    public List<PostListDTO> findAll(int pageNum, int pageSize) {
+        int firstIndex = (pageNum - 1) * pageSize;
+        return postRepository.findAll(firstIndex, pageSize);
     }
 
     @Transactional

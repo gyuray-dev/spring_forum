@@ -20,7 +20,7 @@ public class HomeController {
     
     @GetMapping("/")
     public String home(Model model) {
-        List<PostListDTO> postListDTOs = postService.findAll();
+        List<PostListDTO> postListDTOs = postService.findAll(1, 10);
         model.addAttribute("postListDTOs", postListDTOs);
 
         log.info("postListDTOs.size() = {}", postListDTOs.size());
