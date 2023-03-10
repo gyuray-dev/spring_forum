@@ -31,7 +31,12 @@ public class PostRepository {
 
     public List<PostListDTO> findAll() {
         String query = "select new dev.gyuray.forum.repository.post.PostListDTO(" +
-                "p.id, u.name, p.title, p.regDate, p.view) " +
+                "p.id, " +
+                "p.title, " +
+                "u.name, " +
+                "p.regDate, " +
+                "p.view" +
+                ") " +
                 "from Post p " +
                 "join p.user u " +
                 "order by p.id desc";

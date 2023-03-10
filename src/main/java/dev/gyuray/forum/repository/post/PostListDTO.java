@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class PostListDTO {
     private Long postId;
-    private String userName;
-//    private Integer commentCount;
     private String title;
+    private String userName;
     private LocalDateTime regDate;
     private Integer view;
+    //    private Integer commentCount;
 }
