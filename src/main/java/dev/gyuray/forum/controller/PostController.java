@@ -30,6 +30,10 @@ public class PostController {
         List<PostListDTO> postListDTOs = postService.findAll(pageNum, pageSize);
         model.addAttribute("postListDTOs", postListDTOs);
 
-        return "index";
+        Integer startPage = (pageNum - 1) / pageSize + 1;
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("currentPage", pageNum);
+
+        return "posts/postList";
     }
 }

@@ -87,11 +87,12 @@
                     <button type="button" class="btn btn-light">&lt; prev</button>
                 </div>
                 <div class="btn-group me-2" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-light">1</button>
-                    <button type="button" class="btn btn-primary">2</button>
-                    <button type="button" class="btn btn-light">3</button>
-                    <button type="button" class="btn btn-light">4</button>
-                    <button type="button" class="btn btn-light">5</button>
+                    <button th:each="pageNum : ${#numbers.sequence(startPage, startPage + 4)}"
+                            th:text="${pageNum}"
+                            th:classappend="${pageNum == currentPage}? btn-primary : btn-light"
+                            th:onclick="|location.href='@{/posts/{p}(p=${pageNum})}'|"
+                            type="button" class="btn">
+                    </button>
                 </div>
                 <div class="btn-group me-2" role="group" aria-label="Second group">
                     <button type="button" class="btn btn-light">next &gt;</button>
