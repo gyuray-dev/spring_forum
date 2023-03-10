@@ -1,6 +1,7 @@
-package dev.gyuray.forum.service.comment;
+package dev.gyuray.forum.service;
 
 import dev.gyuray.forum.domain.Comment;
+import dev.gyuray.forum.repository.comment.CommentForm;
 import dev.gyuray.forum.repository.comment.CommentRepository;
 import dev.gyuray.forum.repository.comment.CommentUpdateDTO;
 import lombok.RequiredArgsConstructor;

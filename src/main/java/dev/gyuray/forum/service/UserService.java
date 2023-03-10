@@ -1,7 +1,8 @@
-package dev.gyuray.forum.service.user;
+package dev.gyuray.forum.service;
 
 import dev.gyuray.forum.domain.Address;
 import dev.gyuray.forum.domain.User;
+import dev.gyuray.forum.repository.user.UserForm;
 import dev.gyuray.forum.repository.user.UserRepository;
 import dev.gyuray.forum.repository.user.UserUpdateDTO;
 import lombok.RequiredArgsConstructor;

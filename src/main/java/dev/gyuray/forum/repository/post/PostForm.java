@@ -1,4 +1,4 @@
-package dev.gyuray.forum.service.post;
+package dev.gyuray.forum.repository.post;
 
 import lombok.Getter;
 import lombok.Setter;

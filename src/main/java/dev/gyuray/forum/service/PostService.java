@@ -1,13 +1,13 @@
-package dev.gyuray.forum.service.post;
+package dev.gyuray.forum.service;
 
 import dev.gyuray.forum.domain.Post;
+import dev.gyuray.forum.repository.post.PostForm;
 import dev.gyuray.forum.repository.post.PostRepository;
 import dev.gyuray.forum.repository.post.PostUpdateDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

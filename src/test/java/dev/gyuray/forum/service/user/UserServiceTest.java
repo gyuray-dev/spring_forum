@@ -2,7 +2,9 @@ package dev.gyuray.forum.service.user;
 
 import dev.gyuray.forum.domain.Address;
 import dev.gyuray.forum.domain.User;
+import dev.gyuray.forum.repository.user.UserForm;
 import dev.gyuray.forum.repository.user.UserUpdateDTO;
+import dev.gyuray.forum.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,8 @@ import java.util.Optional;
 @SpringBootTest
 class UserServiceTest {
 
-    @Autowired UserService userService;
+    @Autowired
+    UserService userService;
 
     Map<String, UserForm> getData() {
         Map<String, UserForm> userForms = new HashMap<>();

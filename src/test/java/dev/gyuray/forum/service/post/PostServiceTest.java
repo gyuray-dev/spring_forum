@@ -1,7 +1,9 @@
 package dev.gyuray.forum.service.post;
 
 import dev.gyuray.forum.domain.Post;
+import dev.gyuray.forum.repository.post.PostForm;
 import dev.gyuray.forum.repository.post.PostUpdateDTO;
+import dev.gyuray.forum.service.PostService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

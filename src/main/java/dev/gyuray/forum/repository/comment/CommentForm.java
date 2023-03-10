@@ -1,4 +1,4 @@
-package dev.gyuray.forum.service.comment;
+package dev.gyuray.forum.repository.comment;
 
 import lombok.Getter;
 import lombok.Setter;
