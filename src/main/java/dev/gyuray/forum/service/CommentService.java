@@ -15,11 +15,18 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
 
+    @Transactional
     public Long comment(CommentForm commentForm) {
         Comment comment = new Comment();
         comment.setContent(commentForm.getContent());
         commentRepository.save(comment);
         return comment.getId();
+    }
+
+    public Comment findCommentById(Long commentId) {
+        return commentRepository.findOne(commentId).orElseThrow(() -> {
+            throw new IllegalStateException("해당 댓글이 존재하지 않습니다.");
+        });
     }
 
     @Transactional
