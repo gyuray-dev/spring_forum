@@ -1,9 +1,12 @@
 package dev.gyuray.forum.service;
 
 import dev.gyuray.forum.domain.Post;
+import dev.gyuray.forum.domain.User;
 import dev.gyuray.forum.repository.post.PostForm;
 import dev.gyuray.forum.repository.post.PostRepository;
 import dev.gyuray.forum.repository.post.PostUpdateDTO;
+import dev.gyuray.forum.repository.post.PostListDTO;
+import dev.gyuray.forum.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +20,14 @@ import java.util.Optional;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public Long post(PostForm postForm) {
         Post post = new Post();
+        Long writerId = postForm.getUserId();
+        User writer = userRepository.findOne(writerId).orElseThrow(IllegalStateException::new);
+        post.setUser(writer);
         post.setTitle(postForm.getTitle());
         post.setContent(postForm.getContent());
         postRepository.save(post);
@@ -33,8 +40,9 @@ public class PostService {
                 });
     }
 
-    public List<Post> findAll() {
+    public List<PostListDTO> findAll() {
         return postRepository.findAll();
+
     }
 
     @Transactional
