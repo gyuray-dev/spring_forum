@@ -29,8 +29,12 @@ public class PostRepository {
         foundPost.setContent(postUpdateDTO.getContent());
     }
 
-    public List<Post> findAll() {
-        return em.createQuery("select p from Post p")
+    public List<PostListDTO> findAll() {
+        String query = "select new dev.gyuray.forum.repository.post.PostListDTO(" +
+                "p.id, u.name, p.title, p.regDate, p.view) " +
+                "from Post p " +
+                "join p.user u";
+        return em.createQuery(query, PostListDTO.class)
                 .getResultList();
     }
 
