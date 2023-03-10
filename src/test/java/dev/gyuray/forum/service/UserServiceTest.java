@@ -1,4 +1,4 @@
-package dev.gyuray.forum.service.user;
+package dev.gyuray.forum.service;
 
 import dev.gyuray.forum.domain.Address;
 import dev.gyuray.forum.domain.User;

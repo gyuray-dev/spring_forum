@@ -1,4 +1,4 @@
-package dev.gyuray.forum.service.post;
+package dev.gyuray.forum.service;
 
 import dev.gyuray.forum.domain.Post;
 import dev.gyuray.forum.repository.post.PostForm;
