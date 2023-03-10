@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -47,32 +47,25 @@
     </div>
 
 
-    <!-- Board -->
+    <!-- Board Table -->
     <div class="container">
         <table class="table align-middle">
             <thead>
                 <tr class="text-center">
                     <th scope="col" class="col-1">번호</th>
-                    <th scope="col" class="col-6">글제목</th>
+                    <th scope="col" class="col-6">제목</th>
                     <th scope="col" class="col-2">작성자</th>
                     <th scope="col" class="col-1">조회수</th>
                     <th scope="col" class="col-2">작성일</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
-                <tr class="text-center">
-                    <td>3</td>
-                    <td class="text-start">공지사항 글제목</td>
-                    <td>운영자</td>
-                    <td>1</td>
-                    <td>2023-03-01 12:34:56</td>
-                </tr>
-                <tr class="text-center">
-                    <td>2</td>
-                    <td class="text-start">공지사항 글제목</td>
-                    <td>운영자</td>
-                    <td>1</td>
-                    <td>2023-03-01 12:34:56</td>
+                <tr th:each="postListDTO : ${postListDTOs}" class="text-center">
+                    <td th:text="${postListDTO.postId}">2</td>
+                    <td th:text="${postListDTO.title}" class="text-start">공지사항 글제목</td>
+                    <td th:text="${postListDTO.userName}">운영자</td>
+                    <td th:text="${postListDTO.view}">1</td>
+                    <td th:text="${postListDTO.regDate}">2023-03-01 12:34:56</td>
                 </tr>
             </tbody>
         </table>
@@ -130,8 +123,8 @@
         </div>
     </div>
 
-        <!-- Footer -->
-        <footer class="container mt-5 border-top p-3 text-center text-lg-start">
+    <!-- Footer -->
+    <footer class="container mt-5 border-top p-3 text-center text-lg-start">
             <div class="row d-flex align-items-center">
 
                 <div class="col-md-7 col-lg-8 text-center text-md-start">
@@ -155,15 +148,14 @@
             </div>
         </footer>
 
-
-
-        <!-- Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
             integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
             crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
             integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
             crossorigin="anonymous"></script>
+
 </body>
 
 </html>
