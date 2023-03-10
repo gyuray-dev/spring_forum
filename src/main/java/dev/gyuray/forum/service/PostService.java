@@ -17,6 +17,7 @@ public class PostService {
 
     private final PostRepository postRepository;
 
+    @Transactional
     public Long post(PostForm postForm) {
         Post post = new Post();
         post.setTitle(postForm.getTitle());
