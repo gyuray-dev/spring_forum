@@ -14,3 +14,7 @@ spring:
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
+
+logging.level:
+  org.hibernate.SQL: debug
+
