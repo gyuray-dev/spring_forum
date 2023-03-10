@@ -33,7 +33,8 @@ public class PostRepository {
         String query = "select new dev.gyuray.forum.repository.post.PostListDTO(" +
                 "p.id, u.name, p.title, p.regDate, p.view) " +
                 "from Post p " +
-                "join p.user u";
+                "join p.user u " +
+                "order by p.id desc";
         return em.createQuery(query, PostListDTO.class)
                 .getResultList();
     }
