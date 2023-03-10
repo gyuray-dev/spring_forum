@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +23,12 @@ public class PostService {
         post.setContent(postForm.getContent());
         postRepository.save(post);
         return post.getId();
+    }
+
+    public Post findPostById(Long postId) {
+        return postRepository.findOne(postId).orElseThrow(() -> {
+                    throw new IllegalStateException("해당 게시글이 존재하지 않습니다");
+                });
     }
 
     @Transactional
