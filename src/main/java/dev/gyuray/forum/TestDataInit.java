@@ -26,17 +26,18 @@ public class TestDataInit {
     void initTestData() {
         log.info("Test Data Initialization");
 
-        UserForm userFormA = new UserForm();
-        userFormA.setName("운영자");
-        userFormA.setCity("cityA");
-        userFormA.setStreet("streetA");
-        userFormA.setZipcode("12345");
-        userFormA.setEmail("userA@email.com");
+        UserForm userForm = new UserForm();
+        userForm.setName("운영자");
+        userForm.setCity("cityA");
+        userForm.setStreet("streetA");
+        userForm.setZipcode("12345");
+        userForm.setEmail("userA@email.com");
 
-        userService.join(userFormA);
+        Long userId = userService.join(userForm);
 
         for (int i = 1; i <= 25; i++) {
             PostForm postForm = new PostForm();
+            postForm.setUserId(userId);
             postForm.setTitle("제목" + i);
             postForm.setContent("내용" + i);
 
