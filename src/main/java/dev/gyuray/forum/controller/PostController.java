@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -23,16 +25,26 @@ public class PostController {
     public String postList(
             @PathVariable Integer pageNum,
             @CookieValue(required = false) Integer pageSize,
-            Model model
+            Model model,
+            HttpServletResponse response
     ) {
-        if (pageSize == null) pageSize = 10;
+        if (pageSize == null || (pageSize !=10 && pageSize != 30 && pageSize != 50)) {
+            log.info("Set cookie to 10");
+            Cookie pageSizeCookie = new Cookie("pageSize", "10");
+            response.addCookie(pageSizeCookie);
+            pageSize = 10;
+        }
 
         List<PostListDTO> postListDTOs = postService.findAll(pageNum, pageSize);
         model.addAttribute("postListDTOs", postListDTOs);
 
+        // for paging
         Integer startPage = (pageNum - 1) / pageSize + 1;
         model.addAttribute("startPage", startPage);
         model.addAttribute("currentPage", pageNum);
+
+        // for pageSize radio button
+        model.addAttribute("pageSize", pageSize);
 
         return "posts/postList";
     }
