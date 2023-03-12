@@ -13,5 +13,4 @@ public class UserForm {
     private String street;
     private String zipcode;
     private String email;
-    private LocalDateTime regDate;
 }

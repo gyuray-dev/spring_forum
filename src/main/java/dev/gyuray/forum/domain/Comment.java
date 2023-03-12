@@ -24,7 +24,12 @@ public class Comment {
     @JoinColumn(name = "post_id")
     private Post post;
 
+    @Column(nullable = false)
     private LocalDateTime regDate;
 
     private String content;
+
+    public Comment() {
+        regDate = LocalDateTime.now();
+    }
 }

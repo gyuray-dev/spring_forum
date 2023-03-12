@@ -6,6 +6,7 @@ import dev.gyuray.forum.repository.user.UserForm;
 import dev.gyuray.forum.repository.user.UserRepository;
 import dev.gyuray.forum.repository.user.UserUpdateDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,7 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
 
     private final UserRepository userRepository;
@@ -34,7 +36,6 @@ public class UserService {
         user.setName(userForm.getName());
         user.setAddress(address);
         user.setEmail(userForm.getEmail());
-        user.setRegDate(userForm.getRegDate());
         userRepository.save(user);
 
         return user.getId();

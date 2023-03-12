@@ -29,8 +29,14 @@ public class Post {
 
     private String content;
 
+    @Column(nullable = false)
     private LocalDateTime regDate;
 
-    private Integer view;
+    @Column(nullable = false)
+    private int view;
 
+    public Post() {
+        regDate = LocalDateTime.now();
+        view = 0;
+    }
 }
