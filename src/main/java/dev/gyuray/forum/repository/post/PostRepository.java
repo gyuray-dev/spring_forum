@@ -35,7 +35,8 @@ public class PostRepository {
                 "p.title, " +
                 "u.name, " +
                 "p.regDate, " +
-                "p.view" +
+                "p.view, " +
+                "''" +
                 ") " +
                 "from Post p " +
                 "join p.user u " +

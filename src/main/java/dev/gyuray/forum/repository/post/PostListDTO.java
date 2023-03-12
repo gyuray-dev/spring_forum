@@ -14,5 +14,6 @@ public class PostListDTO {
     private String userName;
     private LocalDateTime regDate;
     private Integer view;
+    private String formattedRegDate;
     //    private Integer commentCount;
 }

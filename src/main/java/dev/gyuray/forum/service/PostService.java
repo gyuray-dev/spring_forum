@@ -8,15 +8,20 @@ import dev.gyuray.forum.repository.post.PostUpdateDTO;
 import dev.gyuray.forum.repository.post.PostListDTO;
 import dev.gyuray.forum.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class PostService {
 
     private final PostRepository postRepository;
@@ -42,7 +47,22 @@ public class PostService {
 
     public List<PostListDTO> findAll(int pageNum, int pageSize) {
         int firstIndex = (pageNum - 1) * pageSize;
-        return postRepository.findAll(firstIndex, pageSize);
+        List<PostListDTO> postListDTOs = postRepository.findAll(firstIndex, pageSize);
+
+        // 날짜 포매팅
+        for (PostListDTO postListDTO : postListDTOs) {
+            LocalDateTime regDate = postListDTO.getRegDate();
+            LocalDateTime now = LocalDateTime.now();
+            long diff = ChronoUnit.HOURS.between(regDate, now);
+
+            if (diff < 24) {
+                postListDTO.setFormattedRegDate(DateTimeFormatter.ofPattern("HH:mm").format(regDate));
+            } else {
+                postListDTO.setFormattedRegDate(DateTimeFormatter.ofPattern("yyyy-MM-dd").format(regDate));
+            }
+        }
+
+        return postListDTOs;
     }
 
     public Long getTotalCount() {
