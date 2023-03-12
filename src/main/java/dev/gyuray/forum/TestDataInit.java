@@ -35,7 +35,7 @@ public class TestDataInit {
 
         Long userId = userService.join(userForm);
 
-        for (int i = 1; i <= 25; i++) {
+        for (int i = 1; i <= 120; i++) {
             PostForm postForm = new PostForm();
             postForm.setUserId(userId);
             postForm.setTitle("제목" + i);

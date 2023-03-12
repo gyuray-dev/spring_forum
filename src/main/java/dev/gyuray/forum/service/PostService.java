@@ -45,6 +45,10 @@ public class PostService {
         return postRepository.findAll(firstIndex, pageSize);
     }
 
+    public Long getTotalCount() {
+        return postRepository.totalCount();
+    }
+
     @Transactional
     public void updatePost(PostUpdateDTO postUpdateDTO) {
         Optional<Post> foundPost = postRepository.findOne(postUpdateDTO.getId());

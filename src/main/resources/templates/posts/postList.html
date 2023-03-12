@@ -81,25 +81,37 @@
     </div>
 
 
-    <!-- pager -->
     <div class="container">
+        <!-- pager -->
         <div class="row mb-3 text-center">
             <div class="btn-toolbar d-flex justify-content-center" role="toolbar"
                 aria-label="Toolbar with button groups">
+
                 <div class="btn-group me-2" role="group" aria-label="Second group">
-                    <button type="button" class="btn btn-light">&lt; prev</button>
+                    <button type="button" class="btn btn-light"
+                            th:if="${currentPage} > 5"
+                            th:onclick="|location.href='@{/posts?currentPage={p}(p=${startPage} - 1)}'|">
+                        &lt; prev
+                    </button>
                 </div>
+
                 <div class="btn-group me-2" role="group" aria-label="First group">
-                    <button th:each="pageNum : ${#numbers.sequence(startPage, startPage + 4)}"
+                    <button th:each="pageNum : ${#numbers.sequence(startPage, endPage)}"
                             th:text="${pageNum}"
                             th:classappend="${pageNum == currentPage}? btn-primary : btn-light"
-                            th:onclick="|location.href='@{/posts/{p}(p=${pageNum})}'|"
+                            th:onclick="|location.href='@{/posts?currentPage={p}(p=${pageNum})}'|"
                             type="button" class="btn">
                     </button>
                 </div>
+
                 <div class="btn-group me-2" role="group" aria-label="Second group">
-                    <button type="button" class="btn btn-light">next &gt;</button>
+                    <button type="button" class="btn btn-light"
+                            th:if="${hasNextPages}"
+                            th:onclick="|location.href='@{/posts?currentPage={p}(p=${startPage} + 5)}'|">
+                        next &gt;
+                    </button>
                 </div>
+
             </div>
         </div>
 

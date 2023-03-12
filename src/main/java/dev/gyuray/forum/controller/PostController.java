@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -21,27 +21,43 @@ public class PostController {
 
     private final PostService postService;
 
-    @GetMapping("/posts/{pageNum}")
+    @GetMapping("/posts")
     public String postList(
-            @PathVariable Integer pageNum,
+            @RequestParam(required = false) Integer currentPage,
             @CookieValue(required = false) Integer pageSize,
             Model model,
             HttpServletResponse response
     ) {
-        if (pageSize == null || (pageSize !=10 && pageSize != 30 && pageSize != 50)) {
-            log.info("Set cookie to 10");
-            Cookie pageSizeCookie = new Cookie("pageSize", "10");
-            response.addCookie(pageSizeCookie);
-            pageSize = 10;
+        if (currentPage == null || currentPage < 1) {
+            currentPage = 1;
         }
 
-        List<PostListDTO> postListDTOs = postService.findAll(pageNum, pageSize);
+        if (pageSize == null || (pageSize !=10 && pageSize != 30 && pageSize != 50)) {
+            response.addCookie(new Cookie("pageSize", "10"));
+            pageSize = 10;
+            currentPage = 1;
+        }
+
+        Long totalPostCount = postService.getTotalCount();
+        Integer lastPage = (int) Math.ceil(totalPostCount / (double) pageSize);
+        currentPage = Math.min(currentPage, lastPage);
+
+        List<PostListDTO> postListDTOs = postService.findAll(currentPage, pageSize);
+
+        Integer startPage = (currentPage - 1) / 5 * 5 + 1;
+        Integer endPage = Math.min(startPage + 4, lastPage);
+
+        boolean hasNextPages = currentPage < (lastPage - 1) / 5 * 5 + 1;
+
+        // for listing
         model.addAttribute("postListDTOs", postListDTOs);
 
         // for paging
-        Integer startPage = (pageNum - 1) / pageSize + 1;
+        model.addAttribute("currentPage", currentPage);
         model.addAttribute("startPage", startPage);
-        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("lastPage", lastPage);
+        model.addAttribute("hasNextPages", hasNextPages);
 
         // for pageSize radio button
         model.addAttribute("pageSize", pageSize);

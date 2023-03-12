@@ -46,6 +46,11 @@ public class PostRepository {
                 .getResultList();
     }
 
+    public Long totalCount() {
+        return em.createQuery("select count(p) from Post p", Long.class)
+                .getSingleResult();
+    }
+
     public void delete(Long postId) {
         Post foundPost = em.find(Post.class, postId);
         em.remove(foundPost);
