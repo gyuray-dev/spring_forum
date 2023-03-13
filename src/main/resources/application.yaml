@@ -15,6 +15,12 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
 
+#p6spy - sql insert문 조회
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+
 logging.level:
   org.hibernate.SQL: debug
 
