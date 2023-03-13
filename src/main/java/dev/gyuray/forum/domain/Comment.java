@@ -1,5 +1,6 @@
 package dev.gyuray.forum.domain;
 
+import dev.gyuray.forum.repository.comment.CommentUpdateDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter @Setter
+@Getter
 @EqualsAndHashCode
 public class Comment {
 
@@ -29,7 +30,23 @@ public class Comment {
 
     private String content;
 
+    public Comment(String content) {
+        this();
+        this.content = content;
+    }
+
     public Comment() {
         regDate = LocalDateTime.now();
     }
+
+    public void updateComment(CommentUpdateDTO commentUpdateDTO) {
+        this.content = commentUpdateDTO.getContent();
+    }
+
+    public void addToPost(Post post) {
+        this.post = post;
+        post.getComments().add(this);
+    }
+
+    private void setPost() {}
 }

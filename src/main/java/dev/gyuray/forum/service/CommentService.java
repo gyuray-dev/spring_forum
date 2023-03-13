@@ -1,6 +1,7 @@
 package dev.gyuray.forum.service;
 
 import dev.gyuray.forum.domain.Comment;
+import dev.gyuray.forum.domain.Post;
 import dev.gyuray.forum.repository.comment.CommentForm;
 import dev.gyuray.forum.repository.comment.CommentRepository;
 import dev.gyuray.forum.repository.comment.CommentUpdateDTO;
@@ -14,11 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommentService {
 
     private final CommentRepository commentRepository;
+    private final PostService postService;
 
     @Transactional
     public Long comment(CommentForm commentForm) {
-        Comment comment = new Comment();
-        comment.setContent(commentForm.getContent());
+        Comment comment = new Comment(commentForm.getContent());
+
+        Long postId = commentForm.getPostId();
+        Post foundPost = postService.findPostById(postId);
+        comment.addToPost(foundPost);
+
         commentRepository.save(comment);
         return comment.getId();
     }

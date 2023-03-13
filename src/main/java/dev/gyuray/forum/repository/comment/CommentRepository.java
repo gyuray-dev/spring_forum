@@ -25,7 +25,7 @@ public class CommentRepository {
 
     public void update(CommentUpdateDTO commentDTO) {
         Comment foundComment = em.find(Comment.class, commentDTO.getId());
-        foundComment.setContent(commentDTO.getContent());
+        foundComment.updateComment(commentDTO);
     }
 
     public List<Comment> findAll() {
