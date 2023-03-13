@@ -42,24 +42,22 @@
 
     <!-- 목록으로 버튼 -->
     <div class="container d-flex">
-        <button type="button" class="btn btn-outline-secondary btn ms-auto mt-2 fw-bold">
-            <a class="list-group-item" th:href="@{/posts?currentPage={currentPage}(currentPage=${currentPage})}">목록으로</a>
-        </button>
+            <a class="btn btn-outline-primary ms-auto mt-2 fw-bold" th:href="@{/posts?currentPage={currentPage}(currentPage=${currentPage})}">목록으로</a>
     </div>
+
 
     <!-- 댓글 -->
     <div class="container">
-
         <!-- 댓글 등록 -->
-        <form action="#">
-              <textarea class="form-control w-100 mt-3" style="resize: none;" name="comment" id="comment" rows="3"
-                    placeholder="댓글을 입력해주세요">
-              </textarea>
+        <form th:action="@{/posts/{postId}/comments/add(postId = ${post.id})}" method="post">
+            <textarea class="form-control w-100 mt-3" style="resize: none;" id="content" name="content" rows="3"
+                placeholder="댓글을 입력해주세요"></textarea>
+            <div class="d-flex">
+                <input class="btn btn-sm btn-primary ms-auto my-3 fw-bold" type="submit" value="댓글 등록"/>
+            </div>
+            <input type="hidden" id="userId" name="userId" th:value="${post.user.id}"/>
+            <input type="hidden" id="postId" name="postId" th:value="${post.id}"/>
         </form>
-
-        <div class="container d-flex mb-3 p-0">
-            <button type="button" class="btn btn-sm btn-primary btn ms-auto mt-2 fw-bold">댓글 등록</button>
-        </div>
 
         <!-- 댓글 목록 -->
         <ul class="list-group list-group-flush mb-3">

@@ -84,7 +84,6 @@ public class PostController {
         // 댓글 로딩
         List<CommentListDTO> commentListDTOs = commentService.findAllByPostId(postId);
         model.addAttribute("commentListDTOs", commentListDTOs);
-        log.info("commentListDTOs.size() = {}", commentListDTOs.size());
 
         // 현재 페이지 저장
         currentPage = (currentPage == null) ? 1 : currentPage;
