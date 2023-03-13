@@ -41,6 +41,7 @@ public class PostRepository {
                 "from Post p " +
                 "join p.user u " +
                 "order by p.id desc";
+
         return em.createQuery(query, PostListDTO.class)
                 .setFirstResult(offset)
                 .setMaxResults(limit)

@@ -18,9 +18,10 @@
         </div>
         <div class="row text-end border-bottom mb-3">
             <p class="text-end">
-                작성자: <span th:text="${post.user.name}">운영자</span>
-                 ･ 게시일: <span th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm:ss')}">2023.03.13</span>
-                 ･ 조회수: <span th:text="${post.view}">12</span>
+                글번호: <span th:text="${post.id}">10</span>
+                 | 작성자: <span th:text="${post.user.name}">운영자</span>
+                 | 게시일: <span th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm:ss')}">2023.03.13</span>
+                 | 조회수: <span th:text="${post.view}">12</span>
             </p>
         </div>
         <div th:text="${post.content}" class="row px-3">

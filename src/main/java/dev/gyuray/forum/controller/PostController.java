@@ -80,7 +80,6 @@ public class PostController {
         Post foundPost = postService.findPostById(postId);
         model.addAttribute("post", foundPost);
 
-
         // 댓글 로딩
         List<CommentListDTO> commentListDTOs = commentService.findAllByPostId(postId);
         model.addAttribute("commentListDTOs", commentListDTOs);
