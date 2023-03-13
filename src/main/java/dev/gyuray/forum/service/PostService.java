@@ -2,12 +2,10 @@ package dev.gyuray.forum.service;
 
 import dev.gyuray.forum.domain.Post;
 import dev.gyuray.forum.domain.User;
-import dev.gyuray.forum.repository.comment.CommentRepository;
 import dev.gyuray.forum.repository.post.PostForm;
+import dev.gyuray.forum.repository.post.PostListDTO;
 import dev.gyuray.forum.repository.post.PostRepository;
 import dev.gyuray.forum.repository.post.PostUpdateDTO;
-import dev.gyuray.forum.repository.post.PostListDTO;
-import dev.gyuray.forum.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,13 +24,13 @@ import java.util.Optional;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Transactional
     public Long post(PostForm postForm) {
         Post post = new Post();
         Long writerId = postForm.getUserId();
-        User writer = userRepository.findOne(writerId).orElseThrow(IllegalStateException::new);
+        User writer = userService.findUser(postForm.getUserId());
         post.setUser(writer);
         post.setTitle(postForm.getTitle());
         post.setContent(postForm.getContent());
