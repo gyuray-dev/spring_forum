@@ -1,5 +1,6 @@
 package dev.gyuray.forum.controller;
 
+import dev.gyuray.forum.domain.Post;
 import dev.gyuray.forum.repository.post.PostListDTO;
 import dev.gyuray.forum.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
@@ -63,5 +65,16 @@ public class PostController {
         model.addAttribute("pageSize", pageSize);
 
         return "posts/postList";
+    }
+
+    @GetMapping("/posts/{postId}")
+    public String viewPost(
+            @PathVariable Long postId,
+            Model model
+    ) {
+        Post foundPost = postService.findPostById(postId);
+        model.addAttribute("post", foundPost);
+
+        return "posts/postView";
     }
 }

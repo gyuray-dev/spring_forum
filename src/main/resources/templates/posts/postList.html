@@ -44,9 +44,15 @@
                 </tr>
             </thead>
             <tbody class="table-group-divider">
-                <tr th:each="postListDTO : ${postListDTOs}" class="text-center">
+                <tr th:each="postListDTO : ${postListDTOs}" class="text-center h-2">
                     <td th:text="${postListDTO.postId}">2</td>
-                    <td th:text="${postListDTO.title}" class="text-start">공지사항 글제목</td>
+                    <td class="text-dark text-start">
+                        <a  class="list-group-item"
+                            th:text="${postListDTO.title}"
+                            th:href="@{/posts/{postId}(postId = ${postListDTO.postId})}">
+                            글제목
+                        </a>
+                    </td>
                     <td th:text="${postListDTO.userName}">운영자</td>
                     <td th:text="${postListDTO.view}">1</td>
                     <td th:text="${postListDTO.formattedRegDate}">2023-03-01 12:34:56</td>

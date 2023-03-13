@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html th:replace="~{/baseLayout :: baseLayout(~{::title}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 조회</title>
+</head>
+
+<body>
+<section style="max-width: 800px; margin: auto;">
+
+    <!-- 게시글 정보 -->
+    <div class="container">
+        <div class="row">
+            <h4 class="h1" th:text="${post.title}">글 제목</h4>
+        </div>
+        <div class="row text-end border-bottom mb-3">
+            <p class="text-end">
+                작성자: <span th:text="${post.user.name}">운영자</span>
+                 ･ 게시일: <span th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm:ss')}">2023.03.13</span>
+                 ･ 조회수: <span th:text="${post.view}">12</span>
+            </p>
+        </div>
+        <div th:text="${post.content}" class="row">
+            <p>
+                Lorem ipsum pariatur dolor impedit libero minima eaque velit aperiam molestiae numquam doloribus
+                eveniet et aspernatur placeat.
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+        <table class="table table-borderless">
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- 목록으로 버튼 -->
+    <div class="container d-flex">
+        <button type="button" class="btn btn-outline-secondary btn ms-auto mt-2 fw-bold">목록으로</button>
+    </div>
+
+    <!-- 댓글 -->
+    <div class="container">
+
+        <!-- 댓글 등록 -->
+        <form action="#">
+              <textarea class="form-control w-100 mt-3" style="resize: none;" name="comment" id="comment" rows="3"
+                    placeholder="댓글을 입력해주세요">
+              </textarea>
+        </form>
+
+        <div class="container d-flex mb-3 p-0">
+            <button type="button" class="btn btn-sm btn-primary btn ms-auto mt-2 fw-bold">댓글 등록</button>
+        </div>
+
+        <!-- 댓글 목록 -->
+        <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item d-flex justify-content-between align-items-start border-bottom mb-2 pb-0">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold mb-2">작성자 <span class="text-secondary fw-normal ms-4 fs-6">1분 전</span></div>
+                    <p>댓글 내용</p>
+                </div>
+                <span class="badge bg-secondary rounded-pill me-2">수정</span>
+                <span class="badge bg-secondary rounded-pill">삭제</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start border-bottom mb-2 pb-0">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold mb-2">작성자 <span class="text-secondary fw-normal ms-4 fs-6">1분 전</span></div>
+                    <p>댓글 내용</p>
+                </div>
+                <span class="badge bg-secondary rounded-pill me-2">수정</span>
+                <span class="badge bg-secondary rounded-pill">삭제</span>
+            </li>
+        </ul>
+    </div>
+
+</section>
+</body>
+
+</html>
