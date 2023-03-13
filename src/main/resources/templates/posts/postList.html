@@ -1,35 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{/baseLayout :: baseLayout(~{::title}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    <!-- Bootswatch CSS -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/cerulean/bootstrap.min.css" integrity="sha256-DVTNk9+Gfg5+ReJbDwm+4kBWmZZeHjaniFMj0km+q2Y=" crossorigin="anonymous"> -->
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-
-    <!-- Bootstrap icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-
+    <title>게시글 목록</title>
 </head>
 
-<body style="max-width: 800px; margin: auto;">
+<body>
+<section style="max-width: 800px; margin: auto;">
 
-    <!-- NavBar -->
-    <div class="container col-md-12 mb-4">
-        <nav class="navbar border-bottom">
-            <a class="navbar-brand" href="/">
-                <img src="/assets/spring.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
-                Spring Forum
-            </a>
-            <button type="button" class="btn btn-outline-primary btn ms-auto">로그인</button>
-            <button type="button" class="btn btn-primary btn ms-2">회원가입</button>
-        </nav>
-    </div>
 
 
     <!-- page size -->
@@ -172,14 +153,7 @@
         }
     </script>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
-            integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
-            crossorigin="anonymous"></script>
-
+</section>
 </body>
 
 </html>
