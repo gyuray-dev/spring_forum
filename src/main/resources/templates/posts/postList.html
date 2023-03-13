@@ -43,13 +43,16 @@
                     <th scope="col" class="col-2">작성일</th>
                 </tr>
             </thead>
+
+            <!-- 게시글 -->
             <tbody class="table-group-divider">
                 <tr th:each="postListDTO : ${postListDTOs}" class="text-center h-2">
                     <td th:text="${postListDTO.postId}">2</td>
                     <td class="text-dark text-start">
                         <a  class="list-group-item"
                             th:text="${postListDTO.title}"
-                            th:href="@{/posts/{postId}(postId = ${postListDTO.postId})}">
+                            th:href="@{/posts/{postId}?currentPage={currentPage}
+                            (postId = ${postListDTO.postId}, currentPage = ${currentPage})}">
                             글제목
                         </a>
                     </td>

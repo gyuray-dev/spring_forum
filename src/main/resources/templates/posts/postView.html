@@ -42,7 +42,9 @@
 
     <!-- 목록으로 버튼 -->
     <div class="container d-flex">
-        <button type="button" class="btn btn-outline-secondary btn ms-auto mt-2 fw-bold">목록으로</button>
+        <button type="button" class="btn btn-outline-secondary btn ms-auto mt-2 fw-bold">
+            <a class="list-group-item" th:href="@{/posts?currentPage={currentPage}(currentPage=${currentPage})}">목록으로</a>
+        </button>
     </div>
 
     <!-- 댓글 -->

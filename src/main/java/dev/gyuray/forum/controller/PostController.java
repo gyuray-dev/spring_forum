@@ -70,10 +70,14 @@ public class PostController {
     @GetMapping("/posts/{postId}")
     public String viewPost(
             @PathVariable Long postId,
+            @RequestParam(required = false) Long currentPage,
             Model model
     ) {
         Post foundPost = postService.findPostById(postId);
         model.addAttribute("post", foundPost);
+
+        currentPage = (currentPage == null) ? 1 : currentPage;
+        model.addAttribute("currentPage", currentPage);
 
         return "posts/postView";
     }
