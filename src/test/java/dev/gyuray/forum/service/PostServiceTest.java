@@ -32,7 +32,7 @@ class PostServiceTest {
         postForm.setTitle("제목1");
         postForm.setContent("내용1");
 
-        Long postId = postService.post(postForm);
+        Long postId = postService.addPost(postForm);
         Post foundPost = postService.findPostById(postId);
 
         Assertions.assertEquals(postForm.getTitle(), foundPost.getTitle());
@@ -71,8 +71,8 @@ class PostServiceTest {
         postForm2.setUserId(userId);
         postForm2.setTitle("제목2");
 
-        Long postId1 = postService.post(postForm1);
-        Long postId2 = postService.post(postForm2);
+        Long postId1 = postService.addPost(postForm1);
+        Long postId2 = postService.addPost(postForm2);
         List<PostListDTO> postListDTOs = postService.findAll(1, 10);
 
         Assertions.assertEquals(2, postListDTOs.size());

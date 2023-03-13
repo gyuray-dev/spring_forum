@@ -27,7 +27,7 @@ public class CommentService {
     private final UserService userService;
 
     @Transactional
-    public Long comment(CommentForm commentForm) {
+    public Long addComment(CommentForm commentForm) {
         Comment comment = new Comment(commentForm.getContent());
 
         Long postId = commentForm.getPostId();

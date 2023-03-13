@@ -19,7 +19,7 @@ public class CommentController {
             @PathVariable Long postId,
             @ModelAttribute CommentForm commentForm
     ) {
-        commentService.comment(commentForm);
+        commentService.addComment(commentForm);
 
         return "redirect:/posts/" + postId;
     }
