@@ -28,8 +28,20 @@ public class CommentRepository {
         foundComment.updateComment(commentDTO);
     }
 
-    public List<Comment> findAll() {
-        return em.createQuery("select c from Comment c")
+    public List<CommentListDTO> findAll(Long postId) {
+        String query = "select new dev.gyuray.forum.repository.comment.CommentListDTO(" +
+                "u.name, " +
+                "c.regDate, " +
+                "c.content, " +
+                "''" +
+                ") " +
+                "from Comment c " +
+                "join c.user u " +
+                "where c.post.id = :postId " +
+                "order by c.id";
+
+        return em.createQuery(query, CommentListDTO.class)
+                .setParameter("postId", postId)
                 .getResultList();
     }
 

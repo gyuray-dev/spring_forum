@@ -1,7 +1,9 @@
 package dev.gyuray.forum.controller;
 
 import dev.gyuray.forum.domain.Post;
+import dev.gyuray.forum.repository.comment.CommentListDTO;
 import dev.gyuray.forum.repository.post.PostListDTO;
+import dev.gyuray.forum.service.CommentService;
 import dev.gyuray.forum.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,7 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    private final CommentService commentService;
 
     @GetMapping("/posts")
     public String postList(
@@ -73,9 +76,17 @@ public class PostController {
             @RequestParam(required = false) Long currentPage,
             Model model
     ) {
+        // 게시글 로딩
         Post foundPost = postService.findPostById(postId);
         model.addAttribute("post", foundPost);
 
+
+        // 댓글 로딩
+        List<CommentListDTO> commentListDTOs = commentService.findAllByPostId(postId);
+        model.addAttribute("commentListDTOs", commentListDTOs);
+        log.info("commentListDTOs.size() = {}", commentListDTOs.size());
+
+        // 현재 페이지 저장
         currentPage = (currentPage == null) ? 1 : currentPage;
         model.addAttribute("currentPage", currentPage);
 

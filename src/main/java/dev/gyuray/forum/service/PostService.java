@@ -2,6 +2,7 @@ package dev.gyuray.forum.service;
 
 import dev.gyuray.forum.domain.Post;
 import dev.gyuray.forum.domain.User;
+import dev.gyuray.forum.repository.comment.CommentRepository;
 import dev.gyuray.forum.repository.post.PostForm;
 import dev.gyuray.forum.repository.post.PostRepository;
 import dev.gyuray.forum.repository.post.PostUpdateDTO;
@@ -40,6 +41,8 @@ public class PostService {
     }
 
     public Post findPostById(Long postId) {
+
+
         return postRepository.findOne(postId).orElseThrow(() -> {
                     throw new IllegalStateException("해당 게시글이 존재하지 않습니다");
                 });

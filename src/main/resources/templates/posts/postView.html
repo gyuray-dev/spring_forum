@@ -63,18 +63,15 @@
 
         <!-- 댓글 목록 -->
         <ul class="list-group list-group-flush mb-3">
-            <li class="list-group-item d-flex justify-content-between align-items-start border-bottom mb-2 pb-0">
+            <li class="list-group-item d-flex justify-content-between align-items-start border-bottom mb-2 pb-0"
+                th:each="commentListDTO : ${commentListDTOs}">
                 <div class="ms-2 me-auto">
-                    <div class="fw-bold mb-2">작성자 <span class="text-secondary fw-normal ms-4 fs-6">1분 전</span></div>
-                    <p>댓글 내용</p>
-                </div>
-                <span class="badge bg-secondary rounded-pill me-2">수정</span>
-                <span class="badge bg-secondary rounded-pill">삭제</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start border-bottom mb-2 pb-0">
-                <div class="ms-2 me-auto">
-                    <div class="fw-bold mb-2">작성자 <span class="text-secondary fw-normal ms-4 fs-6">1분 전</span></div>
-                    <p>댓글 내용</p>
+                    <div class="fw-bold mb-2">
+                        <span th:text="${commentListDTO.userName}">작성자</span>
+                        <span class="text-secondary fw-normal ms-4 fs-6"
+                              th:text="${commentListDTO.formattedRegDate}">1분 전</span>
+                    </div>
+                    <p th:text="${commentListDTO.content}">댓글 내용</p>
                 </div>
                 <span class="badge bg-secondary rounded-pill me-2">수정</span>
                 <span class="badge bg-secondary rounded-pill">삭제</span>

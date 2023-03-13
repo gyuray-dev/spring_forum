@@ -48,5 +48,10 @@ public class Comment {
         post.getComments().add(this);
     }
 
+    public void addToUser(User user) {
+        this.user = user;
+        post.getComments().add(this);
+    }
+
     private void setPost() {}
 }
