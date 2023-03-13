@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html th:replace="~{/baseLayout :: baseLayout(~{::title}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시글 조회</title>
+</head>
+
+<body>
+<section style="max-width: 800px; margin: auto;">
+
+  <!-- 글 등록 -->
+  <div class="container">
+    <form th:action="@{/posts}" method="post">
+      <!-- 제목 -->
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">제목</span>
+        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+      </div>
+
+      <!-- 본문 -->
+      <textarea class="form-control w-100 mt-3" style="resize: none;" id="content" name="content" rows="25"
+                placeholder="본문을 입력해주세요"></textarea>
+      <div class="d-flex">
+        <input class="btn btn-md btn-primary ms-auto my-3" type="submit" value="글 등록" />
+        <a class="btn btn-md btn-outline-secondary ms-2 my-3" href="/posts" value="취소">취소</a>
+      </div>
+    </form>
+  </div>
+
+</section>
+</body>
+
+</html>

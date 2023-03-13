@@ -2,6 +2,7 @@ package dev.gyuray.forum.controller;
 
 import dev.gyuray.forum.domain.Post;
 import dev.gyuray.forum.repository.comment.CommentListDTO;
+import dev.gyuray.forum.repository.post.PostForm;
 import dev.gyuray.forum.repository.post.PostListDTO;
 import dev.gyuray.forum.service.CommentService;
 import dev.gyuray.forum.service.PostService;
@@ -9,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -89,5 +87,10 @@ public class PostController {
         model.addAttribute("currentPage", currentPage);
 
         return "posts/postView";
+    }
+
+    @GetMapping("/post")
+    public String createForm() {
+        return "posts/postForm";
     }
 }
