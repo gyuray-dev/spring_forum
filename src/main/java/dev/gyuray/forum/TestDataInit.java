@@ -47,7 +47,7 @@ public class TestDataInit {
             postForm.setTitle("제목" + i);
             postForm.setContent("내용" + i);
 
-            postService.post(postForm);
+            postService.addPost(postForm);
         }
 
         List<PostListDTO> postListDTOs = postService.findAll(1, 10);
@@ -57,7 +57,7 @@ public class TestDataInit {
                 commentForm.setContent("댓글 " + j);
                 commentForm.setUserId(userId);
                 commentForm.setPostId(postListDTOs.get(i).getPostId());
-                commentService.comment(commentForm);
+                commentService.addComment(commentForm);
             }
         }
     }
