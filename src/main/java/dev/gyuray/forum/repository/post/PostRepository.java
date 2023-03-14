@@ -23,8 +23,8 @@ public class PostRepository {
     }
 
     public void update(PostUpdateDTO postUpdateDTO) {
-        Post foundPost = em.find(Post.class, postUpdateDTO.getId());
-        foundPost.setId(postUpdateDTO.getId());
+        Post foundPost = em.find(Post.class, postUpdateDTO.getPostId());
+        foundPost.setId(postUpdateDTO.getPostId());
         foundPost.setTitle(postUpdateDTO.getTitle());
         foundPost.setContent(postUpdateDTO.getContent());
     }

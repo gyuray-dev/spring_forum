@@ -5,29 +5,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>글 작성</title>
+  <title>글 수정</title>
 </head>
 
 <body>
 <section style="max-width: 800px; margin: auto;">
 
-  <!-- 글 등록 -->
+  <!-- 글 수정 -->
   <div class="container">
-    <form th:action="@{/posts}" method="post">
+    <form th:action="@{/posts/{postId}/edit(postId = ${post.id})}" method="post">
       <!-- 제목 -->
       <div class="input-group mb-3">
         <span class="input-group-text" id="inputGroup-sizing-default">제목</span>
-        <input name="title" type="text" class="form-control" aria-label="title input" />
+        <input th:value="${post.title}" name="title" type="text" class="form-control" aria-label="title input" />
       </div>
 
       <!-- 본문 -->
       <textarea class="form-control w-100 mt-3" style="resize: none;" id="content" name="content" rows="25"
-                placeholder="본문을 입력해주세요"></textarea>
+                th:text="${post.content}" placeholder="본문을 입력해주세요"></textarea>
       <div class="d-flex">
-        <input class="btn btn-md btn-primary ms-auto my-3" type="submit" value="글 등록" />
-        <a class="btn btn-md btn-outline-secondary ms-2 my-3" href="/posts" value="취소">취소</a>
+        <input class="btn btn-md btn-primary ms-auto my-3" type="submit" value="글 수정" />
+        <a class="btn btn-md btn-outline-secondary ms-2 my-3" href="/posts">취소</a>
       </div>
       <input type="hidden" name="userId" id="userId" value="1"/> <!-- TODO - 유저 권한 기능 추가 후 변경 -->
+      <input type="hidden" name="id" id="postId" th:value="${post.id}"/>
     </form>
   </div>
 

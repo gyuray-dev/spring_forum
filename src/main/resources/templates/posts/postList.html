@@ -52,7 +52,8 @@
                         <a  class="list-group-item"
                             th:text="${postListDTO.title}"
                             th:href="@{/posts/{postId}?currentPage={currentPage}
-                            (postId = ${postListDTO.postId}, currentPage = ${currentPage})}">
+                                    (postId = ${postListDTO.postId},
+                                     currentPage = ${postPagerDTO.currentPage})}">
                             글제목
                         </a>
                     </td>
@@ -90,7 +91,7 @@
                     <button th:each="pageNum : ${#numbers.sequence(postPagerDTO.startPage, postPagerDTO.endPage)}"
                             th:text="${pageNum}"
                             th:classappend="${pageNum == postPagerDTO.currentPage}? btn-primary : btn-light"
-                            th:onclick="|location.href='@{/posts?currentPage={p}(p=${pageNum})}'|"
+                            th:onclick="|location.href='@{/posts?currentPage={p}(p = ${pageNum})}'|"
                             type="button" class="btn">
                     </button>
                 </div>
@@ -98,7 +99,7 @@
                 <div class="btn-group me-2" role="group" aria-label="Second group">
                     <button type="button" class="btn btn-light"
                             th:if="${postPagerDTO.hasNextPages}"
-                            th:onclick="|location.href='@{/posts?currentPage={p}(p=${postPagerDTO.startPage} + 5)}'|">
+                            th:onclick="|location.href='@{/posts?currentPage={p}(p = ${postPagerDTO.startPage} + 5)}'|">
                         next &gt;
                     </button>
                 </div>

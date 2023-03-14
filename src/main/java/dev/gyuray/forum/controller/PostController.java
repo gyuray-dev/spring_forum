@@ -4,6 +4,7 @@ import dev.gyuray.forum.domain.Post;
 import dev.gyuray.forum.repository.comment.CommentListDTO;
 import dev.gyuray.forum.repository.post.PostForm;
 import dev.gyuray.forum.repository.post.PostListDTO;
+import dev.gyuray.forum.repository.post.PostUpdateDTO;
 import dev.gyuray.forum.service.CommentService;
 import dev.gyuray.forum.service.PostPagerDTO;
 import dev.gyuray.forum.service.PostService;
@@ -67,15 +68,12 @@ public class PostController {
             @RequestParam(required = false) Long currentPage,
             Model model
     ) {
-        // 게시글 로딩
         Post foundPost = postService.findPostById(postId);
         model.addAttribute("post", foundPost);
 
-        // 댓글 로딩
         List<CommentListDTO> commentListDTOs = commentService.findAllByPostId(postId);
         model.addAttribute("commentListDTOs", commentListDTOs);
 
-        // 현재 페이지 저장
         currentPage = (currentPage == null) ? 1 : currentPage;
         model.addAttribute("currentPage", currentPage);
 
@@ -85,5 +83,31 @@ public class PostController {
     @GetMapping("/post")
     public String createForm() {
         return "posts/postForm";
+    }
+
+    @GetMapping("/posts/{postId}/edit")
+    public String updatePostForm(
+            @PathVariable Long postId,
+            Model model
+    ) {
+        Post foundPost = postService.findPostById(postId);
+        model.addAttribute("post", foundPost);
+        return "posts/postUpdateForm";
+    }
+
+    @PostMapping("/posts/{postId}/edit")
+    public String updatePost(
+            @ModelAttribute PostUpdateDTO postUpdateDTO
+    ) {
+        postService.updatePost(postUpdateDTO);
+        return "redirect:/posts/" + postUpdateDTO.getPostId();
+    }
+
+    @GetMapping("/posts/{postId}/delete")
+    public String deletePost(
+            @PathVariable Long postId
+    ) {
+        postService.deletePost(postId);
+        return "redirect:/posts/";
     }
 }

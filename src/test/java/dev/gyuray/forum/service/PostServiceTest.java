@@ -40,7 +40,7 @@ class PostServiceTest {
 
         //update
         PostUpdateDTO postUpdateDTO = new PostUpdateDTO();
-        postUpdateDTO.setId(postId);
+        postUpdateDTO.setPostId(postId);
         postUpdateDTO.setTitle("새 제목");
         postUpdateDTO.setContent("새 내용");
         postService.updatePost(postUpdateDTO);

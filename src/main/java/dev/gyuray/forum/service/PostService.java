@@ -69,7 +69,7 @@ public class PostService {
 
     @Transactional
     public void updatePost(PostUpdateDTO postUpdateDTO) {
-        Optional<Post> foundPost = postRepository.findOne(postUpdateDTO.getId());
+        Optional<Post> foundPost = postRepository.findOne(postUpdateDTO.getPostId());
 
         Post post = foundPost.orElseThrow(() -> {
             throw new IllegalStateException("삭제된 게시물입니다.");

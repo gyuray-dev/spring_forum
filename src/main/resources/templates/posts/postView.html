@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{/baseLayout :: baseLayout(~{::title}, ~{::section})}"
-      xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{/baseLayout :: baseLayout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -9,77 +8,102 @@
 </head>
 
 <body>
-<section style="max-width: 800px; margin: auto;">
+    <section style="max-width: 800px; margin: auto;">
 
-    <!-- 게시글 정보 -->
-    <div class="container">
-        <div class="row">
-            <h2 class="h2" th:text="${post.title}">글 제목</h2>
-        </div>
-        <div class="row text-end border-bottom mb-3">
-            <p class="text-end">
-                글번호: <span th:text="${post.id}">10</span>
-                 | 작성자: <span th:text="${post.user.name}">운영자</span>
-                 | 게시일: <span th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm:ss')}">2023.03.13</span>
-                 | 조회수: <span th:text="${post.view}">12</span>
-            </p>
-        </div>
-        <div th:text="${post.content}" class="row px-3">
-            <p>
-                Lorem ipsum pariatur dolor impedit libero minima eaque velit aperiam molestiae numquam doloribus
-                eveniet et aspernatur placeat.
-            </p>
-        </div>
-    </div>
-
-    <div class="container">
-        <table class="table table-borderless">
-            <tbody>
-
-            </tbody>
-        </table>
-    </div>
-
-
-    <!-- 목록으로 버튼 -->
-    <div class="container d-flex">
-            <a class="btn btn-outline-primary ms-auto mt-2 fw-bold" th:href="@{/posts?currentPage={currentPage}(currentPage=${currentPage})}">목록으로</a>
-    </div>
-
-
-    <!-- 댓글 -->
-    <div class="container">
-        <!-- 댓글 등록 -->
-        <form th:action="@{/posts/{postId}/comments/add(postId = ${post.id})}" method="post">
-            <textarea class="form-control w-100 mt-3" style="resize: none;" id="content" name="content" rows="3"
-                placeholder="댓글을 입력해주세요"></textarea>
-            <div class="d-flex">
-                <input class="btn btn-sm btn-primary ms-auto my-3 fw-bold" type="submit" value="댓글 등록"/>
+        <!-- 게시글 정보 -->
+        <div class="container">
+            <div class="row">
+                <h2 class="h2 " th:text="${post.title}">글 제목</h2>
             </div>
-            <input type="hidden" id="userId" name="userId" th:value="${post.user.id}"/>
-            <input type="hidden" id="postId" name="postId" th:value="${post.id}"/>
-        </form>
-
-        <!-- 댓글 목록 -->
-        <ul class="list-group list-group-flush mb-3">
-            <li class="list-group-item d-flex justify-content-between align-items-start border-bottom mb-2 pb-0"
-                th:each="commentListDTO : ${commentListDTOs}">
-                <div class="ms-2 me-auto">
-                    <div class="fw-bold mb-2">
-                        <span th:text="${commentListDTO.userName}">작성자</span>
-                        <span class="text-secondary fw-normal ms-4 fs-6"
-                              th:text="${commentListDTO.formattedRegDate}">1분 전</span>
+            <div class="row text-end border-bottom mb-3 p-2 d-flex align-items-center">
+                <p class="text-start col-md-10 col-sm-12 m-0">
+                    글번호: <span th:text="${post.id}">10</span>
+                    | 작성자: <span th:text="${post.user.name}">운영자</span>
+                    | 게시일: <span th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm:ss')}">2023.03.13</span>
+                    | 조회수: <span th:text="${post.view}">12</span>
+                </p>
+                <div class="col-md-2 col-sm-12">
+                    <div class="row">
+                        <a th:href="@{/posts/{postId}/edit(postId = ${post.id})}" class="col-md-6 col-sm-6 text-center fw-semibold">수정</a>
+                        <a th:href="@{/posts/{postId}/delete(postId = ${post.id})}" class="col-md-6 col-sm-6 text-center fw-semibold">삭제</a>
                     </div>
-                    <p th:text="${commentListDTO.content}">댓글 내용</p>
                 </div>
-                <span class="badge bg-secondary bg-opacity-75 fw-semibold rounded me-2">수정</span>
-                <span class="badge bg-secondary bg-opacity-75 fw-semibold rounded">삭제</span>
-            </li>
-        </ul>
-    </div>
+            </div>
+            <div th:text="${post.content}" class="row px-3">
+                <p>
+                    Lorem ipsum pariatur dolor impedit libero minima eaque velit aperiam molestiae numquam doloribus
+                    eveniet et aspernatur placeat.
+                </p>
+            </div>
+        </div>
 
-    <!-- TODO - 빈 댓글 등록 방지 JS -->
-</section>
+        <!-- 목록으로 버튼 -->
+        <div class="container d-flex">
+            <a class="btn btn-outline-primary ms-auto mt-2 fw-bold"
+                th:href="@{/posts?currentPage={currentPage}(currentPage=${currentPage})}">목록으로</a>
+        </div>
+
+
+        <!-- 댓글 -->
+        <div class="container">
+            <!-- 댓글 등록 -->
+            <form th:action="@{/posts/{postId}/comments/add(postId = ${post.id})}" method="post">
+                <textarea class="form-control w-100 mt-3" style="resize: none;" id="content" name="content" rows="3"
+                    placeholder="댓글을 입력해주세요"></textarea>
+                <div class="d-flex">
+                    <input class="btn btn-sm btn-primary ms-auto my-3 fw-bold" type="submit" value="댓글 등록" />
+                </div>
+                <input type="hidden" id="userId" name="userId" th:value="${post.user.id}" />
+                <input type="hidden" id="postId" name="postId" th:value="${post.id}" />
+            </form>
+
+            <!-- 댓글 목록 -->
+            <ul class="list-group list-group-flush mb-3">
+                <li class="list-group-item d-flex justify-content-between align-items-start border-bottom mb-2 pb-0"
+                    th:each="commentListDTO : ${commentListDTOs}">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold mb-2">
+                            <span th:text="${commentListDTO.userName}">작성자</span>
+                            <span class="text-secondary fw-normal ms-4 fs-6"
+                                th:text="${commentListDTO.formattedRegDate}">1분 전</span>
+                        </div>
+                        <p th:text="${commentListDTO.content}">댓글 내용</p>
+                    </div>
+                    <span class="badge bg-secondary bg-opacity-75 fw-semibold rounded me-2">수정</span>
+                    <span class="badge bg-secondary bg-opacity-75 fw-semibold rounded">삭제</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TODO - 빈 댓글 등록 방지 JS -->
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="container mt-5 border-top rounded-3 p-3 text-center text-lg-start">
+        <div class="row d-flex align-items-center">
+
+            <div class="col-md-7 col-lg-8 text-center text-md-start">
+                © 2023 Copyright:
+                <a class="text-dark" href="https://gyuray.dev/">gyuray.dev</a>
+            </div>
+
+            <div class="col-md-5 col-lg-4 ml-lg-0 text-center text-md-end">
+                <a href="https://gyurey.dev" class="btn btn-outline-dark btn-floating m-1" role="button">
+                    <i class="bi bi-cup-hot fs-5"></i>
+                </a>
+                <a href="https://github.com/gyuray-dev" class="btn btn-outline-dark btn-floating m-1" role="button">
+                    <i class="bi bi-github fs-5"></i>
+                </a>
+                <a href="https://www.instagram.com/ooggyoo/" class="btn btn-outline-dark btn-floating m-1"
+                   role="button">
+                    <i class="bi bi-instagram fs-5"></i>
+                </a>
+            </div>
+
+        </div>
+    </footer>
+
 </body>
 
 </html>
