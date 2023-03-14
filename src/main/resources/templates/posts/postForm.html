@@ -17,7 +17,7 @@
       <!-- 제목 -->
       <div class="input-group mb-3">
         <span class="input-group-text" id="inputGroup-sizing-default">제목</span>
-        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        <input name="title" type="text" class="form-control" aria-label="title input" />
       </div>
 
       <!-- 본문 -->
@@ -27,6 +27,7 @@
         <input class="btn btn-md btn-primary ms-auto my-3" type="submit" value="글 등록" />
         <a class="btn btn-md btn-outline-secondary ms-2 my-3" href="/posts" value="취소">취소</a>
       </div>
+      <input type="hidden" name="userId" id="userId" value="1"/> <!-- TODO - 유저 권한 기능 추가 후 변경 -->
     </form>
   </div>
 

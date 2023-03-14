@@ -68,6 +68,16 @@ public class PostController {
         return "posts/postList";
     }
 
+    @PostMapping("/posts")
+    public String createPost(
+            @ModelAttribute PostForm postForm
+    ) {
+        log.info("postForm.getUserId() = {}", postForm.getUserId());
+        postService.addPost(postForm);
+
+        return "redirect:/posts";
+    }
+
     @GetMapping("/posts/{postId}")
     public String viewPost(
             @PathVariable Long postId,
