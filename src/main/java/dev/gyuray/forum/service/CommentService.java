@@ -52,7 +52,7 @@ public class CommentService {
         List<CommentListDTO> commentListDTOs = commentRepository.findAll(postId);
         for (CommentListDTO commentListDTO : commentListDTOs) {
             LocalDateTime regDate = commentListDTO.getRegDate();
-            String formattedRegDate = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(regDate);
+            String formattedRegDate = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(regDate);
             commentListDTO.setFormattedRegDate(formattedRegDate);
         }
 

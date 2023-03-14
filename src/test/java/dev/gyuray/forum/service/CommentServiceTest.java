@@ -32,7 +32,7 @@ class CommentServiceTest {
 
         //update
         CommentUpdateDTO commentUpdateDTO = new CommentUpdateDTO();
-        commentUpdateDTO.setId(commentId);
+        commentUpdateDTO.setCommentId(commentId);
         commentUpdateDTO.setContent("새 내용");
         commentService.updateComment(commentUpdateDTO);
 

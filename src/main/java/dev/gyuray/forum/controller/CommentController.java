@@ -1,6 +1,7 @@
 package dev.gyuray.forum.controller;
 
 import dev.gyuray.forum.repository.comment.CommentForm;
+import dev.gyuray.forum.repository.comment.CommentUpdateDTO;
 import dev.gyuray.forum.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,16 @@ public class CommentController {
             @PathVariable Long commentId
     ) {
         commentService.deleteComment(commentId);
+        return "redirect:/posts/" + postId;
+    }
+
+    @PostMapping("/posts/{postId}/comments/{commentId}/edit")
+    public String editComment(
+            @PathVariable Long postId,
+            @PathVariable Long commentId,
+            @ModelAttribute CommentUpdateDTO commentUpdateDTO
+    ) {
+        commentService.updateComment(commentUpdateDTO);
         return "redirect:/posts/" + postId;
     }
 }

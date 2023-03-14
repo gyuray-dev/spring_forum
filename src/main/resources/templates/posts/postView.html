@@ -53,57 +53,82 @@
                 <div class="d-flex">
                     <input class="btn btn-sm btn-primary ms-auto my-3 fw-bold" type="submit" value="댓글 등록" />
                 </div>
-                <input type="hidden" id="userId" name="userId" th:value="${post.user.id}" />
-                <input type="hidden" id="postId" name="postId" th:value="${post.id}" />
+                <input type="hidden" name="userId" th:value="${post.user.id}" />
+                <input type="hidden" name="postId" th:value="${post.id}" />
             </form>
 
             <!-- 댓글 목록 -->
             <ul class="list-group list-group-flush mb-3">
-                <li class="list-group-item d-flex justify-content-between align-items-start border-bottom mb-2 pb-0"
-                    th:each="commentListDTO : ${commentListDTOs}">
-                    <div class="ms-2 me-auto">
-                        <div class="fw-bold mb-2">
-                            <span th:text="${commentListDTO.userName}">작성자</span>
-                            <span class="text-secondary fw-normal ms-4 fs-6"
-                                th:text="${commentListDTO.formattedRegDate}">1분 전</span>
-                        </div>
-                        <p th:text="${commentListDTO.content}">댓글 내용</p>
-                    </div>
-                    <button class="btn btn-sm me-2">수정</button>
-                    <button th:onclick="|location='@{/posts/{postId}/comments/{commentId}/delete(postId = ${post.id}, commentId = ${commentListDTO.commentId})}'|"
-                            class="btn btn-sm">삭제</button>
+                <li class="row border-bottom my-2" th:each="commentListDTO : ${commentListDTOs}">
+                    <span class="col-6 col-md-2 fw-bold text-center" th:text="${commentListDTO.userName}">작성자</span>
+
+                    <span class="col-6 col-md-3 text-center text-secondary fw-normal fs-6"
+                          th:text="${commentListDTO.formattedRegDate}">2023-03-14 18:52:00</span>
+
+                    <button th:onclick="|editComment(this, ${commentListDTO.commentId})|"
+                            class="col-6 btn btn-sm col-md-1 ms-md-auto text-center comment-button">수정</button>
+
+                    <button th:onclick="|location='@{/posts/{postId}/comments/{commentId}/delete
+                            (postId = ${post.id}, commentId = ${commentListDTO.commentId})}'|"
+                            class="col-6 btn btn-sm col-md-1 text-center comment-button">삭제</button>
+
+                    <p th:text="${commentListDTO.content}">댓글 내용</p>
                 </li>
             </ul>
+
         </div>
 
         <!-- TODO - 빈 댓글 등록 방지 JS -->
+
+        <!-- 댓글 수정 템플릿 -->
+        <template>
+            <form class="input-group col-12 col-6 mb-2" method="post">
+                <textarea type="text" name="content" class="form-control" rows="3" style="resize: none"
+                          aria-label="Recipient's username with two button addons"></textarea>
+                <button class="btn btn-outline-secondary" type="button" onclick="submit()">완료</button>
+                <button class="btn btn-outline-danger" type="button" onclick="cancelEdit(this)">취소</button>
+                <input type="hidden" name="commentId"/>
+            </form>
+        </template>
+
+        <script th:inline="javascript">
+            function editComment(button, commentId) {
+                let parent = button.parentElement;
+                let contentEl = parent.lastElementChild;
+                let content = contentEl.innerText;
+                contentEl.style.display = 'none';
+
+
+                let form = document.getElementsByTagName('template')[0].content.cloneNode(true).firstElementChild;
+                let editTextarea = form.getElementsByTagName('textarea')[0];
+                editTextarea.innerText = content;
+
+                let hiddenInput = form.getElementsByTagName('input')[0];
+                hiddenInput.value = commentId;
+
+                form.action = '/posts/[[${postId}]]/comments/' + commentId + '/edit';
+
+                parent.appendChild(form);
+
+                let commentButtons = document.getElementsByClassName('comment-button');
+                for (let button of commentButtons) {
+                    button.style.pointerEvents = 'none';
+                }
+            }
+
+            function cancelEdit(button) {
+                let li = button.closest('li');
+                li.getElementsByTagName('p')[0].style.display = '';
+                li.getElementsByTagName('form')[0].remove();
+
+                let commentButtons = document.getElementsByClassName('comment-button');
+                for (let button of commentButtons) {
+                    button.style.pointerEvents = '';
+                }
+            }
+        </script>
     </section>
 
-
-    <!-- Footer -->
-    <footer class="container mt-5 border-top rounded-3 p-3 text-center text-lg-start">
-        <div class="row d-flex align-items-center">
-
-            <div class="col-md-7 col-lg-8 text-center text-md-start">
-                © 2023 Copyright:
-                <a class="text-dark" href="https://gyuray.dev/">gyuray.dev</a>
-            </div>
-
-            <div class="col-md-5 col-lg-4 ml-lg-0 text-center text-md-end">
-                <a href="https://gyurey.dev" class="btn btn-outline-dark btn-floating m-1" role="button">
-                    <i class="bi bi-cup-hot fs-5"></i>
-                </a>
-                <a href="https://github.com/gyuray-dev" class="btn btn-outline-dark btn-floating m-1" role="button">
-                    <i class="bi bi-github fs-5"></i>
-                </a>
-                <a href="https://www.instagram.com/ooggyoo/" class="btn btn-outline-dark btn-floating m-1"
-                   role="button">
-                    <i class="bi bi-instagram fs-5"></i>
-                </a>
-            </div>
-
-        </div>
-    </footer>
 
 </body>
 
