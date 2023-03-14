@@ -4,6 +4,7 @@ import dev.gyuray.forum.repository.comment.CommentForm;
 import dev.gyuray.forum.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,15 @@ public class CommentController {
             @ModelAttribute CommentForm commentForm
     ) {
         commentService.addComment(commentForm);
+        return "redirect:/posts/" + postId;
+    }
 
+    @GetMapping("/posts/{postId}/comments/{commentId}/delete")
+    public String deleteComment(
+            @PathVariable Long postId,
+            @PathVariable Long commentId
+    ) {
+        commentService.deleteComment(commentId);
         return "redirect:/posts/" + postId;
     }
 }

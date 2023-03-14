@@ -69,8 +69,9 @@
                         </div>
                         <p th:text="${commentListDTO.content}">댓글 내용</p>
                     </div>
-                    <span class="badge bg-secondary bg-opacity-75 fw-semibold rounded me-2">수정</span>
-                    <span class="badge bg-secondary bg-opacity-75 fw-semibold rounded">삭제</span>
+                    <button class="btn btn-sm me-2">수정</button>
+                    <button th:onclick="|location='@{/posts/{postId}/comments/{commentId}/delete(postId = ${post.id}, commentId = ${commentListDTO.commentId})}'|"
+                            class="btn btn-sm">삭제</button>
                 </li>
             </ul>
         </div>

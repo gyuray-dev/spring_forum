@@ -33,7 +33,9 @@ public class CommentRepository {
                 "u.name, " +
                 "c.regDate, " +
                 "c.content, " +
-                "''" +
+                "'', " +
+                "c.id, " +
+                "u.id" +
                 ") " +
                 "from Comment c " +
                 "join c.user u " +
