@@ -84,6 +84,27 @@ public class PostService {
         postRepository.delete(postId);
     }
 
+
+    public PostPagerDTO getPager(int currentPage, int pageSize) {
+        Long totalPostCount = getTotalCount();
+        int lastPage = (int) Math.ceil(totalPostCount / (double) pageSize);
+        currentPage = Math.min(currentPage, lastPage);
+
+        int startPage = (currentPage - 1) / 5 * 5 + 1;
+        int endPage = Math.min(startPage + 4, lastPage);
+
+        boolean hasNextPages = currentPage < (lastPage - 1) / 5 * 5 + 1;
+
+        PostPagerDTO postPagerDTO = new PostPagerDTO();
+        postPagerDTO.setCurrentPage(currentPage);
+        postPagerDTO.setStartPage(startPage);
+        postPagerDTO.setEndPage(endPage);
+        postPagerDTO.setLastPage(lastPage);
+        postPagerDTO.setHasNextPages(hasNextPages);
+        postPagerDTO.setPageSize(pageSize);
+
+        return postPagerDTO;
+    }
 }
 
 

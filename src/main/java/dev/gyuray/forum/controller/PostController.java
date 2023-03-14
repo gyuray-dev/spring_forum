@@ -5,6 +5,7 @@ import dev.gyuray.forum.repository.comment.CommentListDTO;
 import dev.gyuray.forum.repository.post.PostForm;
 import dev.gyuray.forum.repository.post.PostListDTO;
 import dev.gyuray.forum.service.CommentService;
+import dev.gyuray.forum.service.PostPagerDTO;
 import dev.gyuray.forum.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,29 +42,11 @@ public class PostController {
             currentPage = 1;
         }
 
-        Long totalPostCount = postService.getTotalCount();
-        Integer lastPage = (int) Math.ceil(totalPostCount / (double) pageSize);
-        currentPage = Math.min(currentPage, lastPage);
-
         List<PostListDTO> postListDTOs = postService.findAll(currentPage, pageSize);
-
-        Integer startPage = (currentPage - 1) / 5 * 5 + 1;
-        Integer endPage = Math.min(startPage + 4, lastPage);
-
-        boolean hasNextPages = currentPage < (lastPage - 1) / 5 * 5 + 1;
-
-        // for listing
         model.addAttribute("postListDTOs", postListDTOs);
 
-        // for paging
-        model.addAttribute("currentPage", currentPage);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-        model.addAttribute("lastPage", lastPage);
-        model.addAttribute("hasNextPages", hasNextPages);
-
-        // for pageSize radio button
-        model.addAttribute("pageSize", pageSize);
+        PostPagerDTO postPagerDTO = postService.getPager(currentPage, pageSize);
+        model.addAttribute("postPagerDTO", postPagerDTO);
 
         return "posts/postList";
     }

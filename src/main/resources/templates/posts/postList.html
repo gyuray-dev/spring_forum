@@ -17,15 +17,15 @@
     <div class="container mb-1 d-flex justify-content-end">
         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
             <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
-                   th:checked="${pageSize} == 10" onclick="setPageSizeCookie('10')">
+                   th:checked="${postPagerDTO.pageSize} == 10" onclick="setPageSizeCookie('10')">
             <label class="btn btn-sm btn-outline-secondary py-0" for="btnradio1">10개</label>
 
             <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
-                   th:checked="${pageSize} == 30" onclick="setPageSizeCookie('30')">
+                   th:checked="${postPagerDTO.pageSize} == 30" onclick="setPageSizeCookie('30')">
             <label class="btn btn-sm btn-outline-secondary py-0" for="btnradio2">30개</label>
 
             <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
-                   th:checked="${pageSize} == 50" onclick="setPageSizeCookie('50')">
+                   th:checked="${postPagerDTO.pageSize} == 50" onclick="setPageSizeCookie('50')">
             <label class="btn btn-sm btn-outline-secondary py-0" for="btnradio3">50개</label>
         </div>
     </div>
@@ -80,16 +80,16 @@
 
                 <div class="btn-group me-2" role="group" aria-label="Second group">
                     <button type="button" class="btn btn-light"
-                            th:if="${currentPage} > 5"
-                            th:onclick="|location.href='@{/posts?currentPage={p}(p=${startPage} - 1)}'|">
+                            th:if="${postPagerDTO.currentPage} > 5"
+                            th:onclick="|location.href='@{/posts?currentPage={p}(p=${postPagerDTO.startPage} - 1)}'|">
                         &lt; prev
                     </button>
                 </div>
 
                 <div class="btn-group me-2" role="group" aria-label="First group">
-                    <button th:each="pageNum : ${#numbers.sequence(startPage, endPage)}"
+                    <button th:each="pageNum : ${#numbers.sequence(postPagerDTO.startPage, postPagerDTO.endPage)}"
                             th:text="${pageNum}"
-                            th:classappend="${pageNum == currentPage}? btn-primary : btn-light"
+                            th:classappend="${pageNum == postPagerDTO.currentPage}? btn-primary : btn-light"
                             th:onclick="|location.href='@{/posts?currentPage={p}(p=${pageNum})}'|"
                             type="button" class="btn">
                     </button>
@@ -97,8 +97,8 @@
 
                 <div class="btn-group me-2" role="group" aria-label="Second group">
                     <button type="button" class="btn btn-light"
-                            th:if="${hasNextPages}"
-                            th:onclick="|location.href='@{/posts?currentPage={p}(p=${startPage} + 5)}'|">
+                            th:if="${postPagerDTO.hasNextPages}"
+                            th:onclick="|location.href='@{/posts?currentPage={p}(p=${postPagerDTO.startPage} + 5)}'|">
                         next &gt;
                     </button>
                 </div>
@@ -131,9 +131,9 @@
     </div>
 
     <script th:inline="javascript">
-        function setPageSizeCookie(pageSize) {
-            document.cookie = "pageSize=" + pageSize;
-            let newPageNum = Math.floor(([[${currentPage}]] - 1) * [[${pageSize}]] / pageSize) + 1
+        function setPageSizeCookie(newPageSize) {
+            document.cookie = "pageSize=" + newPageSize;
+            let newPageNum = Math.floor(([[${postPagerDTO.currentPage}]] - 1) * [[${postPagerDTO.pageSize}]] / newPageSize) + 1;
             location.replace("/posts?currentPage=" + newPageNum);
         }
     </script>
