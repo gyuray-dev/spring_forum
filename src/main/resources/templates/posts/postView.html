@@ -8,90 +8,92 @@
 </head>
 
 <body>
-    <section style="max-width: 800px; margin: auto;">
+<section style="max-width: 800px; margin: auto;">
 
-        <!-- 게시글 정보 -->
-        <div class="container">
-            <div class="row">
-                <h2 class="h2 " th:text="${post.title}">글 제목</h2>
-            </div>
-            <div class="row text-end border-bottom mb-3 p-2 d-flex align-items-center">
-                <p class="text-start col-md-10 col-sm-12 m-0">
-                    글번호: <span th:text="${post.id}">10</span>
-                    | 작성자: <span th:text="${post.user.name}">운영자</span>
-                    | 게시일: <span th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm:ss')}">2023.03.13</span>
-                    | 조회수: <span th:text="${post.view}">12</span>
-                </p>
-                <div class="col-md-2 col-sm-12">
-                    <div class="row">
-                        <a th:href="@{/posts/{postId}/edit(postId = ${post.id})}" class="col-md-6 col-sm-6 text-center fw-semibold">수정</a>
-                        <a th:href="@{/posts/{postId}/delete(postId = ${post.id})}" class="col-md-6 col-sm-6 text-center fw-semibold">삭제</a>
-                    </div>
+    <!-- 게시글 정보 -->
+    <div class="container">
+        <div class="row">
+            <h2 class="h2 " th:text="${post.title}">글 제목</h2>
+        </div>
+        <div class="row text-end border-bottom mb-3 p-2 d-flex align-items-center">
+            <p class="text-start col-md-10 col-sm-12 m-0">
+                글번호: <span th:text="${post.id}">10</span>
+                | 작성자: <span th:text="${post.user.name}">운영자</span>
+                | 게시일: <span th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm:ss')}">2023.03.13</span>
+                | 조회수: <span th:text="${post.view}">12</span>
+            </p>
+            <div class="col-md-2 col-sm-12">
+                <div class="row">
+                    <a th:href="@{/posts/{postId}/edit(postId = ${post.id})}"
+                       class="col-md-6 col-sm-6 text-center fw-semibold">수정</a>
+                    <a th:href="@{/posts/{postId}/delete(postId = ${post.id})}"
+                       class="col-md-6 col-sm-6 text-center fw-semibold">삭제</a>
                 </div>
             </div>
-            <div th:text="${post.content}" class="row px-3">
-                <p>
-                    Lorem ipsum pariatur dolor impedit libero minima eaque velit aperiam molestiae numquam doloribus
-                    eveniet et aspernatur placeat.
-                </p>
-            </div>
         </div>
-
-        <!-- 목록으로 버튼 -->
-        <div class="container d-flex">
-            <a class="btn btn-outline-primary ms-auto mt-2 fw-bold"
-                th:href="@{/posts?currentPage={currentPage}(currentPage=${currentPage})}">목록으로</a>
+        <div th:text="${post.content}" class="row px-3" style="white-space: pre-wrap">
+            Lorem ipsum pariatur dolor impedit libero minima eaque velit aperiam molestiae numquam doloribus
+            eveniet et aspernatur placeat.
         </div>
+    </div>
+
+    <!-- 목록으로 버튼 -->
+    <div class="container d-flex">
+        <a class="btn btn-outline-primary ms-auto mt-2 fw-bold"
+           th:href="@{/posts?currentPage={currentPage}(currentPage=${currentPage})}">목록으로</a>
+    </div>
 
 
-        <!-- 댓글 -->
-        <div class="container">
-            <!-- 댓글 등록 -->
-            <form th:action="@{/posts/{postId}/comments/add(postId = ${post.id})}" method="post">
+    <!-- 댓글 -->
+    <div class="container">
+        <!-- 댓글 등록 -->
+        <form th:action="@{/posts/{postId}/comments/add(postId = ${post.id})}" method="post">
                 <textarea class="form-control w-100 mt-3" style="resize: none;" id="content" name="content" rows="3"
-                    placeholder="댓글을 입력해주세요"></textarea>
-                <div class="d-flex">
-                    <input class="btn btn-sm btn-primary ms-auto my-3 fw-bold" type="submit" value="댓글 등록" />
-                </div>
-                <input type="hidden" name="userId" th:value="${post.user.id}" />
-                <input type="hidden" name="postId" th:value="${post.id}" />
-            </form>
+                          placeholder="댓글을 입력해주세요"></textarea>
+            <div class="d-flex">
+                <input class="btn btn-sm btn-primary ms-auto my-3 fw-bold" type="submit" value="댓글 등록"/>
+            </div>
+            <input type="hidden" name="userId" th:value="${post.user.id}"/>
+            <input type="hidden" name="postId" th:value="${post.id}"/>
+        </form>
 
-            <!-- 댓글 목록 -->
-            <ul class="list-group list-group-flush mb-3">
-                <li class="row border-bottom my-2" th:each="commentListDTO : ${commentListDTOs}">
-                    <span class="col-6 col-md-2 fw-bold text-center" th:text="${commentListDTO.userName}">작성자</span>
+        <!-- 댓글 목록 -->
+        <ul class="list-group list-group-flush mb-3">
+            <li class="row border-bottom my-2" th:each="commentListDTO : ${commentListDTOs}">
+                <span class="col-6 col-md-2 fw-bold text-center" th:text="${commentListDTO.userName}">작성자</span>
 
-                    <span class="col-6 col-md-3 text-center text-secondary fw-normal fs-6"
-                          th:text="${commentListDTO.formattedRegDate}">2023-03-14 18:52:00</span>
+                <span class="col-6 col-md-3 text-center text-secondary fw-normal fs-6"
+                      th:text="${commentListDTO.formattedRegDate}">2023-03-14 18:52:00</span>
 
-                    <button th:onclick="|editComment(this, ${commentListDTO.commentId})|"
-                            class="col-6 btn btn-sm col-md-1 ms-md-auto text-center comment-button">수정</button>
+                <button th:onclick="|editComment(this, ${commentListDTO.commentId})|"
+                        class="col-6 btn btn-sm col-md-1 ms-md-auto text-center comment-button">수정
+                </button>
 
-                    <button th:onclick="|location='@{/posts/{postId}/comments/{commentId}/delete
+                <button th:onclick="|location='@{/posts/{postId}/comments/{commentId}/delete
                             (postId = ${post.id}, commentId = ${commentListDTO.commentId})}'|"
-                            class="col-6 btn btn-sm col-md-1 text-center comment-button">삭제</button>
+                        class="col-6 btn btn-sm col-md-1 text-center comment-button">삭제
+                </button>
 
-                    <p th:text="${commentListDTO.content}">댓글 내용</p>
-                </li>
-            </ul>
+                <p th:text="${commentListDTO.content}" style="white-space: pre-wrap">댓글 내용</p>
+            </li>
+        </ul>
 
-        </div>
+    </div>
 
-        <!-- TODO - 빈 댓글 등록 방지 JS -->
+    <!-- TODO - 빈 댓글 등록 방지 JS -->
 
-        <!-- 댓글 수정 템플릿 -->
-        <template>
-            <form class="input-group col-12 col-6 mb-2" method="post">
+    <!-- 댓글 수정 템플릿 -->
+    <template>
+        <form class="input-group col-12 col-6 mb-2" method="post">
                 <textarea type="text" name="content" class="form-control" rows="3" style="resize: none"
                           aria-label="Recipient's username with two button addons"></textarea>
-                <button class="btn btn-outline-secondary" type="button" onclick="submit()">완료</button>
-                <button class="btn btn-outline-danger" type="button" onclick="cancelEdit(this)">취소</button>
-                <input type="hidden" name="commentId"/>
-            </form>
-        </template>
+            <button class="btn btn-outline-secondary" type="button" onclick="submit()">완료</button>
+            <button class="btn btn-outline-danger" type="button" onclick="cancelEdit(this)">취소</button>
+            <input type="hidden" name="commentId"/>
+        </form>
+    </template>
 
-        <script th:inline="javascript">
+    <script th:inline="javascript">
             function editComment(button, commentId) {
                 let parent = button.parentElement;
                 let contentEl = parent.lastElementChild;
@@ -126,8 +128,9 @@
                     button.style.pointerEvents = '';
                 }
             }
-        </script>
-    </section>
+
+    </script>
+</section>
 
 
 </body>
