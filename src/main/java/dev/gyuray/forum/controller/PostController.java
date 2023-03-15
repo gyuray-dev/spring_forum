@@ -56,8 +56,8 @@ public class PostController {
     public String createPost(
             @ModelAttribute PostForm postForm
     ) {
-        log.info("postForm.getUserId() = {}", postForm.getUserId());
         postService.addPost(postForm);
+        log.info("postForm.getContent() = {}", postForm.getContent());
 
         return "redirect:/posts";
     }
