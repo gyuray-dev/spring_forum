@@ -27,6 +27,7 @@ public class Post {
 
     private String title;
 
+    @Lob
     private String content;
 
     @Column(nullable = false)
