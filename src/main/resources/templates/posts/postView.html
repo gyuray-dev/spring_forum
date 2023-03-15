@@ -97,48 +97,48 @@
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script>
 
     <script th:inline="javascript">
-            //edit comment
-            function editComment(button, commentId) {
-                let parent = button.parentElement;
-                let contentEl = parent.lastElementChild;
-                let content = contentEl.innerText;
-                contentEl.style.display = 'none';
+        //edit comment
+        function editComment(button, commentId) {
+            let parent = button.parentElement;
+            let contentEl = parent.lastElementChild;
+            let content = contentEl.innerText;
+            contentEl.style.display = 'none';
 
 
-                let form = document.getElementsByTagName('template')[0].content.cloneNode(true).firstElementChild;
-                let editTextarea = form.getElementsByTagName('textarea')[0];
-                editTextarea.innerText = content;
+            let form = document.getElementsByTagName('template')[0].content.cloneNode(true).firstElementChild;
+            let editTextarea = form.getElementsByTagName('textarea')[0];
+            editTextarea.innerText = content;
 
-                let hiddenInput = form.getElementsByTagName('input')[0];
-                hiddenInput.value = commentId;
+            let hiddenInput = form.getElementsByTagName('input')[0];
+            hiddenInput.value = commentId;
 
-                form.action = '/posts/[[${postId}]]/comments/' + commentId + '/edit';
+            form.action = '/posts/[[${postId}]]/comments/' + commentId + '/edit';
 
-                parent.appendChild(form);
+            parent.appendChild(form);
 
-                let commentButtons = document.getElementsByClassName('comment-button');
-                for (let button of commentButtons) {
-                    button.style.pointerEvents = 'none';
-                }
+            let commentButtons = document.getElementsByClassName('comment-button');
+            for (let button of commentButtons) {
+                button.style.pointerEvents = 'none';
             }
+        }
 
-            function cancelEdit(button) {
-                let li = button.closest('li');
-                li.getElementsByTagName('p')[0].style.display = '';
-                li.getElementsByTagName('form')[0].remove();
+        function cancelEdit(button) {
+            let li = button.closest('li');
+            li.getElementsByTagName('p')[0].style.display = '';
+            li.getElementsByTagName('form')[0].remove();
 
-                let commentButtons = document.getElementsByClassName('comment-button');
-                for (let button of commentButtons) {
-                    button.style.pointerEvents = '';
-                }
+            let commentButtons = document.getElementsByClassName('comment-button');
+            for (let button of commentButtons) {
+                button.style.pointerEvents = '';
             }
+        }
 
-            // Toast UI Editor viewer
-            const viewer = new toastui.Editor({
-                el: document.querySelector('#viewer'),
-                height: 'auto',
-                initialValue: [[${post.content}]]
-            });
+        // Toast UI Editor viewer
+        const viewer = new toastui.Editor({
+            el: document.querySelector('#viewer'),
+            height: 'auto',
+            initialValue: [[${post.content}]]
+        });
 
     </script>
 
