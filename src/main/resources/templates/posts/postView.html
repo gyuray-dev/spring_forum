@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html th:replace="~{/baseLayout :: baseLayout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{/baseLayout :: baseLayout(~{::title}, ~{::section}, ~{::link})}" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게시글 조회</title>
+
+    <!--  TOAST UI Editor Viewer CSS -->
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.min.css" />
 </head>
 
 <body>

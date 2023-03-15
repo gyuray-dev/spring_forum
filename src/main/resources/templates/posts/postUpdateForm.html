@@ -1,36 +1,71 @@
 <!DOCTYPE html>
-<html th:replace="~{/baseLayout :: baseLayout(~{::title}, ~{::section})}"
+<html th:replace="~{/baseLayout :: baseLayout(~{::title}, ~{::section}, ~{::link})}"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>글 수정</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글 수정</title>
+    <!--  TOAST UI Editor CSS -->
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
 </head>
 
 <body>
 <section style="max-width: 800px; margin: auto;">
 
-  <!-- 글 수정 -->
-  <div class="container">
-    <form th:action="@{/posts/{postId}/edit(postId = ${post.id})}" method="post">
-      <!-- 제목 -->
-      <div class="input-group mb-3">
-        <span class="input-group-text" id="inputGroup-sizing-default">제목</span>
-        <input th:value="${post.title}" name="title" type="text" class="form-control" aria-label="title input" />
-      </div>
+    <!-- 글 수정 -->
+    <div class="container">
+        <form th:action="@{/posts/{postId}/edit(postId = ${post.id})}" method="post">
+            <!-- 제목 -->
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">제목</span>
+                <input th:value="${post.title}" name="title" type="text" class="form-control" aria-label="title input"/>
+            </div>
 
-      <!-- 본문 -->
-      <textarea class="form-control w-100 mt-3" style="resize: none;" id="content" name="content" rows="25"
-                th:text="${post.content}" placeholder="본문을 입력해주세요"></textarea>
-      <div class="d-flex">
-        <input class="btn btn-md btn-primary ms-auto my-3" type="submit" value="글 수정" />
-        <a class="btn btn-md btn-outline-secondary ms-2 my-3" href="/posts">취소</a>
-      </div>
-      <input type="hidden" name="userId" id="userId" value="1"/> <!-- TODO - 유저 권한 기능 추가 후 변경 -->
-      <input type="hidden" name="id" id="postId" th:value="${post.id}"/>
-    </form>
-  </div>
+            <!-- 본문 -->
+            <div id="editor"></div>
+
+            <div class="d-flex">
+                <input type="hidden" name="content">
+                <button class="btn btn-md btn-primary ms-auto my-3" type="button" onclick="submitPost(this)">글 수정
+                </button>
+                <a class="btn btn-md btn-outline-secondary ms-2 my-3" href="/posts">취소</a>
+            </div>
+            <input type="hidden" name="userId" id="userId" value="1"/> <!-- TODO - 유저 권한 기능 추가 후 변경 -->
+            <input type="hidden" name="id" id="postId" th:value="${post.id}"/>
+        </form>
+    </div>
+
+    <!--  TOAST UI Editor CDN  -->
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <!-- 한국어 패치 -->
+    <script src="https://uicdn.toast.com/editor/latest/i18n/ko-kr.min.js"></script>
+
+    <script th:inline="javascript">
+        const Editor = toastui.Editor;
+        const editor = new Editor({
+            el: document.querySelector('#editor'),
+            height: '500px',
+            initialEditType: 'WYSIWYG',
+            previewStyle: 'vertical',
+            language: "ko-KR"
+        });
+        editor.setHTML([[${post.content}]]);
+
+
+        function submitPost(button) {
+            console.log("submit");
+            let form = button.closest('form');
+            let inputs = form.getElementsByTagName('input');
+            for (let input of inputs) {
+                if(input.name === 'content') {
+                    input.value = editor.getHTML();
+                }
+            }
+
+            form.submit();
+        }
+    </script>
 
 </section>
 </body>
