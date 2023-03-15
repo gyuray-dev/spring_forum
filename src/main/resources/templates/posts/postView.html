@@ -31,10 +31,7 @@
                 </div>
             </div>
         </div>
-        <div th:utext="${post.content}" class="row px-3" style="white-space: pre-wrap">
-            Lorem ipsum pariatur dolor impedit libero minima eaque velit aperiam molestiae numquam doloribus
-            eveniet et aspernatur placeat.
-        </div>
+        <div id="viewer"></div>
     </div>
 
     <!-- 목록으로 버튼 -->
@@ -93,7 +90,11 @@
         </form>
     </template>
 
+    <!-- Toast Editor Viewer CDN -->
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script>
+
     <script th:inline="javascript">
+            //edit comment
             function editComment(button, commentId) {
                 let parent = button.parentElement;
                 let contentEl = parent.lastElementChild;
@@ -128,6 +129,13 @@
                     button.style.pointerEvents = '';
                 }
             }
+
+            // Toast UI Editor viewer
+            const viewer = new toastui.Editor({
+                el: document.querySelector('#viewer'),
+                height: 'auto',
+                initialValue: [[${post.content}]]
+            });
 
     </script>
 
