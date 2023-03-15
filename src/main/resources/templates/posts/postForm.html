@@ -51,13 +51,13 @@
     });
 
     function submitPost(button) {
-        console.log("submit");
         let form = button.closest('form');
         let inputs = form.getElementsByTagName('input');
         for (let input of inputs) {
             if(input.name === 'content') {
                 input.value = editor.getHTML();
             }
+        }
 
         form.submit();
     }

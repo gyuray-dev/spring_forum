@@ -69,6 +69,7 @@ public class PostController {
             Model model
     ) {
         Post foundPost = postService.findPostById(postId);
+        postService.addView(foundPost);
         model.addAttribute("post", foundPost);
 
         List<CommentListDTO> commentListDTOs = commentService.findAllByPostId(postId);
