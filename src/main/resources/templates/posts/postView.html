@@ -48,10 +48,10 @@
     <div class="container">
         <!-- 댓글 등록 -->
         <form th:action="@{/posts/{postId}/comments/add(postId = ${post.id})}" method="post">
-                <textarea class="form-control w-100 mt-3" style="resize: none;" id="content" name="content" rows="3"
-                          placeholder="댓글을 입력해주세요"></textarea>
+            <textarea class="form-control w-100 mt-3" style="resize: none;" name="content" rows="3"
+                      placeholder="댓글을 입력해주세요"></textarea>
             <div class="d-flex">
-                <input class="btn btn-sm btn-primary ms-auto my-3 fw-bold" type="submit" value="댓글 등록"/>
+                <button type="button" onclick="submitComment(this)" class="btn btn-sm btn-primary ms-auto my-3 fw-bold" />댓글 등록</button>
             </div>
             <input type="hidden" name="userId" th:value="${post.user.id}"/>
             <input type="hidden" name="postId" th:value="${post.id}"/>
@@ -74,7 +74,7 @@
                         class="col-6 btn btn-sm col-md-1 text-center comment-button">삭제
                 </button>
 
-                <p th:text="${commentListDTO.content}" style="white-space: pre-wrap">댓글 내용</p>
+                <p th:text="${commentListDTO.content}" id="comment" style="white-space: pre-wrap">댓글 내용</p>
             </li>
         </ul>
 
@@ -84,30 +84,40 @@
 
     <!-- 댓글 수정 템플릿 -->
     <template>
-        <form class="input-group col-12 col-6 mb-2" method="post">
-                <textarea type="text" name="content" class="form-control" rows="3" style="resize: none"
-                          aria-label="Recipient's username with two button addons"></textarea>
-            <button class="btn btn-outline-secondary" type="button" onclick="submit()">완료</button>
-            <button class="btn btn-outline-danger" type="button" onclick="cancelEdit(this)">취소</button>
+        <form class="input-group row mb-2 m-auto" method="post">
+            <textarea class="col-10" type="text" name="content" lass="form-control" rows="3" style="resize: none"
+                      aria-label="Recipient's username with two button addons"></textarea>
+            <button class="btn btn-outline-secondary col-1" type="button" onclick="submitComment(this)">완료</button>
+            <button class="btn btn-outline-danger col-1" type="button" onclick="cancelEdit(this)">취소</button>
             <input type="hidden" name="commentId"/>
         </form>
     </template>
 
     <!-- Toast Editor Viewer CDN -->
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script>
+    <!--  SweetAlert2  -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script th:inline="javascript">
-        //edit comment
+        // 댓글 작성 및 수정
+        function submitComment(button) {
+            let form = button.closest('form');
+            if (validateComment(form)) {
+                form.submit();
+            };
+        }
+
+        // 댓글 수정
         function editComment(button, commentId) {
-            let parent = button.parentElement;
-            let contentEl = parent.lastElementChild;
-            let content = contentEl.innerText;
-            contentEl.style.display = 'none';
+            let parent = button.closest('li');
+            let prevComment = parent.querySelector('#comment');
+            let prevContent = prevComment.innerText;
+            prevComment.style.display = 'none';
 
 
             let form = document.getElementsByTagName('template')[0].content.cloneNode(true).firstElementChild;
-            let editTextarea = form.getElementsByTagName('textarea')[0];
-            editTextarea.innerText = content;
+            let editingComment = form.getElementsByTagName('textarea')[0];
+            editingComment.innerText = prevContent;
 
             let hiddenInput = form.getElementsByTagName('input')[0];
             hiddenInput.value = commentId;
@@ -122,6 +132,7 @@
             }
         }
 
+        // 댓글 수정 취소
         function cancelEdit(button) {
             let li = button.closest('li');
             li.getElementsByTagName('p')[0].style.display = '';
@@ -139,6 +150,23 @@
             height: 'auto',
             initialValue: [[${post.content}]]
         });
+
+        // 댓글 유효성 검증
+        function validateComment(form) {
+            let comment = form.getElementsByTagName('textarea')[0];
+            let content = stripHtmlAndTrim(comment.value);
+
+            if (content == '') {
+                Swal.fire('내용을 입력해주세요');
+                return false;
+            }
+
+            return true;
+        }
+
+        function stripHtmlAndTrim(str) {
+            return str.replace(/<\/?[^>]+(>|$)/g, "").trim();
+        }
 
     </script>
 

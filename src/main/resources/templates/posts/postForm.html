@@ -19,8 +19,8 @@
         <form th:action="@{/posts}" method="post">
             <!-- 제목 -->
             <div class="input-group mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-default">제목</span>
-                <input name="title" type="text" class="form-control" aria-label="title input"/>
+                <span class="input-group-text">제목</span>
+                <input name="title" id="title" type="text" class="form-control" aria-label="title input"/>
             </div>
 
             <!-- 본문 -->
@@ -30,7 +30,7 @@
                 </button>
                 <a class="btn btn-md btn-outline-secondary ms-2 my-3" href="/posts" value="취소">취소</a>
             </div>
-            <input type="hidden" name="content">
+            <input type="hidden" name="content" id="content">
             <input type="hidden" name="userId" id="userId" value="1"/> <!-- TODO - 유저 권한 기능 추가 후 변경 -->
         </form>
     </div>
@@ -39,6 +39,8 @@
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
     <!-- 한국어 패치 -->
     <script src="https://uicdn.toast.com/editor/latest/i18n/ko-kr.min.js"></script>
+    <!--  SweetAlert2  -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
     const Editor = toastui.Editor;
@@ -58,8 +60,27 @@
                 input.value = editor.getHTML();
             }
         }
+        if (validatePost(form)) {
+            form.submit();
+        };
+    }
 
-        form.submit();
+    function validatePost(form) {
+        let title = form.querySelector('#title').value.trim();
+        let content = stripHtmlAndTrim(form.querySelector('#content').value);
+        if (title == '') {
+            Swal.fire('제목을 입력해주세요');
+            return false;
+        } else if (content == '') {
+            Swal.fire('내용을 입력해주세요');
+            return false;
+        }
+
+        return true;
+    }
+
+    function stripHtmlAndTrim(str) {
+        return str.replace(/<\/?[^>]+(>|$)/g, "").trim();
     }
     </script>
 </section>
