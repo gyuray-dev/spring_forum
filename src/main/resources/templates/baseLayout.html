@@ -17,49 +17,73 @@
         tr {
             height: 55px;
         }
+
+        html, body {
+            height: 100%;
+        }
+
+        header {
+            height: 7vh;
+        }
+
+        section {
+            min-height: 93vh;
+            margin: 0 auto 0;
+            padding: 20px 0 120px;
+            style="max-width: 800px;
+        }
+
+        footer {
+            height: 100px;
+            width: 100%;
+            transform: translateY(-100px);
+        }
+
     </style>
 
 </head>
 <body>
 
-    <!-- NavBar -->
-    <div class="container col-md-12 mb-4">
-        <nav class="navbar d-flex border-bottom">
-            <a class="navbar-brand h1 my-auto" href="/">
-                <img src="/assets/spring.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
-                Spring Forum
-            </a>
-            <button type="button" class="btn btn-outline-primary ms-auto">로그인</button>
-            <button type="button" class="btn btn-primary ms-2">회원가입</button>
+    <header class="border-bottom">
+        <!-- NavBar -->
+        <nav class="container col-md-12 mb-4">
+            <nav class="navbar d-flex">
+                <a class="navbar-brand h1 my-auto" href="/">
+                    <img src="/assets/spring.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+                    Spring Forum
+                </a>
+                <button type="button" class="btn btn-outline-primary ms-auto">로그인</button>
+                <button type="button" class="btn btn-primary ms-2">회원가입</button>
+            </nav>
         </nav>
-    </div>
+    </header>
 
     <div th:replace="${content}">
         레이아웃 본문
     </div>
 
     <!-- Footer -->
-    <footer class="container mt-5 border-top rounded-3 p-3 text-center text-lg-start">
-        <div class="row d-flex align-items-center">
+    <footer class="border-top ">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 mt-3 text-center">
+                    <a href="https://gyurey.dev" class="btn btn-outline-dark btn-floating m-1" role="button">
+                        <i class="bi bi-cup-hot fs-5"></i>
+                    </a>
+                    <a href="https://github.com/gyuray-dev" class="btn btn-outline-dark btn-floating m-1" role="button">
+                        <i class="bi bi-github fs-5"></i>
+                    </a>
+                    <a href="https://www.instagram.com/ooggyoo/" class="btn btn-outline-dark btn-floating m-1"
+                       role="button">
+                        <i class="bi bi-instagram fs-5"></i>
+                    </a>
+                </div>
 
-            <div class="col-md-7 col-lg-8 text-center text-md-start">
-                © 2023 Copyright:
-                <a class="text-dark" href="https://gyuray.dev/">gyuray.dev</a>
+                <div class="col-12 text-center">
+                    © 2023 Copyright:
+                    <a class="text-dark" href="https://gyuray.dev/">gyuray.dev</a>
+                </div>
             </div>
-
-            <div class="col-md-5 col-lg-4 ml-lg-0 text-center text-md-end">
-                <a href="https://gyurey.dev" class="btn btn-outline-dark btn-floating m-1" role="button">
-                    <i class="bi bi-cup-hot fs-5"></i>
-                </a>
-                <a href="https://github.com/gyuray-dev" class="btn btn-outline-dark btn-floating m-1" role="button">
-                    <i class="bi bi-github fs-5"></i>
-                </a>
-                <a href="https://www.instagram.com/ooggyoo/" class="btn btn-outline-dark btn-floating m-1"
-                   role="button">
-                    <i class="bi bi-instagram fs-5"></i>
-                </a>
-            </div>
-
         </div>
     </footer>
 

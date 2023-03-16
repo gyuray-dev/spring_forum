@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<section style="max-width: 800px; margin: auto;">
+<section>
 
     <!-- 게시글 정보 -->
     <div class="container">
@@ -147,6 +147,7 @@
         // Toast UI Editor viewer
         const viewer = new toastui.Editor({
             el: document.querySelector('#viewer'),
+            height: 'auto',
             height: 'auto',
             initialValue: [[${post.content}]]
         });
