@@ -57,12 +57,12 @@
         <!-- NavBar -->
         <nav class="container col-md-12 mb-4">
             <nav class="navbar d-flex">
-                <a class="navbar-brand h1 my-auto" href="/">
+                <a class="navbar-brand my-auto" href="/">
                     <img src="/assets/spring.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
                     Spring Forum
                 </a>
-                <a type="button" class="btn btn-outline-primary ms-auto" href="/users/login">로그인</a>
-                <button type="button" class="btn btn-primary ms-2">회원가입</button>
+                <a th:unless="${hideLoginButtons}" type="button" class="btn btn-outline-primary ms-auto" href="/users/login">로그인</a>
+                <a th:unless="${hideLoginButtons}" type="button" class="btn btn-primary ms-2" href="#">회원가입</a>
             </nav>
         </nav>
     </header>
