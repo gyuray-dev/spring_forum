@@ -1,10 +1,7 @@
 package dev.gyuray.forum.repository.user;
 
-import dev.gyuray.forum.domain.Address;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
 
 @Getter @Setter
 public class UserForm {
@@ -13,4 +10,5 @@ public class UserForm {
     private String street;
     private String zipcode;
     private String email;
+    private String password;
 }

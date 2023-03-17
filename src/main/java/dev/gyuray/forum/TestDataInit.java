@@ -29,7 +29,7 @@ public class TestDataInit {
 
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
-    void initTestData() {
+    public void initTestData() {
         log.info("Test Data Initialization");
 
         UserForm userForm = new UserForm();
@@ -38,6 +38,7 @@ public class TestDataInit {
         userForm.setStreet("streetA");
         userForm.setZipcode("12345");
         userForm.setEmail("userA@email.com");
+        userForm.setPassword("1234");
 
         Long userId = userService.join(userForm);
 

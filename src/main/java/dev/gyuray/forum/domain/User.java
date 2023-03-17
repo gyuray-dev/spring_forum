@@ -38,6 +38,9 @@ public class User {
     @Column(nullable = false)
     private LocalDateTime regDate;
 
+    @Column(nullable = false)
+    private String password;
+
     public User() {
         regDate = LocalDateTime.now();
     }
