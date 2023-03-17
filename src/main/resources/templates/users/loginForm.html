@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html th:replace="~{/baseLayout :: baseLayout(~{::title}, ~{::section}, ~{::link})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link>
+</head>
+
+<body>
+<section>
+    <div class="container login">
+        <div class="row d-flex flex-column justify-content-between align-items-center gap-4">
+            <h4 class="h1 text-center">로그인</h4>
+            <div class="input-group input-group-lg p-0">
+                <span class="input-group-text w-25 fs-6">아이디</span>
+                <input type="text" class="form-control" aria-label="Sizing example input">
+            </div>
+            <div class="input-group input-group-lg p-0">
+                <span class="input-group-text w-25 fs-6">비밀번호</span>
+                <input type="text" class="form-control" aria-label="Sizing example input">
+            </div>
+            <button type="button" class="btn btn-primary btn-lg">로그인</button>
+            <button type="button" class="btn btn-outline-secondary btn-lg">회원가입</button>
+        </div>
+    </div>
+</section>
+</body>
+
+</html>

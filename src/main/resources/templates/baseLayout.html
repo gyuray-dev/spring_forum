@@ -24,6 +24,8 @@
 
         header {
             height: 60px;
+            position: relative;
+            z-index: 1;
         }
 
         section {
@@ -39,6 +41,13 @@
             transform: translateY(-170px);
         }
 
+        .login {
+            display: flex;
+            min-height: 60vh;
+            align-items: center;
+            justify-content: center;
+        }
+
     </style>
 
 </head>
@@ -52,7 +61,7 @@
                     <img src="/assets/spring.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
                     Spring Forum
                 </a>
-                <button type="button" class="btn btn-outline-primary ms-auto">로그인</button>
+                <a type="button" class="btn btn-outline-primary ms-auto" href="/users/login">로그인</a>
                 <button type="button" class="btn btn-primary ms-2">회원가입</button>
             </nav>
         </nav>
