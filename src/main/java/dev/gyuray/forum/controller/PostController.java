@@ -21,12 +21,13 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/posts")
 public class PostController {
 
     private final PostService postService;
     private final CommentService commentService;
 
-    @GetMapping("/posts")
+    @GetMapping
     public String postList(
             @RequestParam(required = false) Integer currentPage,
             @CookieValue(required = false) Integer pageSize,
@@ -52,7 +53,7 @@ public class PostController {
         return "posts/postList";
     }
 
-    @PostMapping("/posts")
+    @PostMapping
     public String createPost(
             @ModelAttribute PostForm postForm
     ) {
@@ -62,7 +63,7 @@ public class PostController {
         return "redirect:/posts";
     }
 
-    @GetMapping("/posts/{postId}")
+    @GetMapping("/{postId}")
     public String viewPost(
             @PathVariable Long postId,
             @RequestParam(required = false) Long currentPage,
@@ -81,12 +82,12 @@ public class PostController {
         return "posts/postView";
     }
 
-    @GetMapping("/post")
+    @GetMapping("/new")
     public String createForm() {
         return "posts/postForm";
     }
 
-    @GetMapping("/posts/{postId}/edit")
+    @GetMapping("/{postId}/edit")
     public String updatePostForm(
             @PathVariable Long postId,
             Model model
@@ -96,7 +97,7 @@ public class PostController {
         return "posts/postUpdateForm";
     }
 
-    @PostMapping("/posts/{postId}/edit")
+    @PostMapping("/{postId}/edit")
     public String updatePost(
             @ModelAttribute PostUpdateDTO postUpdateDTO
     ) {
@@ -104,7 +105,7 @@ public class PostController {
         return "redirect:/posts/" + postUpdateDTO.getPostId();
     }
 
-    @GetMapping("/posts/{postId}/delete")
+    @GetMapping("/{postId}/delete")
     public String deletePost(
             @PathVariable Long postId
     ) {
