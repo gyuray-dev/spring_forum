@@ -23,7 +23,7 @@ public class UserService {
 
     @Transactional
     public Long join(UserForm userForm) {
-        if (userRepository.findByName(userForm.getName()).isEmpty()) {
+        if (!userRepository.findByName(userForm.getName()).isEmpty()) {
             throw new IllegalStateException("이미 존재하는 회원입니다");
         }
 
@@ -36,6 +36,7 @@ public class UserService {
         user.setName(userForm.getName());
         user.setAddress(address);
         user.setEmail(userForm.getEmail());
+        user.setLoginId(userForm.getLoginId());
         user.setPassword(userForm.getPassword());
         userRepository.save(user);
 

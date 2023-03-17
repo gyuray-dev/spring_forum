@@ -38,6 +38,7 @@ public class TestDataInit {
         userForm.setStreet("streetA");
         userForm.setZipcode("12345");
         userForm.setEmail("userA@email.com");
+        userForm.setLoginId("admin");
         userForm.setPassword("1234");
 
         Long userId = userService.join(userForm);

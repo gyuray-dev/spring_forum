@@ -39,6 +39,9 @@ public class User {
     private LocalDateTime regDate;
 
     @Column(nullable = false)
+    private String loginId;
+
+    @Column(nullable = false)
     private String password;
 
     public User() {

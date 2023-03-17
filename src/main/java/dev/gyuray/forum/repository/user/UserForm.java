@@ -10,5 +10,6 @@ public class UserForm {
     private String street;
     private String zipcode;
     private String email;
+    private String loginId;
     private String password;
 }
