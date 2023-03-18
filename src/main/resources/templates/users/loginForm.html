@@ -15,9 +15,15 @@
               th:object="${loginForm}">
 
 
-
             <div class="row d-flex flex-column justify-content-between align-items-center gap-4">
                 <h4 class="h1 text-center">로그인</h4>
+
+                <th:block th:if="${#fields.hasGlobalErrors()}">
+                    <div th:each="err : ${#fields.globalErrors()}" th:text="${err}" class="alert alert-danger mb-0" role="alert">
+                        에러 메시지
+                    </div>
+                </th:block>
+
                 <div class="input-group input-group-lg p-0">
                     <span class="input-group-text w-25 fs-6">아이디</span>
                     <input type="text" class="form-control" aria-label="Sizing example input"
