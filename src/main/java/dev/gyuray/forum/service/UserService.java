@@ -63,14 +63,9 @@ public class UserService {
     }
 
     public User login(String loginId, String password) {
-
-        List<User> foundUsers = userRepository.findByLoginId(loginId);
-        if (foundUsers.isEmpty() || !foundUsers.get(0).getPassword().equals(password)) {
-            log.info("foundUsers.size() = {}", foundUsers.size());
-            return null;
-        }
-
-        return foundUsers.get(0);
+        return userRepository.findByLoginId(loginId).stream()
+                .filter((user) -> user.getPassword().equals(password))
+                .findAny().orElse(null);
     }
 
     @Transactional
