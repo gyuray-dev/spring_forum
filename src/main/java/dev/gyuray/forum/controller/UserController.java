@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -34,11 +37,9 @@ public class UserController {
     public String login(
             @ModelAttribute LoginForm loginForm,
             BindingResult bindingResult,
-            Model model
+            Model model,
+            HttpServletRequest request
     ) {
-        log.info("loginForm.getLoginId() = {}", loginForm.getLoginId());
-        log.info("loginForm.getPassword() = {}", loginForm.getPassword());
-
         User loginUser = userService.login(loginForm.getLoginId(), loginForm.getPassword());
         if (loginUser == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
@@ -46,6 +47,21 @@ public class UserController {
             return "users/loginForm";
         }
 
-        return "redirect:/posts";
+        HttpSession session = request.getSession();
+        session.setAttribute("loginUser", loginUser);
+        model.addAttribute("hideLoginButtons", "true");
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            session.invalidate();
+        }
+
+        return "redirect:/";
     }
 }

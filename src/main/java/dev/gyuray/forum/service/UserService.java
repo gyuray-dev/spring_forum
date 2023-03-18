@@ -64,7 +64,7 @@ public class UserService {
 
     public User login(String loginId, String password) {
         return userRepository.findByLoginId(loginId).stream()
-                .filter((user) -> user.getPassword().equals(password))
+                .filter(user -> user.getPassword().equals(password))
                 .findAny().orElse(null);
     }
 
