@@ -36,6 +36,12 @@ public class UserRepository {
                 .getResultList();
     }
 
+    public List<User> findByLoginId(String loginId) {
+        return em.createQuery("select u from User u where u.loginId = :loginId", User.class)
+                .setParameter("loginId", loginId)
+                .getResultList();
+    }
+
     public List<User> findAll() {
         return em.createQuery("select u from User u", User.class)
                 .getResultList();

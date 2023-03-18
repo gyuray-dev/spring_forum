@@ -62,6 +62,17 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User login(String loginId, String password) {
+
+        List<User> foundUsers = userRepository.findByLoginId(loginId);
+        if (foundUsers.isEmpty() || !foundUsers.get(0).getPassword().equals(password)) {
+            log.info("foundUsers.size() = {}", foundUsers.size());
+            return null;
+        }
+
+        return foundUsers.get(0);
+    }
+
     @Transactional
     public void updateUser(UserUpdateDTO userUpdateDTO) {
         userRepository.update(userUpdateDTO);
