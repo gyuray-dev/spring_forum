@@ -3,10 +3,7 @@ package dev.gyuray.forum.service;
 import dev.gyuray.forum.domain.Post;
 import dev.gyuray.forum.domain.Role;
 import dev.gyuray.forum.domain.User;
-import dev.gyuray.forum.repository.post.PostForm;
-import dev.gyuray.forum.repository.post.PostListDTO;
-import dev.gyuray.forum.repository.post.PostRepository;
-import dev.gyuray.forum.repository.post.PostUpdateDTO;
+import dev.gyuray.forum.repository.post.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -43,9 +40,9 @@ public class PostService {
                 });
     }
 
-    public List<PostListDTO> findAll(int pageNum, int pageSize) {
+    public List<PostListDTO> findAll(int pageNum, int pageSize, PostSearchDTO postSearchDTO) {
         int firstIndex = (pageNum - 1) * pageSize;
-        List<PostListDTO> postListDTOs = postRepository.findAll(firstIndex, pageSize);
+        List<PostListDTO> postListDTOs = postRepository.findAll(firstIndex, pageSize, postSearchDTO);
 
         // 날짜 포매팅
         for (PostListDTO postListDTO : postListDTOs) {

@@ -109,18 +109,18 @@
         </div>
 
         <!-- search bar -->
-        <div class="row d-flex justify-content-center align-items-center">
+        <form class="row d-flex justify-content-center align-items-center" action="/posts" method="get">
             <div class="col-md-5">
                 <div class="row">
                     <div class="col-md-4 p-0">
-                        <select class="form-select" id="">
-                            <option value="title">제목</option>
-                            <option value="title">내용</option>
-                            <option value="title">작성자</option>
+                        <select class="form-select" name="queryType">
+                            <option value="title" th:selected="${postSearchDTO.queryType == 'title'}">제목</option>
+                            <option value="content" th:selected="${postSearchDTO.queryType == 'content'}">내용</option>
+                            <option value="user" th:selected="${postSearchDTO.queryType == 'user'}">작성자</option>
                         </select>
                     </div>
                     <div class="col-md-8 p-0">
-                        <input class="form-control" type="text" placeholder="검색" aria-label="Search">
+                        <input th:value="${postSearchDTO.query}" name="query" class="form-control" type="text" placeholder="검색 내용" aria-label="Search">
                     </div>
                 </div>
             </div>
@@ -129,7 +129,8 @@
                     <i class="bi bi-search"></i>
                 </button>
             </div>
-        </div>
+        </form>
+
     </div>
 
     <script th:inline="javascript">

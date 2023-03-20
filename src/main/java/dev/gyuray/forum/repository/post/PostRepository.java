@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +23,8 @@ public class PostRepository {
         return Optional.ofNullable(em.find(Post.class, postId));
     }
 
-    public List<PostListDTO> findAll(int offset, int limit) {
-        String query = "select new dev.gyuray.forum.repository.post.PostListDTO(" +
+    public List<PostListDTO> findAll(int offset, int limit, PostSearchDTO postSearchDTO) {
+        String jpql = "select new dev.gyuray.forum.repository.post.PostListDTO(" +
                 "p.id, " +
                 "p.title, " +
                 "u.name, " +
@@ -32,10 +33,34 @@ public class PostRepository {
                 "''" +
                 ") " +
                 "from Post p " +
-                "join p.user u " +
-                "order by p.id desc";
+                "join p.user u ";
 
-        return em.createQuery(query, PostListDTO.class)
+        String searchQuery = "";
+        String searchQueryType = "";
+
+        boolean isSearching = false;
+        if (postSearchDTO != null && postSearchDTO.getQueryType() != null &&postSearchDTO.getQuery() != null) {
+            searchQueryType = postSearchDTO.getQueryType(); //p.title, p.content, u.name
+            searchQuery = postSearchDTO.getQuery();
+
+            if (searchQueryType.equals("user")) {
+                jpql += "where u.name like :query ";
+            } else {
+                jpql += "where p." + searchQueryType + " like :query ";
+            }
+
+            isSearching = true;
+        }
+
+        jpql += "order by p.id desc";
+
+        TypedQuery<PostListDTO> query = em.createQuery(jpql, PostListDTO.class);
+
+        if (isSearching) {
+            query.setParameter("query", "%" + searchQuery + "%");
+        }
+
+        return query
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();

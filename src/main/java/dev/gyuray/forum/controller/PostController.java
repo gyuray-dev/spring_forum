@@ -5,6 +5,7 @@ import dev.gyuray.forum.domain.User;
 import dev.gyuray.forum.repository.comment.CommentListDTO;
 import dev.gyuray.forum.repository.post.PostForm;
 import dev.gyuray.forum.repository.post.PostListDTO;
+import dev.gyuray.forum.repository.post.PostSearchDTO;
 import dev.gyuray.forum.repository.post.PostUpdateDTO;
 import dev.gyuray.forum.service.CommentService;
 import dev.gyuray.forum.service.PostPagerDTO;
@@ -30,6 +31,7 @@ public class PostController {
 
     @GetMapping
     public String postList(
+            @ModelAttribute PostSearchDTO postSearchDTO,
             @RequestParam(required = false) Integer currentPage,
             @CookieValue(required = false) Integer pageSize,
             Model model,
@@ -45,7 +47,7 @@ public class PostController {
             currentPage = 1;
         }
 
-        List<PostListDTO> postListDTOs = postService.findAll(currentPage, pageSize);
+        List<PostListDTO> postListDTOs = postService.findAll(currentPage, pageSize, postSearchDTO);
         model.addAttribute("postListDTOs", postListDTOs);
 
         PostPagerDTO postPagerDTO = postService.getPager(currentPage, pageSize);

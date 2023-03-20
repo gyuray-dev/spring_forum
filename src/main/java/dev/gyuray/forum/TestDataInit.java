@@ -64,7 +64,7 @@ public class TestDataInit {
             }
         }
 
-        List<PostListDTO> postListDTOs = postService.findAll(1, 10);
+        List<PostListDTO> postListDTOs = postService.findAll(1, 10, null);
         for (int i = 0; i < postListDTOs.size(); i++) {
             for (int j = 1; j <= i + 1; j++) {
                 CommentForm commentForm = new CommentForm();
