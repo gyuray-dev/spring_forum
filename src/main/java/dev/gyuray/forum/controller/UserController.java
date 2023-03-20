@@ -8,10 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -37,6 +34,7 @@ public class UserController {
     public String login(
             @ModelAttribute LoginForm loginForm,
             BindingResult bindingResult,
+            @RequestParam(defaultValue = "/") String redirectURL,
             Model model,
             HttpServletRequest request
     ) {
@@ -50,7 +48,7 @@ public class UserController {
         HttpSession session = request.getSession();
         session.setAttribute("loginUser", loginUser);
 
-        return "redirect:/";
+        return "redirect:" + redirectURL;
     }
 
     @GetMapping("/logout")
