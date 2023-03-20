@@ -27,10 +27,10 @@
             </p>
             <div class="col-md-2 col-sm-12">
                 <div class="row">
-                    <a th:href="@{/posts/{postId}/edit(postId = ${post.id})}"
-                       class="col-md-6 col-sm-6 text-center fw-semibold">수정</a>
-                    <a th:href="@{/posts/{postId}/delete(postId = ${post.id})}"
-                       class="col-md-6 col-sm-6 text-center fw-semibold">삭제</a>
+                    <a th:if="${loginUser.id == post.user.id}" th:href="@{/posts/{postId}/edit(postId = ${post.id})}"
+                       class="col-md-6 col-sm-6 text-end fw-semibold">수정</a>
+                    <a th:if="${loginUser.id == post.user.id or loginUser.role.name() == 'ADMIN'}" th:href="@{/posts/{postId}/delete(postId = ${post.id})}"
+                       class="col-md-6 col-sm-6 text-end fw-semibold">삭제</a>
                 </div>
             </div>
         </div>
@@ -65,11 +65,14 @@
                 <span class="col-6 col-md-3 text-center text-secondary fw-normal fs-6"
                       th:text="${commentListDTO.formattedRegDate}">2023-03-14 18:52:00</span>
 
-                <button th:onclick="|editComment(this, ${commentListDTO.commentId})|"
+                <button th:if="${commentListDTO.userId == loginUser.id}"
+                        th:onclick="|editComment(this, ${commentListDTO.commentId})|"
                         class="col-6 btn btn-sm col-md-1 ms-md-auto text-center comment-button">수정
                 </button>
 
-                <button th:onclick="|location='@{/posts/{postId}/comments/{commentId}/delete
+                <button th:if="${commentListDTO.userId == loginUser.id or loginUser.role.name() == 'ADMIN'}"
+                        th:classappend="${commentListDTO.userId != loginUser.id and loginUser.role.name() == 'ADMIN'} ? ms-auto : _"
+                        th:onclick="|location='@{/posts/{postId}/comments/{commentId}/delete
                             (postId = ${post.id}, commentId = ${commentListDTO.commentId})}'|"
                         class="col-6 btn btn-sm col-md-1 text-center comment-button">삭제
                 </button>
