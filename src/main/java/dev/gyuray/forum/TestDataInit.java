@@ -49,6 +49,7 @@ public class TestDataInit {
         userForm.setName("홍길동");
         userForm.setLoginId("hong");
         userForm.setPassword("1234");
+        userForm.setEmail("userB@email.com");
         Long userId2 = userService.join(userForm);
         User user2 = userService.findUser(userId2);
 

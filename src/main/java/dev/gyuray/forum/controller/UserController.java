@@ -28,7 +28,7 @@ public class UserController {
             @SessionAttribute(required = false) User loginUser,
             Model model
     ) {
-        if (loginUser != null) {
+        if (loginUser != null) { // TODO - 비로그인 유저용 페이지 별도 인터셉터 생성
             return "redirect:/";
         }
         model.addAttribute("hideLoginButtons", "true");
@@ -89,15 +89,29 @@ public class UserController {
     @PostMapping("/new")
     public String signup(
             @SessionAttribute(required = false) User loginUser,
-            @ModelAttribute UserForm userForm
+            @ModelAttribute UserForm userForm,
+            BindingResult bindingResult
 
     ) {
         if (loginUser != null) {
             return "redirect:/";
         }
 
-        userService.join(userForm);
+        if (!userService.isUsableLoginId(userForm.getLoginId())) {
+            bindingResult.rejectValue("loginId", "login.duplicate.loginId", "이미 사용 중인 아이디입니다.");
+        }
+        if (!userService.isUsableEmail(userForm.getEmail())) {
+            bindingResult.rejectValue("email", "login.duplicate.email", "이미 사용 중인 이메일입니다.");
+        }
+        if (!userService.isUsableName(userForm.getName())) {
+            bindingResult.rejectValue("name", "login.duplicate.name", "이미 사용 중인 닉네임입니다.");
+        }
 
+        if (bindingResult.hasErrors()) {
+            return "users/userForm";
+        }
+
+        userService.join(userForm);
         return "redirect:/";
     }
 }

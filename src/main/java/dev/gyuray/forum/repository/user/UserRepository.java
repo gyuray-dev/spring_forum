@@ -42,6 +42,12 @@ public class UserRepository {
                 .getResultList();
     }
 
+    public List<User> findByEmail(String email) {
+        return em.createQuery("select u from User u where u.email = :email", User.class)
+                .setParameter("email", email)
+                .getResultList();
+    }
+
     public List<User> findAll() {
         return em.createQuery("select u from User u", User.class)
                 .getResultList();
@@ -51,5 +57,4 @@ public class UserRepository {
         User foundUser = em.find(User.class, userId);
         em.remove(foundUser);
     }
-
 }

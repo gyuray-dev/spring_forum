@@ -24,12 +24,13 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Comment> comments = new ArrayList<>();
 
-    @Column(name="user_name")
+    @Column(name="user_name", unique = true)
     private String name;
 
     @Embedded
     private Address address;
 
+    @Column(unique = true)
     private String email;
 
     @Enumerated(EnumType.STRING)
@@ -39,7 +40,7 @@ public class User {
     @Column(nullable = false)
     private LocalDateTime regDate;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String loginId;
 
     @Column(nullable = false)

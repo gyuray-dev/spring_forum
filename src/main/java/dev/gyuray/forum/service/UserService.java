@@ -23,10 +23,6 @@ public class UserService {
 
     @Transactional
     public Long join(UserForm userForm) {
-        if (!userRepository.findByName(userForm.getName()).isEmpty()) {
-            throw new IllegalStateException("이미 존재하는 회원입니다");
-        }
-
         Address address = new Address();
         address.setCity(userForm.getCity());
         address.setStreet(userForm.getStreet());
@@ -42,6 +38,19 @@ public class UserService {
 
         return user.getId();
     }
+
+    public boolean isUsableLoginId(String loginId) {
+        return userRepository.findByLoginId(loginId).isEmpty();
+    }
+    public boolean isUsableName(String name) {
+        return userRepository.findByName(name).isEmpty();
+    }
+
+    public boolean isUsableEmail(String email) {
+        return userRepository.findByEmail(email).isEmpty();
+    }
+
+
 
     public User findUser(Long userId) {
         return userRepository.findOne(userId).orElseThrow(() -> {
