@@ -81,13 +81,13 @@ public class UserController {
 
     ) {
         if (!userService.isUsableLoginId(userForm.getLoginId())) {
-            bindingResult.rejectValue("loginId", "login.duplicate.loginId", "이미 사용 중인 아이디입니다.");
+            bindingResult.rejectValue("loginId", "duplicate", "이미 사용 중인 아이디입니다.");
         }
         if (!userService.isUsableEmail(userForm.getEmail())) {
-            bindingResult.rejectValue("email", "login.duplicate.email", "이미 사용 중인 이메일입니다.");
+            bindingResult.rejectValue("email", "duplicate", "이미 사용 중인 이메일입니다.");
         }
         if (!userService.isUsableName(userForm.getName())) {
-            bindingResult.rejectValue("name", "login.duplicate.name", "이미 사용 중인 닉네임입니다.");
+            bindingResult.rejectValue("name", "duplicate", "이미 사용 중인 닉네임입니다.");
         }
 
         if (bindingResult.hasErrors()) {

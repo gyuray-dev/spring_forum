@@ -50,8 +50,6 @@ public class UserService {
         return userRepository.findByEmail(email).isEmpty();
     }
 
-
-
     public User findUser(Long userId) {
         return userRepository.findOne(userId).orElseThrow(() -> {
             throw new IllegalStateException("해당 ID를 가진 유저가 없습니다");
