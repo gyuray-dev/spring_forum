@@ -56,6 +56,10 @@
             max-width: 940px;
         }
 
+        .signup {
+            max-width: 400px;
+        }
+
     </style>
 
 </head>
@@ -70,7 +74,7 @@
                     Spring Forum
                 </a>
                 <a th:unless="${#objects.nullSafe(hideLoginButtons, false) or isLoggedIn}" type="button" class="btn btn-outline-primary ms-auto" href="/users/login">로그인</a>
-                <a th:unless="${#objects.nullSafe(hideLoginButtons, false) or isLoggedIn}" type="button" class="btn btn-primary ms-2" href="#">회원가입</a>
+                <a th:unless="${#objects.nullSafe(hideLoginButtons, false) or isLoggedIn}" type="button" class="btn btn-primary ms-2" href="/users/new">회원가입</a>
                 <a th:if="${isLoggedIn}" type="button" class="btn btn-outline-secondary ms-auto" href="/users/logout">로그아웃</a>
                 <a th:if="${isLoggedIn}" type="button" class="btn btn-outline-primary ms-2" href="#">내 정보</a>
             </nav>

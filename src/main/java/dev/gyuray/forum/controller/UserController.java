@@ -2,6 +2,7 @@ package dev.gyuray.forum.controller;
 
 import dev.gyuray.forum.domain.User;
 import dev.gyuray.forum.repository.user.LoginForm;
+import dev.gyuray.forum.repository.user.UserForm;
 import dev.gyuray.forum.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +25,12 @@ public class UserController {
     @GetMapping("/login")
     public String loginForm(
             @ModelAttribute LoginForm loginForm,
+            @SessionAttribute(required = false) User loginUser,
             Model model
     ) {
+        if (loginUser != null) {
+            return "redirect:/";
+        }
         model.addAttribute("hideLoginButtons", "true");
         return "users/loginForm";
     }
@@ -34,13 +39,17 @@ public class UserController {
     public String login(
             @ModelAttribute LoginForm loginForm,
             BindingResult bindingResult,
+            @SessionAttribute(required = false) User loginUser,
             @RequestParam(defaultValue = "/") String redirectURL,
             Model model,
             HttpServletRequest request
     ) {
-        log.info("loginForm = {}", loginForm);
-        User loginUser = userService.login(loginForm.getLoginId(), loginForm.getPassword());
-        log.info("loginUser = {}", loginUser);
+        if (loginUser != null) {
+            return "redirect:/";
+        }
+
+        loginUser = userService.login(loginForm.getLoginId(), loginForm.getPassword());
+
         if (loginUser == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             model.addAttribute("hideLoginButtons", "true");
@@ -54,12 +63,40 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    public String logout(
+            HttpServletRequest request
+    ) {
         HttpSession session = request.getSession(false);
 
         if (session != null) {
             session.invalidate();
         }
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/new")
+    public String signupForm(
+            @SessionAttribute(required = false) User loginUser,
+            @ModelAttribute UserForm userForm
+    ) {
+        if (loginUser != null) {
+            return "redirect:/";
+        }
+        return "users/userForm";
+    }
+
+    @PostMapping("/new")
+    public String signup(
+            @SessionAttribute(required = false) User loginUser,
+            @ModelAttribute UserForm userForm
+
+    ) {
+        if (loginUser != null) {
+            return "redirect:/";
+        }
+
+        userService.join(userForm);
 
         return "redirect:/";
     }

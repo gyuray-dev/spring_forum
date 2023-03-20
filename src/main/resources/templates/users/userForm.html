@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html th:replace="~{/baseLayout :: baseLayout(~{::title}, ~{::section}, ~{::link})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link>
+</head>
+
+<body>
+<section>
+    <section>
+        <form action="/users/new" method="post" class="container signup"
+              th:object="${userForm}">
+
+            <div class="row d-flex flex-column justify-content-between align-items-center gap-3">
+                <h4 class="h1 text-center">회원가입</h4>
+
+                <th:block th:if="${#fields.hasGlobalErrors()}">
+                    <div th:each="err : ${#fields.globalErrors()}" th:text="${err}" class="alert alert-danger mb-0" role="alert">
+                        에러 메시지
+                    </div>
+                </th:block>
+
+                <div class="input-group input-group-sm p-0">
+                    <span class="input-group-text w-25 fs-6">이메일</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input" name="email">
+                </div>
+
+                <div class="input-group input-group-sm p-0">
+                    <span class="input-group-text w-25 fs-6">아이디</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input" name="loginId">
+                </div>
+
+                <div class="input-group input-group-sm p-0">
+                    <span class="input-group-text w-25 fs-6">비밀번호</span>
+                    <input type="password" class="form-control" aria-label="Sizing example input" name="password">
+                </div>
+
+                <div class="input-group input-group-sm p-0">
+                    <span class="input-group-text w-25 fs-6">닉네임</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input" name="name">
+                </div>
+
+                <div class="input-group input-group-sm p-0">
+                    <span class="input-group-text w-25 fs-6">주소</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input" name="city">
+                </div>
+
+                <div class="input-group input-group-sm p-0">
+                    <span class="input-group-text w-25 fs-6">상세주소</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input" name="street">
+                </div>
+
+                <div class="input-group input-group-sm p-0">
+                    <span class="input-group-text w-25 fs-6">우편번호</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input" name="zipcode">
+                </div>
+
+                <div class="row d-flex justify-content-center gap-3">
+                    <button type="submit" class="btn col-5 btn-primary btn-lg">회원가입</button>
+                    <a type="button" class="btn col-5 btn-outline-secondary btn-lg" href="/">취소</a>
+                </div>
+
+            </div>
+
+        </form>
+    </section>
+</section>
+</body>
+
+</html>
