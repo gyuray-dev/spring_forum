@@ -22,13 +22,6 @@ public class PostRepository {
         return Optional.ofNullable(em.find(Post.class, postId));
     }
 
-    public void update(PostUpdateDTO postUpdateDTO) {
-        Post foundPost = em.find(Post.class, postUpdateDTO.getPostId());
-        foundPost.setId(postUpdateDTO.getPostId());
-        foundPost.setTitle(postUpdateDTO.getTitle());
-        foundPost.setContent(postUpdateDTO.getContent());
-    }
-
     public List<PostListDTO> findAll(int offset, int limit) {
         String query = "select new dev.gyuray.forum.repository.post.PostListDTO(" +
                 "p.id, " +

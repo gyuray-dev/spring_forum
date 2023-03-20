@@ -60,8 +60,6 @@ public class PostController {
             @SessionAttribute(value = "loginUser") User loginUser
     ) {
         postService.addPost(postForm, loginUser);
-        log.info("postForm.getContent() = {}", postForm.getContent());
-
         return "redirect:/posts";
     }
 
@@ -101,17 +99,20 @@ public class PostController {
 
     @PostMapping("/{postId}/edit")
     public String updatePost(
-            @ModelAttribute PostUpdateDTO postUpdateDTO
+            @PathVariable Long postId,
+            @ModelAttribute PostUpdateDTO postUpdateDTO,
+            @SessionAttribute User loginUser
     ) {
-        postService.updatePost(postUpdateDTO);
-        return "redirect:/posts/" + postUpdateDTO.getPostId();
+        postService.updatePost(postId, postUpdateDTO, loginUser);
+        return "redirect:/posts/" + postId;
     }
 
     @GetMapping("/{postId}/delete")
     public String deletePost(
-            @PathVariable Long postId
+            @PathVariable Long postId,
+            @SessionAttribute User loginUser
     ) {
-        postService.deletePost(postId);
+        postService.deletePost(postId, loginUser);
         return "redirect:/posts/";
     }
 }

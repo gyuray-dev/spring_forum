@@ -33,6 +33,7 @@ public class User {
     private String email;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
 
     @Column(nullable = false)
@@ -46,5 +47,6 @@ public class User {
 
     public User() {
         regDate = LocalDateTime.now();
+        role = Role.USER;
     }
 }

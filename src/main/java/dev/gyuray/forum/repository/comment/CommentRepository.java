@@ -23,11 +23,6 @@ public class CommentRepository {
         return Optional.ofNullable(em.find(Comment.class, commentId));
     }
 
-    public void update(CommentUpdateDTO commentDTO) {
-        Comment foundComment = em.find(Comment.class, commentDTO.getCommentId());
-        foundComment.updateComment(commentDTO);
-    }
-
     public List<CommentListDTO> findAll(Long postId) {
         String query = "select new dev.gyuray.forum.repository.comment.CommentListDTO(" +
                 "u.name, " +

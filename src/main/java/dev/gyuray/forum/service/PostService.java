@@ -1,6 +1,7 @@
 package dev.gyuray.forum.service;
 
 import dev.gyuray.forum.domain.Post;
+import dev.gyuray.forum.domain.Role;
 import dev.gyuray.forum.domain.User;
 import dev.gyuray.forum.repository.post.PostForm;
 import dev.gyuray.forum.repository.post.PostListDTO;
@@ -73,20 +74,25 @@ public class PostService {
     }
 
     @Transactional
-    public void updatePost(PostUpdateDTO postUpdateDTO) {
-        Optional<Post> foundPost = postRepository.findOne(postUpdateDTO.getPostId());
+    public void updatePost(Long postId, PostUpdateDTO postUpdateDTO, User user) {
+        Post post = findPostById(postId);
 
-        Post post = foundPost.orElseThrow(() -> {
-            throw new IllegalStateException("삭제된 게시물입니다.");
-        });
-
-        post.setTitle(postUpdateDTO.getTitle());
-        post.setContent(postUpdateDTO.getContent());
+        if (post.getUser().getId() == user.getId()) {
+            post.updatePost(postUpdateDTO);
+        } else {
+            throw new IllegalStateException("게시글을 수정할 권한이 없습니다.");
+        }
     }
 
     @Transactional
-    public void deletePost(Long postId) {
-        postRepository.delete(postId);
+    public void deletePost(Long postId, User user) {
+        Post post = findPostById(postId);
+
+        if (post.getUser().getId() == user.getId() || user.getRole() == Role.ADMIN) {
+            postRepository.delete(postId);
+        } else {
+            throw new IllegalStateException("게시글을 삭제할 권한이 없습니다.");
+        }
     }
 
 

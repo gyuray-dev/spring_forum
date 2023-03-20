@@ -48,16 +48,15 @@ class PostServiceTest {
 
         //update
         PostUpdateDTO postUpdateDTO = new PostUpdateDTO();
-        postUpdateDTO.setPostId(postId);
         postUpdateDTO.setTitle("새 제목");
         postUpdateDTO.setContent("새 내용");
-        postService.updatePost(postUpdateDTO);
+        postService.updatePost(postId, postUpdateDTO, user);
 
         Assertions.assertEquals(postUpdateDTO.getTitle(), foundPost.getTitle());
         Assertions.assertEquals(postUpdateDTO.getContent(), foundPost.getContent());
 
         //delete
-        postService.deletePost(postId);
+        postService.deletePost(postId, user);
         Assertions.assertThrows(IllegalStateException.class, () -> {
             postService.findPostById(postId);
         });

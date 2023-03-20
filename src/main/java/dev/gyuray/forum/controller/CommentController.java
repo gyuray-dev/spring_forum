@@ -1,14 +1,12 @@
 package dev.gyuray.forum.controller;
 
+import dev.gyuray.forum.domain.User;
 import dev.gyuray.forum.repository.comment.CommentForm;
 import dev.gyuray.forum.repository.comment.CommentUpdateDTO;
 import dev.gyuray.forum.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -19,18 +17,20 @@ public class CommentController {
     @PostMapping("/posts/{postId}/comments/add")
     public String addComment(
             @PathVariable Long postId,
-            @ModelAttribute CommentForm commentForm
+            @ModelAttribute CommentForm commentForm,
+            @SessionAttribute User loginUser
     ) {
-        commentService.addComment(commentForm);
+        commentService.addComment(commentForm, loginUser);
         return "redirect:/posts/" + postId;
     }
 
     @GetMapping("/posts/{postId}/comments/{commentId}/delete")
     public String deleteComment(
             @PathVariable Long postId,
-            @PathVariable Long commentId
+            @PathVariable Long commentId,
+            @SessionAttribute User loginUser
     ) {
-        commentService.deleteComment(commentId);
+        commentService.deleteComment(commentId, loginUser);
         return "redirect:/posts/" + postId;
     }
 
@@ -38,9 +38,10 @@ public class CommentController {
     public String editComment(
             @PathVariable Long postId,
             @PathVariable Long commentId,
+            @SessionAttribute User loginUser,
             @ModelAttribute CommentUpdateDTO commentUpdateDTO
     ) {
-        commentService.updateComment(commentUpdateDTO);
+        commentService.updateComment(commentId, commentUpdateDTO, loginUser);
         return "redirect:/posts/" + postId;
     }
 }

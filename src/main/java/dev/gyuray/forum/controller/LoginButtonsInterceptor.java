@@ -6,7 +6,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Map;
 
 public class LoginButtonsInterceptor implements HandlerInterceptor {
 
@@ -17,6 +16,7 @@ public class LoginButtonsInterceptor implements HandlerInterceptor {
             request.setAttribute("isLoggedIn", false);
         } else {
             request.setAttribute("isLoggedIn", true);
+            request.setAttribute("loginUser", session.getAttribute("loginUser"));
         }
     }
 }

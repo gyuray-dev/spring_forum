@@ -1,5 +1,6 @@
 package dev.gyuray.forum.domain;
 
+import dev.gyuray.forum.repository.post.PostUpdateDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +36,11 @@ public class Post {
 
     @Column(nullable = false)
     private int view;
+
+    public void updatePost(PostUpdateDTO postUpdateDTO) {
+        this.setContent(postUpdateDTO.getContent());
+        this.setTitle(postUpdateDTO.getTitle());
+    }
 
     public Post() {
         regDate = LocalDateTime.now();

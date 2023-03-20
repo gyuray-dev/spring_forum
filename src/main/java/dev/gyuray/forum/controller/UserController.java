@@ -38,7 +38,9 @@ public class UserController {
             Model model,
             HttpServletRequest request
     ) {
+        log.info("loginForm = {}", loginForm);
         User loginUser = userService.login(loginForm.getLoginId(), loginForm.getPassword());
+        log.info("loginUser = {}", loginUser);
         if (loginUser == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             model.addAttribute("hideLoginButtons", "true");
