@@ -49,7 +49,6 @@ public class UserController {
 
         HttpSession session = request.getSession();
         session.setAttribute("loginUser", loginUser);
-        model.addAttribute("hideLoginButtons", "true");
 
         return "redirect:/";
     }
