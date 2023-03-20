@@ -60,6 +60,9 @@
                     <td th:text="${postListDTO.view}">1</td>
                     <td th:text="${postListDTO.formattedRegDate}">2023-03-01 12:34:56</td>
                 </tr>
+                <tr th:if="${postListDTOs.size() == 0}" class="text-center h-2">
+                    <td colspan="5">게시글이 없습니다.</td>
+                </tr>
             </tbody>
         </table>
     </div>

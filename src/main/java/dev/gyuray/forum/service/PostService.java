@@ -93,7 +93,7 @@ public class PostService {
 
     public PostPagerDTO getPager(int currentPage, int pageSize) {
         Long totalPostCount = getTotalCount();
-        int lastPage = (int) Math.ceil(totalPostCount / (double) pageSize);
+        int lastPage = Math.max(1, (int) Math.ceil(totalPostCount / (double) pageSize));
         currentPage = Math.min(currentPage, lastPage);
 
         int startPage = (currentPage - 1) / 5 * 5 + 1;
