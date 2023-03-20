@@ -1,5 +1,6 @@
 package dev.gyuray.forum;
 
+import dev.gyuray.forum.controller.GuestInterceptor;
 import dev.gyuray.forum.controller.LoginButtonsInterceptor;
 import dev.gyuray.forum.controller.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
@@ -20,5 +21,9 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginButtonsInterceptor())
                 .order(1)
                 .addPathPatterns("/**");
+
+        registry.addInterceptor(new GuestInterceptor())
+                .order(2)
+                .addPathPatterns("/users/login", "/users/new");
     }
 }

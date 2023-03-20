@@ -25,12 +25,8 @@ public class UserController {
     @GetMapping("/login")
     public String loginForm(
             @ModelAttribute LoginForm loginForm,
-            @SessionAttribute(required = false) User loginUser,
             Model model
     ) {
-        if (loginUser != null) { // TODO - 비로그인 유저용 페이지 별도 인터셉터 생성
-            return "redirect:/";
-        }
         model.addAttribute("hideLoginButtons", "true");
         return "users/loginForm";
     }
@@ -44,10 +40,6 @@ public class UserController {
             Model model,
             HttpServletRequest request
     ) {
-        if (loginUser != null) {
-            return "redirect:/";
-        }
-
         loginUser = userService.login(loginForm.getLoginId(), loginForm.getPassword());
 
         if (loginUser == null) {
@@ -77,26 +69,17 @@ public class UserController {
 
     @GetMapping("/new")
     public String signupForm(
-            @SessionAttribute(required = false) User loginUser,
             @ModelAttribute UserForm userForm
     ) {
-        if (loginUser != null) {
-            return "redirect:/";
-        }
         return "users/userForm";
     }
 
     @PostMapping("/new")
     public String signup(
-            @SessionAttribute(required = false) User loginUser,
             @ModelAttribute UserForm userForm,
             BindingResult bindingResult
 
     ) {
-        if (loginUser != null) {
-            return "redirect:/";
-        }
-
         if (!userService.isUsableLoginId(userForm.getLoginId())) {
             bindingResult.rejectValue("loginId", "login.duplicate.loginId", "이미 사용 중인 아이디입니다.");
         }
