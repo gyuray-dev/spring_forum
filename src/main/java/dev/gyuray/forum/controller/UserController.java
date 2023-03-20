@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +34,7 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(
-            @ModelAttribute LoginForm loginForm,
+            @Validated @ModelAttribute LoginForm loginForm,
             BindingResult bindingResult,
             @SessionAttribute(required = false) User loginUser,
             @RequestParam(defaultValue = "/") String redirectURL,
@@ -42,7 +43,7 @@ public class UserController {
     ) {
         loginUser = userService.login(loginForm.getLoginId(), loginForm.getPassword());
 
-        if (loginUser == null) {
+        if (loginUser == null || bindingResult.hasErrors()) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             model.addAttribute("hideLoginButtons", "true");
             return "users/loginForm";
@@ -76,9 +77,8 @@ public class UserController {
 
     @PostMapping("/new")
     public String signup(
-            @ModelAttribute UserForm userForm,
+            @Validated @ModelAttribute UserForm userForm,
             BindingResult bindingResult
-
     ) {
         if (!userService.isUsableLoginId(userForm.getLoginId())) {
             bindingResult.rejectValue("loginId", "duplicate", "이미 사용 중인 아이디입니다.");

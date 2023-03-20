@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -58,9 +60,14 @@ public class PostController {
 
     @PostMapping
     public String createPost(
-            @ModelAttribute PostForm postForm,
+            @Validated @ModelAttribute PostForm postForm,
+            BindingResult bindingResult,
             @SessionAttribute(value = "loginUser") User loginUser
     ) {
+        if (bindingResult.hasErrors()) {
+            return "posts/postForm";
+        }
+
         postService.addPost(postForm, loginUser);
         return "redirect:/posts";
     }
@@ -103,9 +110,14 @@ public class PostController {
     @PostMapping("/{postId}/edit")
     public String updatePost(
             @PathVariable Long postId,
-            @ModelAttribute PostUpdateDTO postUpdateDTO,
+            @Validated @ModelAttribute PostUpdateDTO postUpdateDTO,
+            BindingResult bindingResult,
             @SessionAttribute User loginUser
     ) {
+        if (bindingResult.hasErrors()) {
+            return "posts/postUpdateForm";
+        }
+
         postService.updatePost(postId, postUpdateDTO, loginUser);
         return "redirect:/posts/" + postId;
     }

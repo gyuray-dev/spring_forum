@@ -6,6 +6,8 @@ import dev.gyuray.forum.repository.comment.CommentUpdateDTO;
 import dev.gyuray.forum.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -17,9 +19,14 @@ public class CommentController {
     @PostMapping("/posts/{postId}/comments/add")
     public String addComment(
             @PathVariable Long postId,
-            @ModelAttribute CommentForm commentForm,
+            @Validated @ModelAttribute CommentForm commentForm,
+            BindingResult bindingResult,
             @SessionAttribute User loginUser
     ) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:/posts/" + postId;
+        }
+
         commentService.addComment(commentForm, loginUser);
         return "redirect:/posts/" + postId;
     }
@@ -39,8 +46,13 @@ public class CommentController {
             @PathVariable Long postId,
             @PathVariable Long commentId,
             @SessionAttribute User loginUser,
-            @ModelAttribute CommentUpdateDTO commentUpdateDTO
+            @Validated @ModelAttribute CommentUpdateDTO commentUpdateDTO,
+            BindingResult bindingResult
     ) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:/posts/" + postId;
+        }
+
         commentService.updateComment(commentId, commentUpdateDTO, loginUser);
         return "redirect:/posts/" + postId;
     }
