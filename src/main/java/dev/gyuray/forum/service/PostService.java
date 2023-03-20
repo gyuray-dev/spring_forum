@@ -27,9 +27,8 @@ public class PostService {
     private final UserService userService;
 
     @Transactional
-    public Long addPost(PostForm postForm) {
+    public Long addPost(PostForm postForm, User writer) {
         Post post = new Post();
-        User writer = userService.findUser(postForm.getUserId());
         post.setUser(writer);
         post.setTitle(postForm.getTitle());
         post.setContent(postForm.getContent());

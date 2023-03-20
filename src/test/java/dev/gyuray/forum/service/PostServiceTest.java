@@ -1,6 +1,7 @@
 package dev.gyuray.forum.service;
 
 import dev.gyuray.forum.domain.Post;
+import dev.gyuray.forum.domain.User;
 import dev.gyuray.forum.repository.post.PostForm;
 import dev.gyuray.forum.repository.post.PostListDTO;
 import dev.gyuray.forum.repository.post.PostUpdateDTO;
@@ -32,7 +33,14 @@ class PostServiceTest {
         postForm.setTitle("제목1");
         postForm.setContent("내용1");
 
-        Long postId = postService.addPost(postForm);
+        // writer
+        UserForm userFormA = new UserForm();
+        userFormA.setLoginId("admin");
+        userFormA.setPassword("1234");
+        Long userId = userService.join(userFormA);
+        User user = userService.findUser(userId);
+
+        Long postId = postService.addPost(postForm, user);
         Post foundPost = postService.findPostById(postId);
 
         Assertions.assertEquals(postForm.getTitle(), foundPost.getTitle());
@@ -59,20 +67,20 @@ class PostServiceTest {
     void findAll() {
         // writer
         UserForm userFormA = new UserForm();
-        userFormA.setName("userA");
+        userFormA.setLoginId("userA");
+        userFormA.setPassword("1234");
         Long userId = userService.join(userFormA);
+        User user = userService.findUser(userId);
         log.info("userId = {}", userId);
 
         // post
         PostForm postForm1 = new PostForm();
-        postForm1.setUserId(userId);
         postForm1.setTitle("제목1");
         PostForm postForm2 = new PostForm();
-        postForm2.setUserId(userId);
         postForm2.setTitle("제목2");
 
-        Long postId1 = postService.addPost(postForm1);
-        Long postId2 = postService.addPost(postForm2);
+        Long postId1 = postService.addPost(postForm1, user);
+        Long postId2 = postService.addPost(postForm2, user);
         List<PostListDTO> postListDTOs = postService.findAll(1, 10);
 
         Assertions.assertEquals(2, postListDTOs.size());

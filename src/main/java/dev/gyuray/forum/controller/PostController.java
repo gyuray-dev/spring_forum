@@ -1,6 +1,7 @@
 package dev.gyuray.forum.controller;
 
 import dev.gyuray.forum.domain.Post;
+import dev.gyuray.forum.domain.User;
 import dev.gyuray.forum.repository.comment.CommentListDTO;
 import dev.gyuray.forum.repository.post.PostForm;
 import dev.gyuray.forum.repository.post.PostListDTO;
@@ -55,9 +56,10 @@ public class PostController {
 
     @PostMapping
     public String createPost(
-            @ModelAttribute PostForm postForm
+            @ModelAttribute PostForm postForm,
+            @SessionAttribute(value = "loginUser") User loginUser
     ) {
-        postService.addPost(postForm);
+        postService.addPost(postForm, loginUser);
         log.info("postForm.getContent() = {}", postForm.getContent());
 
         return "redirect:/posts";
