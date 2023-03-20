@@ -67,10 +67,11 @@ public class PostController {
     public String viewPost(
             @PathVariable Long postId,
             @RequestParam(required = false) Long currentPage,
+            @SessionAttribute User loginUser,
             Model model
     ) {
         Post foundPost = postService.findPostById(postId);
-        postService.addView(foundPost);
+        postService.addView(foundPost, loginUser);
         model.addAttribute("post", foundPost);
 
         List<CommentListDTO> commentListDTOs = commentService.findAllByPostId(postId);

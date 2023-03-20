@@ -64,9 +64,10 @@ public class PostService {
     }
 
     @Transactional
-    public void addView(Post post) {
-        // TODO - 로그인 구현 후 본인 게시글은 조회수가 올라가지 않도록 변경
-        post.setView(post.getView() + 1);
+    public void addView(Post post, User user) {
+        if (post.getUser().getId() != user.getId()) {
+            post.setView(post.getView() + 1);
+        }
     }
 
     public Long getTotalCount() {
