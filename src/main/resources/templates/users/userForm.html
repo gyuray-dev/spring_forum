@@ -31,7 +31,7 @@
 
             <div class="input-group input-group-sm p-0 mt-3">
                 <span class="input-group-text w-25 fs-6">아이디</span>
-                <input th:field="*{loginId}" type="text" class="form-control" aria-label="Sizing example input" name="loginId">
+                <input th:field="*{loginId}" type="text" class="form-control" name="loginId">
             </div>
             <div th:errors="*{loginId}" class="text-danger text-center">에러 메시지</div>
 
@@ -39,27 +39,29 @@
                 <span class="input-group-text w-25 fs-6">비밀번호</span>
                 <input type="password" class="form-control" aria-label="Sizing example input" name="password">
             </div>
+            <div th:errors="*{password}" class="text-danger text-center">에러 메시지</div>
 
             <div class="input-group input-group-sm p-0 mt-3">
                 <span class="input-group-text w-25 fs-6">닉네임</span>
-                <input th:field="*{name}" type="text" class="form-control" aria-label="Sizing example input" name="name">
+                <input th:field="*{name}" type="text" class="form-control" name="name">
             </div>
             <div th:errors="*{name}" class="text-danger text-center">에러 메시지</div>
 
             <div class="input-group input-group-sm p-0 mt-3">
                 <span class="input-group-text w-25 fs-6">주소</span>
-                <input type="text" class="form-control" aria-label="Sizing example input" name="city">
+                <input th:field="*{city}" type="text" class="form-control" name="city">
             </div>
 
             <div class="input-group input-group-sm p-0 mt-3">
                 <span class="input-group-text w-25 fs-6">상세주소</span>
-                <input type="text" class="form-control" aria-label="Sizing example input" name="street">
+                <input th:field="*{street}" type="text" class="form-control" name="street">
             </div>
 
             <div class="input-group input-group-sm p-0 mt-3">
                 <span class="input-group-text w-25 fs-6">우편번호</span>
-                <input type="text" class="form-control" aria-label="Sizing example input" name="zipcode">
+                <input th:field="*{zipcode}" type="text" class="form-control" name="zipcode">
             </div>
+            <div th:errors="*{zipcode}" class="text-danger text-center">에러 메시지</div>
 
             <div class="row d-flex justify-content-center gap-3 mt-4">
                 <button type="submit" class="btn col-5 btn-primary btn-lg">회원가입</button>
