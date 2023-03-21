@@ -27,7 +27,7 @@ public class CommentController {
             return "redirect:/posts/" + postId;
         }
 
-        commentService.addComment(commentForm, loginUser);
+        commentService.addComment(commentForm, postId, loginUser);
         return "redirect:/posts/" + postId;
     }
 

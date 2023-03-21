@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -29,10 +28,9 @@ public class CommentService {
     private final UserService userService;
 
     @Transactional
-    public Long addComment(CommentForm commentForm, User user) {
+    public Long addComment(CommentForm commentForm, Long postId, User user) {
         Comment comment = new Comment(commentForm.getContent());
 
-        Long postId = commentForm.getPostId();
         Post foundPost = postService.findPostById(postId);
         comment.addToPost(foundPost);
 

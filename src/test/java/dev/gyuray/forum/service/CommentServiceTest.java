@@ -44,9 +44,8 @@ class CommentServiceTest {
         //new comment
         CommentForm commentForm = new CommentForm();
         commentForm.setContent("댓글 내용1");
-        commentForm.setPostId(postId);
 
-        Long commentId = commentService.addComment(commentForm, user);
+        Long commentId = commentService.addComment(commentForm, postId, user);
         Comment foundComment = commentService.findCommentById(commentId);
 
         Assertions.assertEquals(commentForm.getContent(), foundComment.getContent());

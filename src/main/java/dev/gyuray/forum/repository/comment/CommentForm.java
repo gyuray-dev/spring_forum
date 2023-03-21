@@ -9,6 +9,4 @@ import javax.validation.constraints.NotBlank;
 public class CommentForm {
     @NotBlank
     private String content;
-    @NotBlank
-    private Long postId;
 }

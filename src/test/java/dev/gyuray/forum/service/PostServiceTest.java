@@ -80,7 +80,7 @@ class PostServiceTest {
 
         Long postId1 = postService.addPost(postForm1, user);
         Long postId2 = postService.addPost(postForm2, user);
-        List<PostListDTO> postListDTOs = postService.findAll(1, 10);
+        List<PostListDTO> postListDTOs = postService.findAll(1, 10, null);
 
         Assertions.assertEquals(2, postListDTOs.size());
     }

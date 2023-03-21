@@ -70,11 +70,10 @@ public class TestDataInit {
             for (int j = 1; j <= i + 1; j++) {
                 CommentForm commentForm = new CommentForm();
                 commentForm.setContent("댓글 " + j);
-                commentForm.setPostId(postListDTOs.get(i).getPostId());
-                if (i % 2 != 0) {
-                    commentService.addComment(commentForm, user1);
+                if (j % 2 != 0) {
+                    commentService.addComment(commentForm, postListDTOs.get(i).getPostId(), user1);
                 } else {
-                    commentService.addComment(commentForm, user2);
+                    commentService.addComment(commentForm, postListDTOs.get(i).getPostId(), user2);
                 }
             }
         }
