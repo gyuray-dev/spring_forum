@@ -48,13 +48,14 @@
                 <tr th:each="postListDTO : ${postListDTOs}" class="text-center h-2">
                     <td th:text="${postListDTO.postId}">2</td>
                     <td class="text-dark text-start">
-                        <a  class="list-group-item"
+                        <a  class="list-group-item d-inline me-3"
                             th:text="${postListDTO.title}"
                             th:href="@{/posts/{postId}?currentPage={currentPage}
                                     (postId = ${postListDTO.postId},
                                      currentPage = ${postPagerDTO.currentPage})}">
                             글제목
                         </a>
+                        <i class="bi bi-chat-left-text text-secondary" style="font-size:13px;" th:text="|&nbsp;${postListDTO.commentsCount}|"></i>
                     </td>
                     <td th:text="${postListDTO.userName}">운영자</td>
                     <td th:text="${postListDTO.view}">1</td>

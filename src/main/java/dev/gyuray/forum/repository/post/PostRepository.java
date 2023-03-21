@@ -30,7 +30,8 @@ public class PostRepository {
                 "u.name, " +
                 "p.regDate, " +
                 "p.view, " +
-                "''" +
+                "'', " +
+                "(select count(*) from Comment c where c.post = p)" +
                 ") " +
                 "from Post p " +
                 "join p.user u ";
