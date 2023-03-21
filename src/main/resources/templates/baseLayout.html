@@ -72,7 +72,7 @@
                 <a class="navbar-brand my-auto" href="/">
                     <img src="/assets/spring.png" alt="Logo" width="30" height="30" class="d-inline-block">
                 </a>
-                <h5 class="m-0">Spring Forum</h5>
+                <h5 class="mb-0 me-auto"><a class="text-decoration-none text-dark" href="/">Spring Forum</a></h5>
                 <a th:unless="${#objects.nullSafe(hideLoginButtons, false) or isLoggedIn}" type="button" class="btn btn-outline-primary ms-auto" href="/users/login">로그인</a>
                 <a th:unless="${#objects.nullSafe(hideLoginButtons, false) or isLoggedIn}" type="button" class="btn btn-primary ms-2" href="/users/new">회원가입</a>
                 <a th:if="${isLoggedIn}" type="button" class="btn btn-outline-secondary ms-auto" href="/users/logout">로그아웃</a>
