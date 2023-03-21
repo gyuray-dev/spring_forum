@@ -15,6 +15,9 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
 
+  messages:
+    basename: messages,errors
+
 #p6spy - sql insert문 조회
 decorator:
   datasource:

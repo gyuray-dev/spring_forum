@@ -91,6 +91,7 @@ public class UserController {
         }
 
         if (bindingResult.hasErrors()) {
+            log.info("bindingResult = {}", bindingResult);
             return "users/userForm";
         }
 
