@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -25,7 +27,7 @@ class CommentServiceTest {
     @Autowired PostService postService;
 
     @Test
-    void basicCrud() {
+    void basicCrud() throws IOException {
         // writer
         UserForm userFormA = new UserForm();
         userFormA.setLoginId("admin");

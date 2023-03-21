@@ -1,6 +1,7 @@
 package dev.gyuray.forum.controller;
 
 import dev.gyuray.forum.domain.Post;
+import dev.gyuray.forum.domain.UploadFile;
 import dev.gyuray.forum.domain.User;
 import dev.gyuray.forum.repository.comment.CommentListDTO;
 import dev.gyuray.forum.repository.post.PostForm;
@@ -12,14 +13,17 @@ import dev.gyuray.forum.service.PostPagerDTO;
 import dev.gyuray.forum.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -30,6 +34,7 @@ public class PostController {
 
     private final PostService postService;
     private final CommentService commentService;
+    private final FileManager fileManager;
 
     @GetMapping
     public String postList(
@@ -63,12 +68,13 @@ public class PostController {
             @Validated @ModelAttribute PostForm postForm,
             BindingResult bindingResult,
             @SessionAttribute(value = "loginUser") User loginUser
-    ) {
+    ) throws IOException {
         if (bindingResult.hasErrors()) {
             return "posts/postForm";
         }
 
-        postService.addPost(postForm, loginUser);
+        Long postId = postService.addPost(postForm, loginUser);
+
         return "redirect:/posts";
     }
 

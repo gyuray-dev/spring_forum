@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.io.IOException;
 import java.util.List;
 
 @SpringBootTest
@@ -27,7 +28,7 @@ class PostServiceTest {
     UserService userService;
 
     @Test
-    void basicCrud() {
+    void basicCrud() throws IOException {
         //new post
         PostForm postForm = new PostForm();
         postForm.setTitle("제목1");
@@ -63,7 +64,7 @@ class PostServiceTest {
     }
 
     @Test
-    void findAll() {
+    void findAll() throws IOException {
         // writer
         UserForm userFormA = new UserForm();
         userFormA.setLoginId("userA");

@@ -16,7 +16,7 @@
 
     <!-- 글 등록 -->
     <div class="container">
-        <form th:action="@{/posts}" method="post">
+        <form th:action="@{/posts}" method="post" enctype="multipart/form-data">
             <!-- 제목 -->
             <div class="input-group mb-3">
                 <span class="input-group-text">제목</span>
@@ -31,6 +31,7 @@
                 <a class="btn btn-md btn-outline-secondary ms-2 my-3" href="/posts" value="취소">취소</a>
             </div>
             <input type="hidden" name="content" id="content">
+            <input type="file" name="uploadFiles" id="uploadFiles" multiple>
         </form>
     </div>
 

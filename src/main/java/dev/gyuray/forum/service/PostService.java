@@ -1,17 +1,22 @@
 package dev.gyuray.forum.service;
 
+import dev.gyuray.forum.controller.FileManager;
 import dev.gyuray.forum.domain.Post;
 import dev.gyuray.forum.domain.Role;
+import dev.gyuray.forum.domain.UploadFile;
 import dev.gyuray.forum.domain.User;
 import dev.gyuray.forum.repository.post.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,22 +27,31 @@ import java.util.Optional;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final UserService userService;
+    private final FileManager fileManager;
 
     @Transactional
-    public Long addPost(PostForm postForm, User writer) {
+    public Long addPost(PostForm postForm, User writer) throws IOException {
         Post post = new Post();
         post.setUser(writer);
         post.setTitle(postForm.getTitle());
         post.setContent(postForm.getContent());
+
+        List<MultipartFile> multipartFiles = postForm.getUploadFiles();
+        if (multipartFiles != null) {
+            List<UploadFile> uploadFiles = fileManager.storeFiles(multipartFiles);
+            for (UploadFile uploadFile : uploadFiles) {
+                uploadFile.addToPost(post);
+            }
+        }
+
         postRepository.save(post);
         return post.getId();
     }
 
     public Post findPostById(Long postId) {
         return postRepository.findOne(postId).orElseThrow(() -> {
-                    throw new IllegalStateException("해당 게시글이 존재하지 않습니다");
-                });
+            throw new IllegalStateException("해당 게시글이 존재하지 않습니다");
+        });
     }
 
     public List<PostListDTO> findAll(int pageNum, int pageSize, PostSearchDTO postSearchDTO) {

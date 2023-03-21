@@ -18,6 +18,15 @@ spring:
   messages:
     basename: messages,errors
 
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 30MB
+
+file:
+  path: /Users/gyuray/dev/projects/forum/src/main/resources/files/
+
+
 #p6spy - sql insert문 조회
 decorator:
   datasource:
@@ -32,3 +41,4 @@ server:
     session:
       tracking-modes: cookie
       timeout: 1800
+

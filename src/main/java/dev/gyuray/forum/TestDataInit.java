@@ -17,6 +17,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -31,7 +32,7 @@ public class TestDataInit {
 
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
-    public void initTestData() {
+    public void initTestData() throws IOException {
         log.info("Test Data Initialization");
 
         UserForm userForm = new UserForm();
