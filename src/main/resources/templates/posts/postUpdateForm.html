@@ -22,6 +22,15 @@
                 <input th:field="*{title}" type="text" class="form-control"/>
             </div>
             <div th:errors="*{title}" class="text-danger text-center">에러 메시지</div>
+            <input class="mb-3" th:field="*{uploadFiles}" type="file" multiple>
+
+            <ul class="list-group me-auto col-sm-5 col-md-4 mb-1">
+                <li th:each="uploadFile : ${uploadFiles}" class="list-group-item d-flex justify-content-between">
+                    <i class="bi bi-file-earmark me-2"></i>
+                    <span class="me-auto" th:text="${uploadFile.originalFileName}"></span>
+                    <button type="button" class="btn-close" th:id="${uploadFile.id}" onclick="uploadFileDeleteAjax(this)"></button>
+                </li>
+            </ul>
 
             <!-- 본문 -->
             <div id="editor"></div>
@@ -32,7 +41,6 @@
                 <a class="btn btn-md btn-outline-secondary ms-2 my-3" href="/posts">취소</a>
             </div>
             <input th:field="*{content}" type="hidden" name="content" id="content">
-            <input th:field="*{uploadFiles}" type="file" multiple>
         </form>
     </div>
 
@@ -72,6 +80,20 @@
 
             request.open("POST", "/files/images/new");
             request.send(formData);
+        }
+
+        function uploadFileDeleteAjax(button) {
+            let uploadFileId = button.id;
+            let li = button.closest("li");
+
+            let request = new XMLHttpRequest();
+
+            request.onload = () => {
+                li.remove();
+            };
+
+            request.open("GET", "/files/attachment/" + uploadFileId + "/delete");
+            request.send();
         }
 
         function submitPost(button) {

@@ -16,12 +16,15 @@
 
     <!-- 글 등록 -->
     <div class="container">
-        <form th:action="@{/posts}" method="post" enctype="multipart/form-data">
+        <form th:object="${postForm}" action="/posts" method="post" enctype="multipart/form-data">
             <!-- 제목 -->
             <div class="input-group mb-3">
                 <span class="input-group-text">제목</span>
-                <input name="title" id="title" type="text" class="form-control" aria-label="title input"/>
+                <input th:field="*{title}" type="text" class="form-control"/>
             </div>
+            <div th:errors="*{title}" class="text-danger text-center">에러 메시지</div>
+
+            <input class="mb-3" type="file" name="uploadFiles" id="uploadFiles" multiple>
 
             <!-- 본문 -->
             <div id="editor"></div>
@@ -30,8 +33,7 @@
                 </button>
                 <a class="btn btn-md btn-outline-secondary ms-2 my-3" href="/posts" value="취소">취소</a>
             </div>
-            <input type="hidden" name="content" id="content">
-            <input type="file" name="uploadFiles" id="uploadFiles" multiple>
+            <input th:field="*{content}" type="hidden" name="content" id="content">
         </form>
     </div>
 

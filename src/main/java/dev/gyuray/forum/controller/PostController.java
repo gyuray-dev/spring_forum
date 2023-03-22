@@ -86,11 +86,6 @@ public class PostController {
         postService.addView(foundPost, loginUser);
         model.addAttribute("post", foundPost);
 
-        for (UploadFile uploadFile : foundPost.getUploadFiles()) {
-            log.info("uploadFile.getStoredFileName() = {}", uploadFile.getStoredFileName());
-            log.info("uploadFile.getOriginalFileName() = {}", uploadFile.getOriginalFileName());
-        }
-
         List<CommentListDTO> commentListDTOs = commentService.findAllByPostId(postId);
         model.addAttribute("commentListDTOs", commentListDTOs);
 
@@ -101,7 +96,9 @@ public class PostController {
     }
 
     @GetMapping("/new")
-    public String createForm() {
+    public String createForm(
+            @ModelAttribute PostForm postForm
+    ) {
         return "posts/postForm";
     }
 

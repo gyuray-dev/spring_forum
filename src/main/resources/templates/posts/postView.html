@@ -38,24 +38,19 @@
         </div>
 
         <!-- 첨부파일 목록 -->
-        <div th:if="${post.uploadFiles.size() > 0}" class="row d-flex flex-column">
-            <button class="col-3 me-auto btn btn-outline-primary" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#collapseExample">
-                <small>첨부파일 보기</small>
-            </button>
-            <div th:each="uploadFile : ${post.uploadFiles}" class="col-3 me-auto collapse p-0" id="collapseExample">
-                <div class="list-group">
-                    <a th:href="|/files/attachment/${uploadFile.id}|" class="list-group-item list-group-item-action">
-                        <div class="d-flex justify-content-between">
-                            <small class="overflow-hidden p-0" th:text="${uploadFile.originalFileName}">첨부파일 이름</small>
-                            <small th:text="${uploadFile.size}" class="text-muted ms-2" style="font-size: 10px;">3MB</small>
-                        </div>
+        <div th:if="${post.uploadFiles.size() > 0}" class="row ms-1">
+            <ul class="list-group me-auto col-sm-5 col-md-4 mb-3">
+                <li th:each="uploadFile : ${post.uploadFiles}" class="list-group-item">
+                    <a th:href="|/files/attachment/${uploadFile.id}|" class="d-flex justify-content-between text-decoration-none text-black">
+                        <i class="bi bi-file-earmark me-2"></i>
+                        <span class="me-auto link-primary" th:text="${uploadFile.originalFileName}">첨부파일 이름</span>
+                        <small th:text="${uploadFile.size}" class="text-muted ms-2">3MB</small>
                     </a>
-                </div>
-            </div>
+                </li>
+            </ul>
         </div>
         <!-- TOAST UI EDITOR 뷰어 -->
-        <div id="viewer"></div>
+        <div id="viewer" class="p-2"></div>
 
     </div>
 
