@@ -40,11 +40,6 @@ public class Post {
     @Column(nullable = false)
     private int view;
 
-    public void updatePost(PostUpdateDTO postUpdateDTO) {
-        this.setContent(postUpdateDTO.getContent());
-        this.setTitle(postUpdateDTO.getTitle());
-    }
-
     public Post() {
         regDate = LocalDateTime.now();
         view = 0;

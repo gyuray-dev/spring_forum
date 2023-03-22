@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -107,10 +108,17 @@ public class PostController {
     @GetMapping("/{postId}/edit")
     public String updatePostForm(
             @PathVariable Long postId,
+            @ModelAttribute PostUpdateDTO postUpdateDTO,
             Model model
     ) {
         Post foundPost = postService.findPostById(postId);
-        model.addAttribute("post", foundPost);
+
+        postUpdateDTO.setPostId(foundPost.getId());
+        postUpdateDTO.setTitle(foundPost.getTitle());
+        postUpdateDTO.setContent(foundPost.getContent());
+
+        model.addAttribute("uploadFiles", foundPost.getUploadFiles());
+        log.info("foundPost.getId() = {}", foundPost.getId());
         return "posts/postUpdateForm";
     }
 
@@ -120,7 +128,7 @@ public class PostController {
             @Validated @ModelAttribute PostUpdateDTO postUpdateDTO,
             BindingResult bindingResult,
             @SessionAttribute User loginUser
-    ) {
+    ) throws IOException {
         if (bindingResult.hasErrors()) {
             return "posts/postUpdateForm";
         }

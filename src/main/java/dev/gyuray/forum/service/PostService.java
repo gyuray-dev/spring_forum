@@ -86,11 +86,23 @@ public class PostService {
     }
 
     @Transactional
-    public void updatePost(Long postId, PostUpdateDTO postUpdateDTO, User user) {
+    public void updatePost(Long postId, PostUpdateDTO postUpdateDTO, User user) throws IOException {
         Post post = findPostById(postId);
 
         if (post.getUser().getId() == user.getId()) {
-            post.updatePost(postUpdateDTO);
+            List<MultipartFile> multipartFiles = postUpdateDTO.getUploadFiles();
+
+            if (multipartFiles != null) {
+                List<UploadFile> uploadFiles = post.getUploadFiles();
+                for (UploadFile newUploadFile : fileManager.storeFiles(multipartFiles)) {
+                    newUploadFile.addToPost(post);
+                }
+
+                post.setUploadFiles(uploadFiles);
+            }
+
+            post.setTitle(postUpdateDTO.getTitle());
+            post.setContent(postUpdateDTO.getContent());
         } else {
             throw new IllegalStateException("게시글을 수정할 권한이 없습니다.");
         }

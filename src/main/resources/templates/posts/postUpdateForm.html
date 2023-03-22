@@ -15,12 +15,13 @@
 
     <!-- 글 수정 -->
     <div class="container">
-        <form th:action="@{/posts/{postId}/edit(postId = ${post.id})}" method="post">
+        <form th:object="${postUpdateDTO}" th:action="@{/posts/{postId}/edit(postId = *{postId})}" method="post" enctype="multipart/form-data">
             <!-- 제목 -->
             <div class="input-group mb-3">
                 <span class="input-group-text">제목</span>
-                <input th:value="${post.title}" name="title" id="title" type="text" class="form-control" aria-label="title input"/>
+                <input th:field="*{title}" type="text" class="form-control"/>
             </div>
+            <div th:errors="*{title}" class="text-danger text-center">에러 메시지</div>
 
             <!-- 본문 -->
             <div id="editor"></div>
@@ -30,8 +31,8 @@
                 </button>
                 <a class="btn btn-md btn-outline-secondary ms-2 my-3" href="/posts">취소</a>
             </div>
-            <input type="hidden" name="content" id="content">
-            <input type="hidden" name="userId" id="userId" value="1"/> <!-- TODO - 유저 권한 기능 추가 후 변경 -->
+            <input th:field="*{content}" type="hidden" name="content" id="content">
+            <input th:field="*{uploadFiles}" type="file" multiple>
         </form>
     </div>
 
@@ -60,7 +61,7 @@
                 }
             }
         });
-        editor.setHTML([[${post.content}]]);
+        editor.setHTML([[${postUpdateDTO.content}]]);
 
         function imageUploadAjax(formData, editorCallback) {
             let request = new XMLHttpRequest();

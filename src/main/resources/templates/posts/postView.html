@@ -47,8 +47,7 @@
                 <div class="list-group">
                     <a th:href="|/files/attachment/${uploadFile.id}|" class="list-group-item list-group-item-action">
                         <div class="d-flex justify-content-between">
-                            <span class="overflow-scroll align-bottom" th:text="${uploadFile.originalFileName}"
-                                  style="font-size: 12px;">첨부파일 이름</span>
+                            <small class="overflow-hidden p-0" th:text="${uploadFile.originalFileName}">첨부파일 이름</small>
                             <small th:text="${uploadFile.size}" class="text-muted ms-2" style="font-size: 10px;">3MB</small>
                         </div>
                     </a>
