@@ -4,10 +4,7 @@ import dev.gyuray.forum.domain.Post;
 import dev.gyuray.forum.domain.UploadFile;
 import dev.gyuray.forum.domain.User;
 import dev.gyuray.forum.repository.comment.CommentListDTO;
-import dev.gyuray.forum.repository.post.PostForm;
-import dev.gyuray.forum.repository.post.PostListDTO;
-import dev.gyuray.forum.repository.post.PostSearchDTO;
-import dev.gyuray.forum.repository.post.PostUpdateDTO;
+import dev.gyuray.forum.repository.post.*;
 import dev.gyuray.forum.service.CommentService;
 import dev.gyuray.forum.service.PostPagerDTO;
 import dev.gyuray.forum.service.PostService;
@@ -34,7 +31,6 @@ public class PostController {
 
     private final PostService postService;
     private final CommentService commentService;
-    private final FileManager fileManager;
 
     @GetMapping
     public String postList(
@@ -88,6 +84,11 @@ public class PostController {
         Post foundPost = postService.findPostById(postId);
         postService.addView(foundPost, loginUser);
         model.addAttribute("post", foundPost);
+
+        for (UploadFile uploadFile : foundPost.getUploadFiles()) {
+            log.info("uploadFile.getStoredFileName() = {}", uploadFile.getStoredFileName());
+            log.info("uploadFile.getOriginalFileName() = {}", uploadFile.getOriginalFileName());
+        }
 
         List<CommentListDTO> commentListDTOs = commentService.findAllByPostId(postId);
         model.addAttribute("commentListDTOs", commentListDTOs);

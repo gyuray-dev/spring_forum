@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html th:replace="~{/baseLayout :: baseLayout(~{::title}, ~{::section}, ~{::link})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{/baseLayout :: baseLayout(~{::title}, ~{::section}, ~{::link})}"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -7,7 +8,7 @@
     <title>게시글 조회</title>
 
     <!--  TOAST UI Editor Viewer CSS -->
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.min.css" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.min.css"/>
 </head>
 
 <body>
@@ -29,12 +30,34 @@
                 <div class="row">
                     <a th:if="${loginUser.id == post.user.id}" th:href="@{/posts/{postId}/edit(postId = ${post.id})}"
                        class="col-md-6 col-sm-6 text-end fw-semibold">수정</a>
-                    <a th:if="${loginUser.id == post.user.id or loginUser.role.name() == 'ADMIN'}" th:href="@{/posts/{postId}/delete(postId = ${post.id})}"
+                    <a th:if="${loginUser.id == post.user.id or loginUser.role.name() == 'ADMIN'}"
+                       th:href="@{/posts/{postId}/delete(postId = ${post.id})}"
                        class="col-md-6 col-sm-6 text-end fw-semibold">삭제</a>
                 </div>
             </div>
         </div>
+
+        <!-- 첨부파일 목록 -->
+        <div th:if="${post.uploadFiles.size() > 0}" class="row d-flex flex-column">
+            <button class="col-3 me-auto btn btn-outline-primary" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseExample">
+                <small>첨부파일 보기</small>
+            </button>
+            <div th:each="uploadFile : ${post.uploadFiles}" class="col-3 me-auto collapse p-0" id="collapseExample">
+                <div class="list-group">
+                    <a th:href="|/files/${uploadFile.id}|" class="list-group-item list-group-item-action">
+                        <div class="d-flex justify-content-between">
+                            <span class="overflow-scroll align-bottom" th:text="${uploadFile.originalFileName}"
+                                  style="font-size: 12px;">첨부파일 이름</span>
+                            <small th:text="${uploadFile.size}" class="text-muted ms-2" style="font-size: 10px;">3MB</small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- TOAST UI EDITOR 뷰어 -->
         <div id="viewer"></div>
+
     </div>
 
     <!-- 목록으로 버튼 -->
@@ -51,7 +74,9 @@
             <textarea class="form-control w-100 mt-3" style="resize: none;" name="content" rows="3"
                       placeholder="댓글을 입력해주세요"></textarea>
             <div class="d-flex">
-                <button type="button" onclick="submitComment(this)" class="btn btn-sm btn-primary ms-auto my-3 fw-bold" />댓글 등록</button>
+                <button type="button" onclick="submitComment(this)"
+                        class="btn btn-sm btn-primary ms-auto my-3 fw-bold"/>
+                댓글 등록</button>
             </div>
             <input type="hidden" name="userId" th:value="${post.user.id}"/>
             <input type="hidden" name="postId" th:value="${post.id}"/>
@@ -169,6 +194,9 @@
         function stripHtmlAndTrim(str) {
             return str.replace(/<\/?[^>]+(>|$)/g, "").trim();
         }
+
+
+
 
     </script>
 
