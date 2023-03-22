@@ -32,8 +32,9 @@ public class FileManager {
         String ext = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
         String storingFileName = UUID.randomUUID() + "." + ext;
 
+
         multipartFile.transferTo(new File(filePath + storingFileName));
 
-        return new UploadFile(originalFilename, storingFileName);
+        return new UploadFile(originalFilename, storingFileName, multipartFile.getSize());
     }
 }

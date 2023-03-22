@@ -2,7 +2,6 @@ package dev.gyuray.forum.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -15,6 +14,7 @@ public class UploadFile {
 
     private String originalFileName;
     private String storedFileName;
+    private String size;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
@@ -23,14 +23,27 @@ public class UploadFile {
     public UploadFile() {
     }
 
-    public UploadFile(String originalFileName, String storedFileName) {
+    public UploadFile(String originalFileName, String storedFileName, long size) {
         this.originalFileName = originalFileName;
         this.storedFileName = storedFileName;
+        this.size = formattedSize(size);
     }
 
     public void addToPost(Post post) {
         this.post = post;
         post.getUploadFiles().add(this);
+    }
+    
+    public String formattedSize(Long size) {
+        double digits = Math.log10(size);
+
+        if (digits < 3) {
+            return size + "B";
+        } else if (digits < 6) {
+            return size / 1_000 + "KB";
+        } else {
+            return size / 1_000_000 + "MB";
+        }
     }
 
 }
