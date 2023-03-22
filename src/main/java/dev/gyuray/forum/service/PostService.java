@@ -97,10 +97,11 @@ public class PostService {
     }
 
     @Transactional
-    public void deletePost(Long postId, User user) {
+    public void deletePost(Long postId, User user) throws IOException {
         Post post = findPostById(postId);
 
         if (post.getUser().getId() == user.getId() || user.getRole() == Role.ADMIN) {
+            fileManager.deleteFiles(post.getUploadFiles());
             postRepository.delete(postId);
         } else {
             throw new IllegalStateException("게시글을 삭제할 권한이 없습니다.");

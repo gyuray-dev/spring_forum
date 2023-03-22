@@ -133,7 +133,7 @@ public class PostController {
     public String deletePost(
             @PathVariable Long postId,
             @SessionAttribute User loginUser
-    ) {
+    ) throws IOException {
         postService.deletePost(postId, loginUser);
         return "redirect:/posts/";
     }

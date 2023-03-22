@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -36,5 +37,16 @@ public class FileManager {
         multipartFile.transferTo(new File(filePath + storingFileName));
 
         return new UploadFile(originalFilename, storingFileName, multipartFile.getSize());
+    }
+
+    public void deleteFiles(List<UploadFile> uploadFiles) throws IOException {
+        for (UploadFile uploadFile : uploadFiles) {
+            deleteFile(uploadFile);
+        }
+    }
+
+    public void deleteFile(UploadFile uploadFile) throws IOException {
+        File file = new File(filePath + uploadFile.getStoredFileName());
+        Files.deleteIfExists(file.toPath());
     }
 }
