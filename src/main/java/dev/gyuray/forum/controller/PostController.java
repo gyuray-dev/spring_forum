@@ -60,7 +60,14 @@ public class PostController {
         return "posts/postList";
     }
 
-    @PostMapping
+    @GetMapping("/new")
+    public String createForm(
+            @ModelAttribute PostForm postForm
+    ) {
+        return "posts/postForm";
+    }
+
+    @PostMapping("/new")
     public String createPost(
             @Validated @ModelAttribute PostForm postForm,
             BindingResult bindingResult,
@@ -72,7 +79,7 @@ public class PostController {
 
         Long postId = postService.addPost(postForm, loginUser);
 
-        return "redirect:/posts";
+        return "redirect:/posts/" + postId;
     }
 
     @GetMapping("/{postId}")
@@ -93,13 +100,6 @@ public class PostController {
         model.addAttribute("currentPage", currentPage);
 
         return "posts/postView";
-    }
-
-    @GetMapping("/new")
-    public String createForm(
-            @ModelAttribute PostForm postForm
-    ) {
-        return "posts/postForm";
     }
 
     @GetMapping("/{postId}/edit")

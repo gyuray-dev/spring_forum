@@ -60,7 +60,9 @@ public class FileController {
         UploadFile uploadFile = uploadFileRepository.findOne(uploadFileId).orElseThrow(() -> {
             throw new IllegalStateException("권한이 없습니다");
         });
+
         Long userId = uploadFile.getPost().getUser().getId();
+
         if (userId == loginUser.getId()) {
             uploadFileRepository.delete(uploadFileId);
             fileManager.deleteFile(uploadFile);
