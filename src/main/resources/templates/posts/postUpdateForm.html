@@ -49,10 +49,29 @@
             height: '500px',
             initialEditType: 'WYSIWYG',
             previewStyle: 'vertical',
-            language: "ko-KR"
+            language: "ko-KR",
+            hooks: {
+            addImageBlobHook: function(imageFile, editorCallback) {
+                    console.log(imageFile);
+                    let formData = new FormData();
+                    formData.append("image", imageFile);
+
+                    imageUploadAjax(formData, editorCallback);
+                }
+            }
         });
         editor.setHTML([[${post.content}]]);
 
+        function imageUploadAjax(formData, editorCallback) {
+            let request = new XMLHttpRequest();
+
+            request.onload = () => {
+                editorCallback(request.responseText, "image");
+            };
+
+            request.open("POST", "/files/images/new");
+            request.send(formData);
+        }
 
         function submitPost(button) {
             let form = button.closest('form');

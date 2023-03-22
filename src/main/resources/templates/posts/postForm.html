@@ -42,15 +42,36 @@
     <!--  SweetAlert2  -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
+    <script th:inline="javascript">
     const Editor = toastui.Editor;
     const editor = new Editor({
         el: document.querySelector('#editor'),
         height: '500px',
         initialEditType: 'WYSIWYG',
         previewStyle: 'vertical',
-        language: "ko-KR"
+        language: "ko-KR",
+        hooks: {
+            addImageBlobHook: function(imageFile, editorCallback) {
+                console.log(imageFile);
+                let formData = new FormData();
+                formData.append("image", imageFile);
+
+                imageUploadAjax(formData, editorCallback);
+            }
+        }
     });
+
+    function imageUploadAjax(formData, editorCallback) {
+        let request = new XMLHttpRequest();
+
+        request.onload = () => {
+            editorCallback(request.responseText, "image");
+        };
+
+        request.open("POST", "/files/images/new");
+        request.send(formData);
+    }
+
 
     function submitPost(button) {
         let form = button.closest('form');
