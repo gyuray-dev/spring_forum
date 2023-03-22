@@ -27,7 +27,7 @@ public class FileController {
     @Value("${file.path}")
     private String filePath;
 
-    @GetMapping("/{uploadFileId}")
+    @GetMapping("/attachment/{uploadFileId}")
     public ResponseEntity<Resource> downloadFile(
             @PathVariable Long uploadFileId
     ) throws MalformedURLException {

@@ -45,7 +45,7 @@
             </button>
             <div th:each="uploadFile : ${post.uploadFiles}" class="col-3 me-auto collapse p-0" id="collapseExample">
                 <div class="list-group">
-                    <a th:href="|/files/${uploadFile.id}|" class="list-group-item list-group-item-action">
+                    <a th:href="|/files/attachment/${uploadFile.id}|" class="list-group-item list-group-item-action">
                         <div class="d-flex justify-content-between">
                             <span class="overflow-scroll align-bottom" th:text="${uploadFile.originalFileName}"
                                   style="font-size: 12px;">첨부파일 이름</span>
