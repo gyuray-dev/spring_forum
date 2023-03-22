@@ -8,6 +8,7 @@ import dev.gyuray.forum.domain.User;
 import dev.gyuray.forum.repository.post.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +29,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final FileManager fileManager;
+    private final UploadFileRepository uploadFileRepository;
 
     @Transactional
     public Long addPost(PostForm postForm, User writer) throws IOException {
@@ -89,23 +91,40 @@ public class PostService {
     public void updatePost(Long postId, PostUpdateDTO postUpdateDTO, User user) throws IOException {
         Post post = findPostById(postId);
 
-        if (post.getUser().getId() == user.getId()) {
-            List<MultipartFile> multipartFiles = postUpdateDTO.getUploadFiles();
-
-            if (multipartFiles != null) {
-                List<UploadFile> uploadFiles = post.getUploadFiles();
-                for (UploadFile newUploadFile : fileManager.storeFiles(multipartFiles)) {
-                    newUploadFile.addToPost(post);
-                }
-
-                post.setUploadFiles(uploadFiles);
-            }
-
-            post.setTitle(postUpdateDTO.getTitle());
-            post.setContent(postUpdateDTO.getContent());
-        } else {
+        if (post.getUser().getId() != user.getId()) {
             throw new IllegalStateException("게시글을 수정할 권한이 없습니다.");
         }
+
+        // 첨부파일 삭제
+        if (postUpdateDTO.getDeleteFileIds() != null) {
+            for (Long deleteFileId : postUpdateDTO.getDeleteFileIds()) {
+                UploadFile uploadFile = uploadFileRepository.findOne(deleteFileId).orElseThrow(() -> {
+                    throw new IllegalStateException("존재하지 않는 파일입니다.");
+                });
+
+                Long userId = uploadFile.getPost().getUser().getId();
+
+                if (userId == user.getId()) {
+                    uploadFileRepository.delete(deleteFileId);
+                    fileManager.deleteFile(uploadFile);
+                }
+            }
+        }
+
+        // 첨부파일 추가
+        List<MultipartFile> multipartFiles = postUpdateDTO.getUploadFiles();
+
+        if (multipartFiles != null) {
+            List<UploadFile> uploadFiles = post.getUploadFiles();
+            for (UploadFile newUploadFile : fileManager.storeFiles(multipartFiles)) {
+                newUploadFile.addToPost(post);
+            }
+
+            post.setUploadFiles(uploadFiles);
+        }
+
+        post.setTitle(postUpdateDTO.getTitle());
+        post.setContent(postUpdateDTO.getContent());
     }
 
     @Transactional

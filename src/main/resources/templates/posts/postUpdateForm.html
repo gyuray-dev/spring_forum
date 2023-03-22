@@ -27,8 +27,8 @@
             <ul class="list-group me-auto col-sm-5 col-md-4 mb-1">
                 <li th:each="uploadFile : ${uploadFiles}" class="list-group-item d-flex justify-content-between">
                     <i class="bi bi-file-earmark me-2"></i>
-                    <span class="me-auto" th:text="${uploadFile.originalFileName}"></span>
-                    <button type="button" class="btn-close" th:id="${uploadFile.id}" onclick="uploadFileDeleteAjax(this)"></button>
+                    <span class="me-auto overflow-hidden" th:text="${uploadFile.originalFileName}"></span>
+                    <button type="button" class="btn-close" th:id="${uploadFile.id}" onclick="uploadFileDelete(this)"></button>
                 </li>
             </ul>
 
@@ -38,7 +38,7 @@
             <div class="d-flex">
                 <button class="btn btn-md btn-primary ms-auto my-3" type="button" onclick="submitPost(this)">수정 완료
                 </button>
-                <a class="btn btn-md btn-outline-secondary ms-2 my-3" href="/posts">취소</a>
+                <a class="btn btn-md btn-outline-secondary ms-2 my-3" th:href="|/posts/${postUpdateDTO.postId}|">취소</a>
             </div>
             <input th:field="*{content}" type="hidden" name="content" id="content">
         </form>
@@ -82,20 +82,22 @@
             request.send(formData);
         }
 
-        function uploadFileDeleteAjax(button) {
+        // 파일 삭제
+        function uploadFileDelete(button) {
             let uploadFileId = button.id;
+            let form = button.closest("form");
             let li = button.closest("li");
 
-            let request = new XMLHttpRequest();
+            let input = document.createElement("input");
+            input.setAttribute("type", "hidden");
+            input.setAttribute("name", "deleteFileIds");
+            input.setAttribute("value", uploadFileId);
 
-            request.onload = () => {
-                li.remove();
-            };
-
-            request.open("GET", "/files/attachment/" + uploadFileId + "/delete");
-            request.send();
+            form.appendChild(input);
+            li.remove();
         }
 
+        // form 제출
         function submitPost(button) {
             let form = button.closest('form');
             let inputs = form.getElementsByTagName('input');
@@ -109,6 +111,7 @@
             };
         }
 
+        // form 유효성 검증
         function validatePost(form) {
             let title = form.querySelector('#title').value.trim();
             let content = stripHtmlAndTrim(form.querySelector('#content').value);

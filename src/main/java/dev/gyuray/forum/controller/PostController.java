@@ -1,23 +1,22 @@
 package dev.gyuray.forum.controller;
 
 import dev.gyuray.forum.domain.Post;
-import dev.gyuray.forum.domain.UploadFile;
 import dev.gyuray.forum.domain.User;
 import dev.gyuray.forum.repository.comment.CommentListDTO;
-import dev.gyuray.forum.repository.post.*;
+import dev.gyuray.forum.repository.post.PostForm;
+import dev.gyuray.forum.repository.post.PostListDTO;
+import dev.gyuray.forum.repository.post.PostSearchDTO;
+import dev.gyuray.forum.repository.post.PostUpdateDTO;
 import dev.gyuray.forum.service.CommentService;
 import dev.gyuray.forum.service.PostPagerDTO;
 import dev.gyuray.forum.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;

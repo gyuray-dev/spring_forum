@@ -18,4 +18,5 @@ public class PostUpdateDTO {
     private String content;
 
     private List<MultipartFile> uploadFiles;
+    private List<Long> deleteFileIds;
 }

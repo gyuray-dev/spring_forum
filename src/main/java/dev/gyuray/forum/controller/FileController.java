@@ -1,10 +1,8 @@
 package dev.gyuray.forum.controller;
 
 import dev.gyuray.forum.domain.UploadFile;
-import dev.gyuray.forum.domain.User;
 import dev.gyuray.forum.repository.post.UploadFileRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -18,7 +16,6 @@ import org.springframework.web.util.UriUtils;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -50,26 +47,6 @@ public class FileController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
                 .body(resource);
-    }
-
-    @GetMapping("/attachment/{uploadFileId}/delete")
-    public ResponseEntity deleteAttachment(
-            @PathVariable Long uploadFileId,
-            @SessionAttribute User loginUser
-    ) throws IOException {
-        UploadFile uploadFile = uploadFileRepository.findOne(uploadFileId).orElseThrow(() -> {
-            throw new IllegalStateException("권한이 없습니다");
-        });
-
-        Long userId = uploadFile.getPost().getUser().getId();
-
-        if (userId == loginUser.getId()) {
-            uploadFileRepository.delete(uploadFileId);
-            fileManager.deleteFile(uploadFile);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
     }
 
     @ResponseBody

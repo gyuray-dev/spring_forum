@@ -43,7 +43,7 @@
                 <li th:each="uploadFile : ${post.uploadFiles}" class="list-group-item">
                     <a th:href="|/files/attachment/${uploadFile.id}|" class="d-flex justify-content-between text-decoration-none text-black">
                         <i class="bi bi-file-earmark me-2"></i>
-                        <span class="me-auto link-primary" th:text="${uploadFile.originalFileName}">첨부파일 이름</span>
+                        <span class="me-auto link-primary overflow-hidden" th:text="${uploadFile.originalFileName}">첨부파일 이름</span>
                         <small th:text="${uploadFile.size}" class="text-muted ms-2">3MB</small>
                     </a>
                 </li>
