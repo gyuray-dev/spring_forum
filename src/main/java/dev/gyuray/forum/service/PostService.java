@@ -46,7 +46,7 @@ public class PostService {
         postRepository.save(post);
 
         // tree-path 지정
-        if (parentTreePath == null) {
+        if (parentTreePath == null || parentTreePath.equals("")) {
             parentTreePath = "/";
         } else {
             parentTreePath += "/";
@@ -83,7 +83,7 @@ public class PostService {
             }
 
             //들여쓰기
-            long depth = postListDTO.getTreePath().chars().filter(c -> c == '/').count();
+            long depth = postListDTO.getTreePath().chars().filter(c -> c == '/').count() - 1;
             StringBuilder newTitle = new StringBuilder();
             if (depth >= 1) {
                 for (int i = 0; i < depth; i++) {
