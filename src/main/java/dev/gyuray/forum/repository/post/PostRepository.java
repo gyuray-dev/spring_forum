@@ -31,7 +31,8 @@ public class PostRepository {
                 "p.regDate, " +
                 "p.view, " +
                 "'', " +
-                "(select count(*) from Comment c where c.post = p)" +
+                "(select count(*) from Comment c where c.post = p), " +
+                "p.treePath" +
                 ") " +
                 "from Post p " +
                 "join p.user u ";
@@ -53,7 +54,7 @@ public class PostRepository {
             isSearching = true;
         }
 
-        jpql += "order by p.id desc";
+        jpql += "order by p.root desc, p.treePath";
 
         TypedQuery<PostListDTO> query = em.createQuery(jpql, PostListDTO.class);
 

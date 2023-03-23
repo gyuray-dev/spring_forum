@@ -70,13 +70,14 @@ public class PostController {
     public String createPost(
             @Validated @ModelAttribute PostForm postForm,
             BindingResult bindingResult,
+            @RequestParam String parentTreePath,
             @SessionAttribute(value = "loginUser") User loginUser
     ) throws IOException {
         if (bindingResult.hasErrors()) {
             return "posts/postForm";
         }
 
-        Long postId = postService.addPost(postForm, loginUser);
+        Long postId = postService.addPost(postForm, loginUser,parentTreePath);
 
         return "redirect:/posts/" + postId;
     }

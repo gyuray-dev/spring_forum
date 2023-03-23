@@ -54,10 +54,12 @@
 
     </div>
 
-    <!-- 목록으로 버튼 -->
+    <!-- 버튼 -->
     <div class="container d-flex">
-        <a class="btn btn-outline-primary ms-auto mt-2 fw-bold"
-           th:href="@{/posts?currentPage={currentPage}(currentPage=${currentPage})}">목록으로</a>
+        <a class="btn btn-outline-primary ms-auto mt-2 me-2 fw-bold"
+           th:href="|/posts?currentPage=${currentPage}|">목록으로</a>
+        <a class="btn btn-outline-primary mt-2 fw-bold"
+           th:href="|/posts/new?parentTreePath=${post.treePath}|">답글 작성</a>
     </div>
 
 

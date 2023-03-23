@@ -49,6 +49,7 @@
                     <td th:text="${postListDTO.postId}">2</td>
                     <td class="text-dark text-start">
                         <a  class="list-group-item d-inline me-3"
+                            style="white-space: pre;"
                             th:text="${postListDTO.title}"
                             th:href="@{/posts/{postId}?currentPage={currentPage}
                                     (postId = ${postListDTO.postId},

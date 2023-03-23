@@ -60,9 +60,9 @@ public class TestDataInit {
             postForm.setContent("내용" + i);
 
             if (i % 2 != 0) {
-                postService.addPost(postForm, user1);
+                postService.addPost(postForm, user1, null);
             } else {
-                postService.addPost(postForm, user2);
+                postService.addPost(postForm, user2, null);
             }
         }
 

@@ -16,4 +16,5 @@ public class PostListDTO {
     private Integer view;
     private String formattedRegDate;
     private Long commentsCount;
+    private String treePath;
 }

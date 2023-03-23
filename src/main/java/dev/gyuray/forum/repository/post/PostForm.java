@@ -15,4 +15,6 @@ public class PostForm {
     private String content;
 
     private List<MultipartFile> uploadFiles;
+
+    private String parentTreePath;
 }

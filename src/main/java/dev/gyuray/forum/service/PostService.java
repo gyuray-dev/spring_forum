@@ -8,18 +8,16 @@ import dev.gyuray.forum.domain.User;
 import dev.gyuray.forum.repository.post.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -32,7 +30,7 @@ public class PostService {
     private final UploadFileRepository uploadFileRepository;
 
     @Transactional
-    public Long addPost(PostForm postForm, User writer) throws IOException {
+    public Long addPost(PostForm postForm, User writer, String parentTreePath) throws IOException {
         Post post = new Post();
         post.setUser(writer);
         post.setTitle(postForm.getTitle());
@@ -47,6 +45,18 @@ public class PostService {
         }
 
         postRepository.save(post);
+
+        // tree-path 지정
+        if (parentTreePath == null) {
+            parentTreePath = "/";
+        } else {
+            parentTreePath += "/";
+        }
+        post.setTreePath(parentTreePath + post.getId());
+        String treePath = post.getTreePath();
+        String _root = treePath.split("/")[1];
+        post.setRoot(Long.parseLong(_root));
+
         return post.getId();
     }
 
@@ -60,8 +70,9 @@ public class PostService {
         int firstIndex = (pageNum - 1) * pageSize;
         List<PostListDTO> postListDTOs = postRepository.findAll(firstIndex, pageSize, postSearchDTO);
 
-        // 날짜 포매팅
+        // 날짜 포매팅 및 들여쓰기 처리
         for (PostListDTO postListDTO : postListDTOs) {
+            //날짜 포매팅
             LocalDateTime regDate = postListDTO.getRegDate();
             LocalDateTime now = LocalDateTime.now();
             long diff = ChronoUnit.HOURS.between(regDate, now);
@@ -70,6 +81,18 @@ public class PostService {
                 postListDTO.setFormattedRegDate(DateTimeFormatter.ofPattern("HH:mm").format(regDate));
             } else {
                 postListDTO.setFormattedRegDate(DateTimeFormatter.ofPattern("yyyy-MM-dd").format(regDate));
+            }
+
+            //들여쓰기
+            long depth = postListDTO.getTreePath().chars().filter(c -> c == '/').count();
+            StringBuilder newTitle = new StringBuilder();
+            if (depth >= 1) {
+                for (int i = 0; i < depth; i++) {
+                    newTitle.append("      ");
+                }
+                newTitle.append("ㄴ ");
+                newTitle.append(postListDTO.getTitle());
+                postListDTO.setTitle(newTitle.toString());
             }
         }
 

@@ -41,7 +41,7 @@ class PostServiceTest {
         Long userId = userService.join(userFormA);
         User user = userService.findUser(userId);
 
-        Long postId = postService.addPost(postForm, user);
+        Long postId = postService.addPost(postForm, user, null);
         Post foundPost = postService.findPostById(postId);
 
         Assertions.assertEquals(postForm.getTitle(), foundPost.getTitle());
@@ -79,8 +79,8 @@ class PostServiceTest {
         PostForm postForm2 = new PostForm();
         postForm2.setTitle("제목2");
 
-        Long postId1 = postService.addPost(postForm1, user);
-        Long postId2 = postService.addPost(postForm2, user);
+        Long postId1 = postService.addPost(postForm1, user, null);
+        Long postId2 = postService.addPost(postForm2, user, null);
         List<PostListDTO> postListDTOs = postService.findAll(1, 10, null);
 
         Assertions.assertEquals(2, postListDTOs.size());
