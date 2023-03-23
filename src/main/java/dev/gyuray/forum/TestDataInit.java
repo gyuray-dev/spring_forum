@@ -54,16 +54,14 @@ public class TestDataInit {
         Long userId2 = userService.join(userForm);
         User user2 = userService.findUser(userId2);
 
-        for (int i = 1; i <= 10; i++) {
+        StringBuilder parentTreePath = new StringBuilder("");
+        for (int i = 1; i <= 100; i++) {
             PostForm postForm = new PostForm();
             postForm.setTitle("제목" + i);
             postForm.setContent("내용" + i);
 
-            if (i % 2 != 0) {
-                postService.addPost(postForm, user1, null);
-            } else {
-                postService.addPost(postForm, user2, null);
-            }
+            Long id = postService.addPost(postForm, i % 2 != 0? user1 : user2, parentTreePath.toString());
+            parentTreePath.append("/" + id);
         }
 
         List<PostListDTO> postListDTOs = postService.findAll(1, 10, null);
@@ -78,5 +76,7 @@ public class TestDataInit {
                 }
             }
         }
+
+        log.info("Initialization complete");
     }
 }
