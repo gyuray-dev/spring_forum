@@ -63,7 +63,7 @@ public class CommentService {
     public void updateComment(Long commentId, CommentUpdateDTO commentUpdateDTO, User user) {
         Comment foundComment = findCommentById(commentId);
 
-        if (foundComment.getUser().getId() == user.getId()) {
+        if (foundComment.getUser().getId().equals(user.getId())) {
             foundComment.updateComment(commentUpdateDTO);
         } else {
             log.info("foundComment.getUser().getLoginId() = {}", foundComment.getUser().getLoginId());
@@ -76,7 +76,7 @@ public class CommentService {
     public void deleteComment(Long commentId, User user) {
         Comment foundComment = findCommentById(commentId);
 
-        if (foundComment.getUser().getId() == user.getId() || user.getRole() == Role.ADMIN) {
+        if (foundComment.getUser().getId().equals(user.getId()) || user.getRole() == Role.ADMIN) {
             commentRepository.delete(commentId);
         } else {
             throw new IllegalStateException("댓글을 삭제할 권한이 없습니다.");
