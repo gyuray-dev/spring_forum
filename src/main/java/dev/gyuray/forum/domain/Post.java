@@ -40,7 +40,6 @@ public class Post {
     private int view;
 
     private Long root;
-    @Lob
     private String treePath;
 
     public Post() {

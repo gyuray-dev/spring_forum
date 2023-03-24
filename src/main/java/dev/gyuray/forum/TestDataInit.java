@@ -55,13 +55,15 @@ public class TestDataInit {
         User user2 = userService.findUser(userId2);
 
         StringBuilder parentTreePath = new StringBuilder("");
-        for (int i = 1; i <= 100; i++) {
+        for (int i = 1; i <= 9; i++) {
             PostForm postForm = new PostForm();
             postForm.setTitle("제목" + i);
             postForm.setContent("내용" + i);
 
-            Long id = postService.addPost(postForm, i % 2 != 0? user1 : user2, parentTreePath.toString());
-            parentTreePath.append("/" + id);
+            Long postId = postService.addPost(postForm, i % 2 != 0? user1 : user2, parentTreePath.toString());
+            String hexaTriDecimalId = String.format("%6s", Long.toString(postId, Character.MAX_RADIX))
+                    .replace(" ", "0");
+            parentTreePath.append("/" + hexaTriDecimalId);
         }
 
         List<PostListDTO> postListDTOs = postService.findAll(1, 10, null);

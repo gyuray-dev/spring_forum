@@ -51,10 +51,12 @@ public class PostService {
         } else {
             parentTreePath += "/";
         }
-        post.setTreePath(parentTreePath + post.getId());
-        String treePath = post.getTreePath();
-        String _root = treePath.split("/")[1];
-        post.setRoot(Long.parseLong(_root));
+        String hexaTriDecimalId = String.format("%6s", Long.toString(post.getId(), Character.MAX_RADIX))
+                .replace(" ", "0");
+        String treePath = parentTreePath + hexaTriDecimalId;
+        post.setTreePath(treePath);
+        Long _root = Long.parseLong(treePath.split("/")[1], Character.MAX_RADIX);
+        post.setRoot(_root);
 
         return post.getId();
     }
