@@ -59,8 +59,9 @@ public class TestDataInit {
             PostForm postForm = new PostForm();
             postForm.setTitle("제목" + i);
             postForm.setContent("내용" + i);
+            postForm.setParentTreePath(parentTreePath.toString());
 
-            Long postId = postService.addPost(postForm, i % 2 != 0? user1 : user2, parentTreePath.toString());
+            Long postId = postService.addPost(postForm, i % 2 != 0? user1 : user2);
             String hexaTriDecimalId = String.format("%6s", Long.toString(postId, Character.MAX_RADIX))
                     .replace(" ", "0");
             parentTreePath.append("/" + hexaTriDecimalId);

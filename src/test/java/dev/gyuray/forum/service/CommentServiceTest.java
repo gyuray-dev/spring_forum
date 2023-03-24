@@ -41,7 +41,7 @@ class CommentServiceTest {
         postForm.setTitle("제목1");
         postForm.setContent("내용1");
 
-        Long postId = postService.addPost(postForm, user, null);
+        Long postId = postService.addPost(postForm, user);
 
         //new comment
         CommentForm commentForm = new CommentForm();

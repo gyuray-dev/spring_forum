@@ -29,7 +29,7 @@ public class PostService {
     private final UploadFileRepository uploadFileRepository;
 
     @Transactional
-    public Long addPost(PostForm postForm, User writer, String parentTreePath) throws IOException {
+    public Long addPost(PostForm postForm, User writer) throws IOException {
         Post post = new Post();
         post.setUser(writer);
         post.setTitle(postForm.getTitle());
@@ -45,6 +45,7 @@ public class PostService {
 
         postRepository.save(post);
 
+        String parentTreePath = postForm.getParentTreePath();
         // tree-path 지정
         if (parentTreePath == null || parentTreePath.equals("")) {
             parentTreePath = "/";
