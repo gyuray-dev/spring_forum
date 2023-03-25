@@ -31,12 +31,13 @@ public class CommentRepository {
                 "'', " +
                 "c.id, " +
                 "u.id, " +
-                "c.treePath" +
+                "c.treePath, " +
+                "0" +
                 ") " +
                 "from Comment c " +
                 "join c.user u " +
                 "where c.post.id = :postId " +
-                "order by c.id";
+                "order by c.root, c.treePath";
 
         return em.createQuery(query, CommentListDTO.class)
                 .setParameter("postId", postId)

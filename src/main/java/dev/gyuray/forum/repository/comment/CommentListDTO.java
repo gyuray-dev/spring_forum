@@ -18,4 +18,5 @@ public class CommentListDTO {
     private Long userId;
 
     private String treePath;
+    private int depth;
 }

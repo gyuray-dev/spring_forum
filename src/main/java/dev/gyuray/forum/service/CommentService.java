@@ -39,6 +39,22 @@ public class CommentService {
         comment.addToUser(foundUser);
 
         commentRepository.save(comment);
+
+        String parentTreePath = commentForm.getParentTreePath();
+        // tree-path 지정
+        if (parentTreePath == null || parentTreePath.equals("")) {
+            parentTreePath = "/";
+        } else {
+            parentTreePath += "/";
+        }
+        String hexaTriDecimalId = String.format("%6s", Long.toString(comment.getId(), Character.MAX_RADIX))
+                .replace(" ", "0");
+        String treePath = parentTreePath + hexaTriDecimalId;
+        Long _root = Long.parseLong(treePath.split("/")[1], Character.MAX_RADIX);
+
+        comment.setTreePath(treePath);
+        comment.setRoot(_root);
+
         return comment.getId();
     }
 
@@ -54,6 +70,10 @@ public class CommentService {
             LocalDateTime regDate = commentListDTO.getRegDate();
             String formattedRegDate = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(regDate);
             commentListDTO.setFormattedRegDate(formattedRegDate);
+
+            // 들여쓰기 계산
+            int depth = commentListDTO.getTreePath().split("/").length - 2;
+            commentListDTO.setDepth(depth);
         }
 
         return commentListDTOs;

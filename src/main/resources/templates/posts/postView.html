@@ -81,10 +81,14 @@
 
         <!-- 댓글 목록 -->
         <ul class="list-group list-group-flush mb-3" id="accordionExample">
-            <li class="row border-bottom my-2" th:each="commentListDTO : ${commentListDTOs}">
-                <span class="col-6 col-md-2 fw-bold text-center" th:text="${commentListDTO.userName}">작성자</span>
+            <li class="row border-bottom my-2"
+                th:each="commentListDTO : ${commentListDTOs}"
+                th:style="|padding-left:${commentListDTO.depth * 5}%|">
+                <span class="col-6 col-md-2 fw-bold">
+                    <i th:if="${commentListDTO.depth > 0}" class="bi bi-arrow-return-right"></i><span th:text="${commentListDTO.userName}" class="ms-2">작성자</span>
+                </span>
 
-                <span class="col-6 col-md-3 text-center text-secondary fw-normal fs-6"
+                <span class="col-6 col-md-3 text-secondary fw-normal fs-6"
                       th:text="${commentListDTO.formattedRegDate}">2023-03-14 18:52:00</span>
 
                 <button th:if="${commentListDTO.userId == loginUser.id}"
