@@ -80,12 +80,13 @@
         </form>
 
         <!-- 댓글 목록 -->
-        <ul class="list-group list-group-flush mb-3" id="accordionExample">
+        <ul class="list-group list-group-flush mb-3" id="comment-ul">
             <li class="row border-bottom my-2"
                 th:each="commentListDTO : ${commentListDTOs}"
                 th:style="|padding-left:${commentListDTO.depth * 5}%|">
                 <span class="col-6 col-md-2 fw-bold">
-                    <i th:if="${commentListDTO.depth > 0}" class="bi bi-arrow-return-right"></i><span th:text="${commentListDTO.userName}" class="ms-2">작성자</span>
+                    <i th:if="${commentListDTO.depth > 0}" class="bi bi-arrow-return-right"></i><span
+                        th:text="${commentListDTO.userName}" class="ms-2">작성자</span>
                 </span>
 
                 <span class="col-6 col-md-3 text-secondary fw-normal fs-6"
@@ -105,15 +106,16 @@
 
                 <!-- 본문 아코디언 -->
                 <div class="accordion-item">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    <button class="accordion-button collapsed"
+                            type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseOne"
                             data-th-attr="data-bs-target=|#comment${commentListDTO.commentId}|"
-                            onclick="toggleCommentButtons()">
+                            aria-expanded="false">
                         <p th:text="${commentListDTO.content}" id="comment" style="white-space: pre-wrap">댓글 내용</p>
 
                     </button>
-                    <div id="collapseOne" class="accordion-collapse collapse"
-                         th:id="|comment${commentListDTO.commentId}|" data-bs-parent="#accordionExample">
+                    <div class="accordion-collapse collapse"
+                         th:id="|comment${commentListDTO.commentId}|" data-bs-parent="#comment-ul">
                         <div class="accordion-body">
                             <!-- 대댓글 등록 -->
                             <form th:action="@{/posts/{postId}/comments/add(postId = ${post.id})}" method="post">
@@ -195,16 +197,25 @@
             enableCommentButtons();
         }
 
-        let commentButtonsStatus = true;
-
-        function toggleCommentButtons () {
-            if (commentButtonsStatus == true) {
+        let accordionCollapses = document.getElementsByClassName('accordion-collapse');
+        for (let acc of accordionCollapses) {
+                // 대댓글 작성 시 수정 삭제 버튼 비활성화
+                acc.addEventListener('shown.bs.collapse', function(event) {
                 disableCommentButtons();
-            } else {
-                enableCommentButtons();
-            }
+
+                // 대댓글 작성 모두 숨김 시 수정 삭제 버튼 활성화
+                acc.addEventListener('hidden.bs.collapse', function(event) {
+                    for (let acc of accordionCollapses) {
+                        if (acc.classList.contains("show")) {
+                            return false;
+                        }
+                    }
+                    enableCommentButtons();
+                });
+            });
         }
 
+        // 수정 삭제 버튼 비활성화
         function disableCommentButtons() {
             let commentButtons = document.getElementsByClassName('comment-button');
             for (let button of commentButtons) {
@@ -213,6 +224,7 @@
             commentButtonsStatus = false;
         }
 
+        // 수정 삭제 버튼 비활성화
         function enableCommentButtons() {
             let commentButtons = document.getElementsByClassName('comment-button');
             for (let button of commentButtons) {
@@ -245,7 +257,6 @@
         function stripHtmlAndTrim(str) {
             return str.replace(/<\/?[^>]+(>|$)/g, "").trim();
         }
-
 
     </script>
 
