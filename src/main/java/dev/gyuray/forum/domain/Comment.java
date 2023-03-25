@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 @EqualsAndHashCode
 public class Comment {
 
@@ -29,6 +30,9 @@ public class Comment {
     private LocalDateTime regDate;
 
     private String content;
+
+    private Long root;
+    private String treePath;
 
     public Comment(String content) {
         this();

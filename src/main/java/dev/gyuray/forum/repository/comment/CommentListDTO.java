@@ -16,4 +16,7 @@ public class CommentListDTO {
     private String formattedRegDate;
     private Long commentId;
     private Long userId;
+
+    private String treePath;
+    private int depth;
 }
