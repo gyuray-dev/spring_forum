@@ -30,7 +30,8 @@ public class CommentRepository {
                 "c.content, " +
                 "'', " +
                 "c.id, " +
-                "u.id" +
+                "u.id, " +
+                "c.treePath" +
                 ") " +
                 "from Comment c " +
                 "join c.user u " +

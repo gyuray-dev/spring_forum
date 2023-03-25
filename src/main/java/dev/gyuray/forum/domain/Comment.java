@@ -30,6 +30,9 @@ public class Comment {
 
     private String content;
 
+    private Long root;
+    private String treePath;
+
     public Comment(String content) {
         this();
         this.content = content;

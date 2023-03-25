@@ -41,7 +41,8 @@
         <div th:if="${post.uploadFiles.size() > 0}" class="row ms-1">
             <ul class="list-group me-auto col-sm-5 col-md-4 mb-3">
                 <li th:each="uploadFile : ${post.uploadFiles}" class="list-group-item">
-                    <a th:href="|/files/attachment/${uploadFile.id}|" class="d-flex justify-content-between text-decoration-none text-black">
+                    <a th:href="|/files/attachment/${uploadFile.id}|"
+                       class="d-flex justify-content-between text-decoration-none text-black">
                         <i class="bi bi-file-earmark me-2"></i>
                         <span class="me-auto link-primary overflow-hidden" th:text="${uploadFile.originalFileName}">첨부파일 이름</span>
                         <small th:text="${uploadFile.size}" class="text-muted ms-2">3MB</small>
@@ -79,7 +80,7 @@
         </form>
 
         <!-- 댓글 목록 -->
-        <ul class="list-group list-group-flush mb-3">
+        <ul class="list-group list-group-flush mb-3" id="accordionExample">
             <li class="row border-bottom my-2" th:each="commentListDTO : ${commentListDTOs}">
                 <span class="col-6 col-md-2 fw-bold text-center" th:text="${commentListDTO.userName}">작성자</span>
 
@@ -98,7 +99,34 @@
                         class="col-6 btn btn-sm col-md-1 text-center comment-button">삭제
                 </button>
 
-                <p th:text="${commentListDTO.content}" id="comment" style="white-space: pre-wrap">댓글 내용</p>
+                <!-- 본문 아코디언 -->
+                <div class="accordion-item">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                            data-th-attr="data-bs-target=|#comment${commentListDTO.commentId}|" onclick="toggleCommentButtons()">
+                        <p th:text="${commentListDTO.content}" id="comment" style="white-space: pre-wrap">댓글 내용</p>
+
+                    </button>
+                    <div id="collapseOne" class="accordion-collapse collapse"
+                         th:id="|comment${commentListDTO.commentId}|" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <!-- 대댓글 등록 -->
+                            <form th:action="@{/posts/{postId}/comments/add(postId = ${post.id})}" method="post">
+                                <textarea class="form-control w-100 mt-3" style="resize: none;" name="content" rows="3"
+                                       placeholder="대댓글을 입력해주세요"></textarea>
+                                <div class="d-flex">
+                                    <button type="button" onclick="submitComment(this)"
+                                            class="btn btn-sm btn-primary ms-auto my-3 fw-bold"/>
+                                    댓글 등록</button>
+                                </div>
+                                <input type="hidden" name="userId" th:value="${post.user.id}"/>
+                                <input type="hidden" name="postId" th:value="${post.id}"/>
+                                <input type="hidden" name="parentTreePath" th:value="${commentListDTO.treePath}"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
             </li>
         </ul>
 
@@ -148,22 +176,42 @@
 
             parent.appendChild(form);
 
-            let commentButtons = document.getElementsByClassName('comment-button');
-            for (let button of commentButtons) {
-                button.style.pointerEvents = 'none';
-            }
+            disableCommentButtons();
         }
 
         // 댓글 수정 취소
         function cancelEdit(button) {
             let li = button.closest('li');
             li.getElementsByTagName('p')[0].style.display = '';
-            li.getElementsByTagName('form')[0].remove();
+            li.getElementsByTagName('form')[1].remove();
 
+            enableCommentButtons();
+        }
+
+        let commentButtonsStatus = true;
+
+        function toggleCommentButtons () {
+            if (commentButtonsStatus == true) {
+                disableCommentButtons();
+            } else {
+                enableCommentButtons();
+            }
+        }
+
+        function disableCommentButtons() {
+            let commentButtons = document.getElementsByClassName('comment-button');
+            for (let button of commentButtons) {
+                button.style.pointerEvents = 'none';
+            }
+            commentButtonsStatus = false;
+        }
+
+        function enableCommentButtons() {
             let commentButtons = document.getElementsByClassName('comment-button');
             for (let button of commentButtons) {
                 button.style.pointerEvents = '';
             }
+            commentButtonsStatus = true;
         }
 
         // Toast UI Editor viewer
@@ -190,9 +238,6 @@
         function stripHtmlAndTrim(str) {
             return str.replace(/<\/?[^>]+(>|$)/g, "").trim();
         }
-
-
-
 
     </script>
 
