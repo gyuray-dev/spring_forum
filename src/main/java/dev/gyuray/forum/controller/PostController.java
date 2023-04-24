@@ -1,12 +1,10 @@
 package dev.gyuray.forum.controller;
 
 import dev.gyuray.forum.domain.Post;
+import dev.gyuray.forum.domain.Role;
 import dev.gyuray.forum.domain.User;
 import dev.gyuray.forum.repository.comment.CommentListDTO;
-import dev.gyuray.forum.repository.post.PostForm;
-import dev.gyuray.forum.repository.post.PostListDTO;
-import dev.gyuray.forum.repository.post.PostSearchDTO;
-import dev.gyuray.forum.repository.post.PostUpdateDTO;
+import dev.gyuray.forum.repository.post.*;
 import dev.gyuray.forum.service.CommentService;
 import dev.gyuray.forum.service.PostPagerDTO;
 import dev.gyuray.forum.service.PostService;
@@ -31,6 +29,7 @@ public class PostController {
 
     private final PostService postService;
     private final CommentService commentService;
+    private final UploadFileRepository uploadFileRepository;
 
     @GetMapping
     public String postList(
@@ -44,7 +43,7 @@ public class PostController {
             currentPage = 1;
         }
 
-        if (pageSize == null || (pageSize !=10 && pageSize != 30 && pageSize != 50)) {
+        if (pageSize == null || (pageSize != 10 && pageSize != 30 && pageSize != 50)) {
             response.addCookie(new Cookie("pageSize", "10"));
             pageSize = 10;
             currentPage = 1;

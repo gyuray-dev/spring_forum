@@ -36,12 +36,11 @@ public class UserController {
     public String login(
             @Validated @ModelAttribute LoginForm loginForm,
             BindingResult bindingResult,
-            @SessionAttribute(required = false) User loginUser,
             @RequestParam(defaultValue = "/") String redirectURL,
             Model model,
             HttpServletRequest request
     ) {
-        loginUser = userService.login(loginForm.getLoginId(), loginForm.getPassword());
+        User loginUser = userService.login(loginForm.getLoginId(), loginForm.getPassword());
 
         if (loginUser == null || bindingResult.hasErrors()) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");

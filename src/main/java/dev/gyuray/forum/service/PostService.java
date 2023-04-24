@@ -52,12 +52,13 @@ public class PostService {
         } else {
             parentTreePath += "/";
         }
-        String hexaTriDecimalId = String.format("%6s", Long.toString(post.getId(), Character.MAX_RADIX))
+        String hexaTriDecimalId = Long.toString(post.getId(), Character.MAX_RADIX);
+        String hexaTriDecimalIdPadded = String.format("%6s", hexaTriDecimalId)
                 .replace(" ", "0");
-        String treePath = parentTreePath + hexaTriDecimalId;
+        String treePath = parentTreePath + hexaTriDecimalIdPadded;
         post.setTreePath(treePath);
-        Long _root = Long.parseLong(treePath.split("/")[1], Character.MAX_RADIX);
-        post.setRoot(_root);
+        Long root = Long.parseLong(treePath.split("/")[1], Character.MAX_RADIX);
+        post.setRoot(root);
 
         return post.getId();
     }
@@ -121,15 +122,16 @@ public class PostService {
         }
 
         // 첨부파일 삭제
-        if (postUpdateDTO.getDeleteFileIds() != null) {
-            for (Long deleteFileId : postUpdateDTO.getDeleteFileIds()) {
+        List<Long> deleteFileIds = postUpdateDTO.getDeleteFileIds();
+        if (deleteFileIds != null) {
+            for (Long deleteFileId : deleteFileIds) {
                 UploadFile uploadFile = uploadFileRepository.findOne(deleteFileId).orElseThrow(() -> {
                     throw new IllegalStateException("존재하지 않는 파일입니다.");
                 });
 
                 Long userId = uploadFile.getPost().getUser().getId();
 
-                if (!userId.equals(user.getId())) {
+                if (userId.equals(user.getId())) {
                     uploadFileRepository.delete(deleteFileId);
                     fileManager.deleteFile(uploadFile);
                 }

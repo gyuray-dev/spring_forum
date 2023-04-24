@@ -42,7 +42,7 @@ public class TestDataInit {
         userForm.setZipcode("12345");
         userForm.setEmail("userA@email.com");
         userForm.setLoginId("admin");
-        userForm.setPassword("1234");
+        userForm.setPassword("123!@#");
         Long userId1 = userService.join(userForm);
         User user1 = userService.findUser(userId1);
         user1.setRole(Role.ADMIN);
